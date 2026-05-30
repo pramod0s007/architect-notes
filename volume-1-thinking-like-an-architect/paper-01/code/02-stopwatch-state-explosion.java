@@ -1,3 +1,5 @@
+// Paper 01 — Example 2: State explosion → State Pattern
+
 enum StopWatchState {
     IDLE,
     RUNNING,

@@ -1,3 +1,5 @@
+// Paper 01 — Example 3: Behavior variation → Command Pattern
+
 enum TransactionType {
     DEPOSIT,
     WITHDRAW

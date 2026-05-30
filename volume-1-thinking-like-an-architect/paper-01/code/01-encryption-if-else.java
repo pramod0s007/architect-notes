@@ -1,3 +1,5 @@
+// Paper 01 — Example 1: Growing if-else → Strategy Pattern
+
 class Encryptor {
 
     String encrypt(String algorithm, String text) {
