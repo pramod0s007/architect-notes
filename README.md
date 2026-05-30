@@ -81,7 +81,7 @@ They are the result of good architectural reasoning.
 * Paper 14 — Pattern Selection Decision Tree
 * Paper 15 — Which Patterns Still Matter in 2026?
 
-**Navigation:** [Learning path](docs/learning-path.md) · [Pattern selection tree](docs/pattern-selection-decision-tree.md)
+**Navigation:** [Learning path](docs/learning-path.md) · [Architecture map](docs/architecture-map.md) · [Pattern selection tree](docs/pattern-selection-decision-tree.md) · [Interview roadmap](docs/interview-roadmap.md) · [Staff engineer roadmap](docs/staff-engineer-roadmap.md)
 
 
 
