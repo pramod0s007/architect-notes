@@ -72,14 +72,16 @@ They are the result of good architectural reasoning.
 
 * Paper 09 — Specification Pattern
 * Paper 10 — Chain of Responsibility
+
+### Volume 4 — Creational & Architect-Level Thinking
+
 * Paper 11 — Builder Pattern
 * Paper 12 — Factory Pattern
-
-### Volume 4 — Architect-Level Thinking
-
 * Paper 13 — When Patterns Become Anti-Patterns
 * Paper 14 — Pattern Selection Decision Tree
 * Paper 15 — Which Patterns Still Matter in 2026?
+
+**Navigation:** [Learning path](docs/learning-path.md) · [Pattern selection tree](docs/pattern-selection-decision-tree.md)
 
 
 
@@ -92,6 +94,7 @@ architect-notes
 ├── volume-2-behavioral-design
 ├── volume-3-enterprise-patterns
 ├── volume-4-architect-level-thinking
+├── docs
 ├── diagrams
 ├── code-samples
 └── references
