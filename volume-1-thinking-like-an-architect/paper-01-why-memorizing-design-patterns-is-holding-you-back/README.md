@@ -277,3 +277,79 @@ Instead ask:
 > What pressure is this code experiencing?
 
 The answer will often lead you to the correct abstraction.
+
+## The Four Architectural Buckets
+
+After studying hundreds of codebases, I noticed that most design pressures fall into a small number of categories.
+
+### Bucket 1 – Data Variation
+
+The logic remains the same.
+
+Only the data changes.
+
+**Examples:**
+
+- Different report formats
+- Different document types
+- Different configuration values
+
+**Common solutions:**
+
+- Templates
+- Generics
+- Parameterization
+
+### Bucket 2 – Object Variation
+
+The workflow remains the same.
+
+The participating object changes.
+
+**Examples:**
+
+- Different payment providers
+- Different storage engines
+- Different notification channels
+
+**Common solutions:**
+
+- Composition
+- Dependency Injection
+- Object Configuration
+
+### Bucket 3 – Behavior Variation
+
+The algorithm itself changes.
+
+**Examples:**
+
+- Encryption algorithms
+- Pricing algorithms
+- Validation strategies
+
+**Common solutions:**
+
+- Strategy Pattern
+- Command Pattern
+- State Pattern
+
+### Bucket 4 – Rules Variation
+
+Business rules grow and become increasingly complex.
+
+**Examples:**
+
+- Eligibility systems
+- Search filters
+- Discount engines
+
+**Common solutions:**
+
+- Specification Pattern
+- Rule Engines
+- Decision Tables
+
+Most design patterns are simply responses to one of these four categories of pressure.
+
+Understanding the pressure is more important than memorizing the pattern.
