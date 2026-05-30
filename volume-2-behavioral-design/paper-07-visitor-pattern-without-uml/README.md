@@ -86,3 +86,9 @@ Visitor
 - Double dispatch replaces nested type checks.
 - New interactions often mean new visitor implementations, not editing every conditional.
 - Visitor is powerful but has trade-offs (covered in Paper 08).
+
+## Runnable Example
+
+See:
+
+code-samples/visitor/collision-engine

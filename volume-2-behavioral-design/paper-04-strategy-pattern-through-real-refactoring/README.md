@@ -138,3 +138,9 @@ Strategy Pattern
 - The pattern is not the goal.
 - The abstraction is introduced because pressure exists.
 - Composition replaces conditional growth.
+
+## Runnable Example
+
+See:
+
+code-samples/strategy/encryption-example

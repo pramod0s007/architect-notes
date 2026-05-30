@@ -56,3 +56,9 @@ Lookup Table
 - Not every matrix problem needs Visitor or polymorphism.
 - Choose based on growth rate, performance, and team readability.
 - Paper 03 classified collision as behavior variation — table vs Visitor is an implementation decision.
+
+## Runnable Example
+
+See:
+
+code-samples/lookup/collision-engine

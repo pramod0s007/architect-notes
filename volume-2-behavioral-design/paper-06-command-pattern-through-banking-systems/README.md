@@ -132,3 +132,9 @@ Command Pattern
 - Undo is a symptom; encapsulated operations are the abstraction.
 - The invoker separates *when* behavior runs from *what* behavior runs.
 - Growing operation requirements are design pressure, not a pattern checklist.
+
+## Runnable Example
+
+See:
+
+code-samples/command/banking-example

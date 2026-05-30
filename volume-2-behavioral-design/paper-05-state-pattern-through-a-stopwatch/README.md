@@ -140,3 +140,9 @@ State Pattern
 - The pattern is not the goal.
 - State-specific behavior should be isolated.
 - Growing state transitions are a design pressure.
+
+## Runnable Example
+
+See:
+
+code-samples/state/stopwatch-example

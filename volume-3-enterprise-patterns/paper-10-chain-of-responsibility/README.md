@@ -62,3 +62,9 @@ Chain of Responsibility
 - Stages can be added or reordered without rewriting a monolithic pipeline.
 - Common in middleware, filters, and gateway architectures.
 - Distinct from Specification (rules) and Command (encapsulated operations).
+
+## Runnable Example
+
+See:
+
+code-samples/chain-of-responsibility/request-pipeline

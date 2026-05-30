@@ -66,3 +66,9 @@ Specification Pattern
 - Composition (and/or/not) replaces nested conditionals.
 - Often pairs with Repository or Query layers in enterprise systems.
 - Classified as **Bucket 4 – Rules Variation** in Paper 02.
+
+## Runnable Example
+
+See:
+
+code-samples/specification/product-search
