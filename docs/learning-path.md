@@ -1,6 +1,8 @@
 # Learning Path
 
-Recommended reading order for **Architect's Notes**.
+**Architect's Notes** — *A Practical Decision Framework for Modern Software Design*
+
+Recommended reading order matches [publication-order.md](publication-order.md) (Papers 1–15).
 
 ```text
 New Engineer
