@@ -195,6 +195,20 @@ Forces are hidden.
 
 The ability to recognize those forces is what transforms design pattern knowledge into architectural judgment.
 
+## Real Classification Exercises
+
+Encryption Service  
+→ Behavior Variation
+
+Product Search  
+→ Rules Variation
+
+Storage Engine  
+→ Object Variation
+
+Report Export  
+→ Data Variation
+
 ## Design Pressure
 
 ```text
