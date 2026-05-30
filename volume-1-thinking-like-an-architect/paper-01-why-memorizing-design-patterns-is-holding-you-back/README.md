@@ -432,3 +432,42 @@ Patterns are visible.
 Forces are hidden.
 
 The ability to identify those hidden forces is what separates architecture from implementation.
+
+## A Real Interview Example
+
+Imagine an interviewer shows you the following code:
+
+```java
+double calculatePrice(Customer customer, Product product) {
+
+    if(customer.isPremium())
+        return premiumPricing(product);
+
+    if(customer.isEmployee())
+        return employeePricing(product);
+
+    if(customer.isPartner())
+        return partnerPricing(product);
+
+    return regularPricing(product);
+}
+```
+
+Many candidates immediately answer:
+
+> "Use Strategy Pattern."
+
+That answer is incomplete.
+
+A stronger answer is:
+
+> "The system is experiencing behavior variation. Pricing logic changes based on customer type. If new pricing models are expected to grow over time, Strategy Pattern may be an appropriate abstraction."
+
+Notice the difference.
+
+The first answer identifies a pattern.
+
+The second answer identifies the pressure.
+
+Architects are usually hired for the second skill.
+
