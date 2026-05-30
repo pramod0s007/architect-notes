@@ -1,64 +1,199 @@
 # Pattern Selection Decision Tree
 
-## Signature Content
-
-This paper expands the repository's canonical decision tree into an architect-level guide.
-
 **Canonical reference:** [`docs/pattern-selection-decision-tree.md`](../../docs/pattern-selection-decision-tree.md)
 
-## Start Here
+## The Wrong Question
 
-**What is changing?**
+One of the most common questions in software design is:
+
+> Which design pattern should I use?
+
+Unfortunately, this question is usually asked too early.
+
+Patterns are solutions.
+
+Good architecture starts by understanding the problem.
+
+The better question is:
+
+> What kind of variation am I dealing with?
+
+## Step 1 – Identify What Is Changing
+
+Every design problem begins with change.
+
+The first task is to identify the source of that change.
 
 ```text
 What is changing?
 
 ├── Data
-│      ↓
-│   Templates
-│   Configuration
-│
 ├── Object
-│      ↓
-│   DI
-│   Composition
-│
 ├── Behavior
-│      ↓
-│   Strategy
-│   Command
-│   State
-│
 └── Rules
-       ↓
-   Specification
-   Rule Engine
 ```
 
-## How Architects Use This
+This classification immediately removes many incorrect solutions.
 
-1. Name the pressure before naming the pattern.
-2. Map the pressure branch to papers 04–12 in this repository.
-3. Validate with Paper 13 — is the pattern earning its complexity?
-4. Confirm with Paper 15 — is the pattern still worth it in modern codebases?
+### Data Variation
 
-## Branch Notes
+**Examples:**
 
-### Data changing
+- CSV vs JSON vs XML
+- Report formats
+- Configuration values
 
-Prefer templates and configuration over subclass forests.
+**Questions:**
 
-### Object graph changing
+- Is the algorithm stable?
+- Is only the data changing?
 
-Prefer DI and composition before Factory/Abstract Factory.
+**Typical Solutions:**
 
-### Behavior changing
+- Parameters
+- Templates
+- Configuration
+- Generics
 
-Strategy, Command, and State from Volume 2 — each addresses a distinct pressure.
+Patterns are often unnecessary.
 
-### Rules changing
+### Object Variation
 
-Specification and rule engines — Volume 3.
+**Examples:**
+
+- MySQL vs MongoDB
+- S3 vs Azure Blob Storage
+- Email vs SMS
+
+**Questions:**
+
+- Is the workflow stable?
+- Is the participating object changing?
+
+**Typical Solutions:**
+
+- Composition
+- Dependency Injection
+- Factory Pattern
+
+### Behavior Variation
+
+**Examples:**
+
+- Encryption algorithms
+- Pricing strategies
+- Validation algorithms
+
+**Questions:**
+
+- Is the caller stable?
+- Is the algorithm changing?
+
+**Typical Solutions:**
+
+- Strategy Pattern
+- Command Pattern
+- State Pattern
+
+This is where many GoF patterns emerge.
+
+### Rules Variation
+
+**Examples:**
+
+- Eligibility checks
+- Search filters
+- Discount engines
+
+**Questions:**
+
+- Are business rules growing independently?
+- Are conditions multiplying?
+
+**Typical Solutions:**
+
+- Specification Pattern
+- Rule Engines
+- Decision Tables
+
+## Step 2 – Measure The Pressure
+
+Not every variation requires a pattern.
+
+Ask:
+
+- How frequently does it change?
+- How expensive is modification?
+- How likely is future growth?
+- Is complexity increasing?
+
+Without pressure, abstractions are usually unnecessary.
+
+See [Paper 13 — When Patterns Become Anti-Patterns](../paper-13-when-patterns-become-anti-patterns/).
+
+## Step 3 – Introduce The Smallest Possible Abstraction
+
+A common mistake is jumping directly to a sophisticated pattern.
+
+Prefer:
+
+```text
+Simple Code
+      ↓
+Pressure
+      ↓
+Small Refactoring
+      ↓
+Pattern
+```
+
+Not:
+
+```text
+Simple Code
+      ↓
+Pattern
+      ↓
+More Pattern
+      ↓
+Even More Pattern
+```
+
+## The Architect's Shortcut
+
+When reviewing unfamiliar code:
+
+```text
+Data Changing?
+      ↓
+Configuration
+
+Object Changing?
+      ↓
+Composition
+
+Behavior Changing?
+      ↓
+Strategy / Command / State
+
+Rules Changing?
+      ↓
+Specification
+```
+
+This shortcut solves a surprising number of design problems.
+
+## Final Thoughts
+
+Architects do not begin with patterns.
+
+They begin with forces.
+
+Patterns are visible.
+
+Forces are hidden.
+
+The ability to recognize those forces is what transforms design pattern knowledge into architectural judgment.
 
 ## Design Pressure
 
@@ -75,3 +210,4 @@ Right-sized abstraction
 - The tree is a **navigation tool**, not a checklist.
 - Wrong branch → wrong pattern → anti-pattern (Paper 13).
 - Link every production decision to a pressure, not a glossary term.
+- Runnable samples for behavior and rules live under `code-samples/` (Papers 04–10).
