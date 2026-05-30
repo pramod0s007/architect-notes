@@ -1,12 +1,12 @@
 # Architect's Notes
 
-A practical decision framework for software architecture, design patterns, distributed systems, and engineering trade-offs.
+> A practical decision framework for software architecture, design patterns, distributed systems, and engineering trade-offs.
 
----
+
 
 ## Why This Repository Exists
 
-Most software engineering resources teach patterns, frameworks, and technologies in isolation.
+Most software engineering resources teach design patterns, frameworks, and technologies in isolation.
 
 This repository takes a different approach.
 
@@ -14,9 +14,19 @@ Instead of starting with solutions, we start with problems.
 
 Every abstraction, design pattern, architectural style, and engineering decision exists because it solves a recurring problem.
 
-The goal of this repository is to help engineers learn how to recognize those problems and choose the right abstraction.
+The goal of this repository is to help engineers understand:
 
----
+* What problem exists?
+* Why does the problem occur?
+* What architectural pressure is being created?
+* Which abstraction addresses that pressure?
+* What trade-offs are introduced?
+
+The focus is not on memorizing patterns.
+
+The focus is on learning how architects think.
+
+
 
 ## Core Philosophy
 
@@ -40,7 +50,7 @@ Patterns are not the destination.
 
 They are the result of good architectural reasoning.
 
----
+
 
 ## Architect's Notes Series
 
@@ -71,7 +81,7 @@ They are the result of good architectural reasoning.
 * Paper 14 — Pattern Selection Decision Tree
 * Paper 15 — Which Patterns Still Matter in 2026?
 
----
+
 
 ## Repository Structure
 
@@ -87,12 +97,49 @@ architect-notes
 └── references
 ```
 
----
+
+
+## Design Philosophy
+
+Every paper follows the same framework:
+
+```text
+Problem
+    ↓
+Code Smell
+    ↓
+Architectural Pressure
+    ↓
+Possible Solutions
+    ↓
+Selected Abstraction
+    ↓
+Trade-offs
+```
+
+The objective is not to teach design patterns as isolated concepts.
+
+The objective is to understand when and why they emerge.
+
+
+
+## Intended Audience
+
+This repository is for:
+
+* Software Engineers
+* Senior Engineers
+* Staff Engineers
+* Architects
+* Engineering Leaders
+* Engineers preparing for Staff / Principal / Architect roles
+
+
 
 ## Author
 
-Pramod Srivastava
+**Pramod Srivastava**
 
-Computer Scientist @ Adobe
+Staff Backend Engineer @ Adobe
 
-Exploring software architecture, distributed systems, design patterns, and engineering trade-offs.
+Interested in distributed systems, software architecture, AI platforms, engineering trade-offs, and scalable backend systems.
