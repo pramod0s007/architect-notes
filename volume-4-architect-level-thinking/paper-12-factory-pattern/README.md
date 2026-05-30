@@ -54,3 +54,9 @@ Factory
 - Distinct from Builder (how to assemble one complex object) and Strategy (how it behaves after creation).
 - Prefer simple factory methods before Abstract Factory hierarchies.
 - Watch for Factory Hell (Paper 13) when every type gets its own factory interface.
+
+## Runnable Example
+
+See:
+
+code-samples/factory/notification-factory

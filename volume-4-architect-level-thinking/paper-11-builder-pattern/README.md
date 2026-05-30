@@ -65,3 +65,9 @@ Builder
 - Prefer immutability after `build()` when the object is a value or request DTO.
 - Validate invariants at build time, not scattered across call sites.
 - Do not use Builder for every POJO — apply when parameter combinations explode.
+
+## Runnable Example
+
+See:
+
+code-samples/builder/http-request-builder
