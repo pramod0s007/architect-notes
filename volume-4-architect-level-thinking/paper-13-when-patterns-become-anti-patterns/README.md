@@ -59,6 +59,16 @@ At this stage patterns become tools rather than goals.
 
 This is where architectural thinking begins.
 
+## Five Warning Signs Of Overengineering
+
+- More abstractions than business logic
+- Interfaces with a single implementation for years
+- Factories that create one object
+- Builders for trivial objects
+- Patterns introduced for hypothetical future requirements
+
+When these signs appear, the system may be suffering from **accidental complexity** rather than **essential complexity**.
+
 ## Failure Modes
 
 ### Strategy Explosion
