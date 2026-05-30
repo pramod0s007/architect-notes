@@ -14,6 +14,51 @@ This may be the most valuable paper in the series.
 
 Teams apply patterns because they recognize the name — not because the pressure is present.
 
+## The Pattern Maturity Curve
+
+Most engineers experience design patterns in three phases.
+
+### Phase 1 – Discovery
+
+The engineer learns a new pattern.
+
+Everything suddenly looks like a problem that can be solved with that pattern.
+
+Examples:
+
+- Strategy everywhere
+- Factory everywhere
+- Builder everywhere
+
+This phase is exciting but dangerous.
+
+### Phase 2 – Overuse
+
+The engineer begins introducing abstractions before they are needed.
+
+Common symptoms:
+
+- Interfaces with only one implementation
+- Factories that create a single object
+- Builders for objects with three fields
+- Visitors for two object types
+
+Complexity grows faster than business value.
+
+### Phase 3 – Architectural Judgment
+
+The engineer stops asking:
+
+> "Can I use this pattern?"
+
+and starts asking:
+
+> "Should I use this pattern?"
+
+At this stage patterns become tools rather than goals.
+
+This is where architectural thinking begins.
+
 ## Failure Modes
 
 ### Strategy Explosion
