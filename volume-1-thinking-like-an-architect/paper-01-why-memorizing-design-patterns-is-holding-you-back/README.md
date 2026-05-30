@@ -407,3 +407,28 @@ Most design patterns are simply responses to one of these four categories of pre
 
 Understanding the pressure is more important than memorizing the pattern.
 
+## The Architect's Mental Model
+
+When faced with a design problem, do not start by asking:
+
+> Which design pattern should I use?
+
+Instead ask:
+
+- What is changing?
+- Why is it changing?
+- How often is it changing?
+- What pressure is being created?
+- What is the simplest abstraction that relieves that pressure?
+
+This shift in thinking changes everything.
+
+Developers often recognize patterns.
+
+Architects recognize forces.
+
+Patterns are visible.
+
+Forces are hidden.
+
+The ability to identify those hidden forces is what separates architecture from implementation.
