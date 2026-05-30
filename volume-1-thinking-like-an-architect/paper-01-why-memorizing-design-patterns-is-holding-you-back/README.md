@@ -471,3 +471,24 @@ The second answer identifies the pressure.
 
 Architects are usually hired for the second skill.
 
+## Final Thoughts
+
+Design patterns are useful.
+
+They have survived for decades because they solve recurring problems.
+
+However, patterns should never become the starting point of design.
+
+The starting point should always be understanding the forces acting on a system.
+
+Once those forces become visible, the appropriate abstractions often emerge naturally.
+
+The next time you encounter a large switch statement, a growing collection of if-else blocks, or an increasingly complex workflow, do not ask:
+
+> "Which pattern should I use?"
+
+Ask:
+
+> "What pressure is this code experiencing?"
+
+That question is usually the beginning of good architecture.
