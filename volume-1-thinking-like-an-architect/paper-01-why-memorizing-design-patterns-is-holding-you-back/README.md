@@ -280,6 +280,59 @@ The answer will often lead you to the correct abstraction.
 
 ## The Four Architectural Buckets
 
+## Why Patterns Get a Bad Reputation
+
+Many engineers dislike design patterns.
+
+Ironically, the problem is usually not the pattern itself.
+
+The problem is using the pattern before the pressure exists.
+
+Consider a system that supports only a single payment provider.
+
+Some teams immediately introduce:
+
+- Strategy Pattern
+- Factory Pattern
+- Dependency Injection
+- Abstract Interfaces
+
+The result is a complex design that solves a problem that does not yet exist.
+
+This is known as **speculative generality**.
+
+A common architectural mistake is:
+
+```
+Future Requirement
+      ↓
+Premature Abstraction
+      ↓
+Unnecessary Complexity
+```
+
+A better approach is:
+
+```
+Simple Design
+      ↓
+Observe Pressure
+      ↓
+Refactor
+      ↓
+Introduce Abstraction
+```
+
+Patterns should appear because the system demands them.
+
+Not because a design patterns book contains them.
+
+Good architects are not pattern collectors.
+
+Good architects are pressure observers.
+
+The best abstraction is usually the one introduced at the **last responsible moment**.
+
 After studying hundreds of codebases, I noticed that most design pressures fall into a small number of categories.
 
 ### Bucket 1 – Data Variation
@@ -353,3 +406,4 @@ Business rules grow and become increasingly complex.
 Most design patterns are simply responses to one of these four categories of pressure.
 
 Understanding the pressure is more important than memorizing the pattern.
+
