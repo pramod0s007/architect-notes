@@ -62,10 +62,9 @@ Strong answer: Describe the measurable pain, the simpler replacement, and the co
 
 ## Read the Full Article
 
-{medium}
 
 ## This Paper Has No Code Examples
 
 The anti-pattern examples are in the other papers — specifically by showing the **before** state that does not need a pattern yet. See:
-- [`strategy/encryption-example/`](../../code-samples/strategy/encryption-example/) — shows the moment Strategy becomes justified
-- [`state/order-processing/`](../../code-samples/state/order-processing/) — shows what State Pattern removes (the 42-branch mess)
+- [`strategy/encryption-example/`](../../volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/encryption-example/) — shows the moment Strategy becomes justified
+- [`state/order-processing/`](../../volume-2-behavioral-design/paper-05-state-pattern-through-a-stopwatch/order-processing/) — shows what State Pattern removes (the 42-branch mess)

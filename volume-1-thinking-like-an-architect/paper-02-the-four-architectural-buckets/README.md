@@ -57,10 +57,9 @@ Classify first. Pattern second.
 
 ## Read the Full Article
 
-{medium}
 
 ## Related Code Examples
 
-- [`code-samples/strategy/pricing-engine/`](../../code-samples/strategy/pricing-engine/) — Bucket 3: behavior variation in pricing
-- [`code-samples/specification/loan-eligibility/`](../../code-samples/specification/loan-eligibility/) — Bucket 4: rules variation in eligibility
-- [`code-samples/factory/storage-factory/`](../../code-samples/factory/storage-factory/) — Bucket 2: object variation in storage
+- [pricing-engine](../../volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/pricing-engine/) — Bucket 3: behavior variation in pricing
+- [loan-eligibility](../../volume-3-enterprise-patterns/paper-09-specification-pattern/loan-eligibility/) — Bucket 4: rules variation in eligibility
+- [storage-factory](../../volume-4-architect-level-thinking/paper-12-factory-pattern/storage-factory/) — Bucket 2: object variation in storage

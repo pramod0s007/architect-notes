@@ -48,12 +48,12 @@ Most candidates answer "use Strategy Pattern" when shown a growing switch statem
 
 ## Read the Full Article
 
-[Why Memorizing Design Patterns Is Holding You Back]({medium})
+These examples from later papers show the pressure-first thinking introduced here:
 
-Covers the full story, war stories from production systems, the memorization trap, speculative generality, and the last responsible moment.
+- [Strategy — encryption-example](../../volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/encryption-example/) — behavior variation → Strategy Pattern
+- [State — stopwatch-example](../../volume-2-behavioral-design/paper-05-state-pattern-through-a-stopwatch/stopwatch-example/) — state explosion → State Pattern
+- [Command — banking-example](../../volume-2-behavioral-design/paper-06-command-pattern-through-banking-systems/banking-example/) — behavior encapsulation → Command Pattern
 
-## Related Code Examples
+---
 
-- [`code-samples/strategy/encryption-example/`](../../code-samples/strategy/encryption-example/) — pressure-first refactoring from if-else to Strategy
-- [`code-samples/state/stopwatch-example/`](../../code-samples/state/stopwatch-example/) — state explosion leading to State Pattern
-- [`code-samples/command/banking-example/`](../../code-samples/command/banking-example/) — behavior encapsulation pressure
+*Part of the [Architect Notes](https://github.com/pramod0s007/architect-notes) series.*

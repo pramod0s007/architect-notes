@@ -71,14 +71,13 @@ Different pipelines for different endpoint types — same handlers, different as
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`chain-of-responsibility/request-pipeline/`](../../code-samples/chain-of-responsibility/request-pipeline/) | Web API | Auth, Authorization, Validation, Rate Limiting |
-| [`chain-of-responsibility/api-security-pipeline/`](../../code-samples/chain-of-responsibility/api-security-pipeline/) | API Gateway | IP blocklist, JWT, RBAC, rate limit, body validation — fluent `PipelineBuilder` |
+| [`chain-of-responsibility/request-pipeline/`](./request-pipeline/) | Web API | Auth, Authorization, Validation, Rate Limiting |
+| [`chain-of-responsibility/api-security-pipeline/`](./api-security-pipeline/) | API Gateway | IP blocklist, JWT, RBAC, rate limit, body validation — fluent `PipelineBuilder` |
 
 ### How to Run
 

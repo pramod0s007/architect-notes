@@ -58,14 +58,13 @@ The StopWatch itself has zero conditional logic. It delegates everything.
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`state/stopwatch-example/`](../../code-samples/state/stopwatch-example/) | Time tracking | IDLE→RUNNING→PAUSED transitions, invalid transition rejection |
-| [`state/order-processing/`](../../code-samples/state/order-processing/) | E-commerce | PENDING→CONFIRMED→SHIPPED→DELIVERED, CANCELLED, REFUNDED — full lifecycle |
+| [`state/stopwatch-example/`](./stopwatch-example/) | Time tracking | IDLE→RUNNING→PAUSED transitions, invalid transition rejection |
+| [`state/order-processing/`](./order-processing/) | E-commerce | PENDING→CONFIRMED→SHIPPED→DELIVERED, CANCELLED, REFUNDED — full lifecycle |
 
 ### How to Run
 

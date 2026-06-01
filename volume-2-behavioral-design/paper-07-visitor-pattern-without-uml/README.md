@@ -62,14 +62,13 @@ Every major Java AST tool uses Visitor internally: Checkstyle, PMD, SpotBugs, Ja
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`visitor/collision-engine/`](../../code-samples/visitor/collision-engine/) | Game engine | Ship/Station/Comet/Asteroid — double dispatch for collision handling |
-| [`visitor/document-processor/`](../../code-samples/visitor/document-processor/) | Content pipeline | PDF/Word/HTML × validation, metadata, indexing — 3 visitors, 3 types |
+| [`visitor/collision-engine/`](./collision-engine/) | Game engine | Ship/Station/Comet/Asteroid — double dispatch for collision handling |
+| [`visitor/document-processor/`](./document-processor/) | Content pipeline | PDF/Word/HTML × validation, metadata, indexing — 3 visitors, 3 types |
 
 ### How to Run
 

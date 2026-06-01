@@ -59,14 +59,13 @@ These are complementary — Factory creates, Builder configures.
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`factory/notification-factory/`](../../code-samples/factory/notification-factory/) | Notifications | Email, SMS — centralized creation |
-| [`factory/storage-factory/`](../../code-samples/factory/storage-factory/) | Infrastructure | S3, Azure Blob, Local disk — `createFromEnvironment()` reads system property |
+| [`factory/notification-factory/`](./notification-factory/) | Notifications | Email, SMS — centralized creation |
+| [`factory/storage-factory/`](./storage-factory/) | Infrastructure | S3, Azure Blob, Local disk — `createFromEnvironment()` reads system property |
 
 ### How to Run
 

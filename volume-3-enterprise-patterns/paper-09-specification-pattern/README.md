@@ -76,14 +76,13 @@ List<Customer> customers = repository.findAll(isActive().and(inRegion("EU")));
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`specification/product-search/`](../../code-samples/specification/product-search/) | E-commerce | Price, category, rating, stock — composable AND/OR/NOT filters |
-| [`specification/loan-eligibility/`](../../code-samples/specification/loan-eligibility/) | Lending | Age, income, credit, blacklist, premium override — `getFailedRules()` for rejection reasons |
+| [`specification/product-search/`](./product-search/) | E-commerce | Price, category, rating, stock — composable AND/OR/NOT filters |
+| [`specification/loan-eligibility/`](./loan-eligibility/) | Lending | Age, income, credit, blacklist, premium override — `getFailedRules()` for rejection reasons |
 
 ### How to Run
 

@@ -59,15 +59,14 @@ OkHttp, AWS SDK v2, Elasticsearch Java client, Retrofit — all use Builder for 
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`builder/http-request-builder/`](../../code-samples/builder/http-request-builder/) | Networking | Method, URL, headers, body, timeout, retry — the foundational Builder |
-| [`builder/database-config/`](../../code-samples/builder/database-config/) | Infrastructure | SSL, connection pool, timeouts, read replica — `build()` validates invariants |
-| [`builder/search-request/`](../../code-samples/builder/search-request/) | Search | Query, filters, pagination, sort — cross-field validation (`maxPrice >= minPrice`) |
+| [`builder/http-request-builder/`](./http-request-builder/) | Networking | Method, URL, headers, body, timeout, retry — the foundational Builder |
+| [`builder/database-config/`](./database-config/) | Infrastructure | SSL, connection pool, timeouts, read replica — `build()` validates invariants |
+| [`builder/search-request/`](./search-request/) | Search | Query, filters, pagination, sort — cross-field validation (`maxPrice >= minPrice`) |
 
 ### How to Run
 

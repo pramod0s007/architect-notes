@@ -73,14 +73,13 @@ class StripeAdapter implements PaymentGateway {
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`adapter/storage-adapter/`](../../code-samples/adapter/storage-adapter/) | Cloud storage | S3 (`putObject`) and Azure Blob (`uploadBlob`) adapted to one `ObjectStorage` interface |
-| [`adapter/payment-adapter/`](../../code-samples/adapter/payment-adapter/) | Payments | Stripe (cents, PaymentIntent) and PayPal (order/capture) adapted to one `PaymentGateway` |
+| [`adapter/storage-adapter/`](./storage-adapter/) | Cloud storage | S3 (`putObject`) and Azure Blob (`uploadBlob`) adapted to one `ObjectStorage` interface |
+| [`adapter/payment-adapter/`](./payment-adapter/) | Payments | Stripe (cents, PaymentIntent) and PayPal (order/capture) adapted to one `PaymentGateway` |
 
 ### How to Run
 

@@ -49,7 +49,6 @@ Pattern literacy + restraint is the modern staff engineer signal. Not pattern co
 
 ## Read the Full Article
 
-{medium}
 
 ## All Code Examples in This Repo
 

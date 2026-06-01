@@ -58,15 +58,14 @@ After:
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`strategy/encryption-example/`](../../code-samples/strategy/encryption-example/) | Security | AES, DES, BLOWFISH — the classic Strategy refactoring |
-| [`strategy/payment-gateway/`](../../code-samples/strategy/payment-gateway/) | Payments | PayPal, Stripe, Razorpay — runtime provider switching |
-| [`strategy/pricing-engine/`](../../code-samples/strategy/pricing-engine/) | E-commerce | Premium/Employee/Partner/Standard tiers — 4 pricing algorithms |
+| [`strategy/encryption-example/`](./encryption-example/) | Security | AES, DES, BLOWFISH — the classic Strategy refactoring |
+| [`strategy/payment-gateway/`](./payment-gateway/) | Payments | PayPal, Stripe, Razorpay — runtime provider switching |
+| [`strategy/pricing-engine/`](./pricing-engine/) | E-commerce | Premium/Employee/Partner/Standard tiers — 4 pricing algorithms |
 
 ### How to Run
 

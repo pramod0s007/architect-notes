@@ -47,14 +47,13 @@ Silent observer failures are the most dangerous production problem with Observer
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`observer/order-events/`](../../code-samples/observer/order-events/) | E-commerce | Email, Warehouse, Loyalty, Analytics — producer never changes when consumers added |
-| [`observer/stock-price-monitor/`](../../code-samples/observer/stock-price-monitor/) | Finance | Price alerts, portfolio tracking, audit log — live deregistration mid-stream |
+| [`observer/order-events/`](./order-events/) | E-commerce | Email, Warehouse, Loyalty, Analytics — producer never changes when consumers added |
+| [`observer/stock-price-monitor/`](./stock-price-monitor/) | Finance | Price alerts, portfolio tracking, audit log — live deregistration mid-stream |
 
 ### How to Run
 

@@ -53,7 +53,6 @@ What is changing?
 
 ## Read the Full Article
 
-{medium}
 
 ## The Tree in Action
 

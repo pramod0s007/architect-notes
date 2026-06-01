@@ -57,13 +57,12 @@ table.getOrDefault(key(a, b), NO_OP).resolve(a, b);
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`lookup/collision-engine/`](../../code-samples/lookup/collision-engine/) | Game engine | Same collision problem as Paper 07 — solved with a Map instead of Visitor |
+| [`lookup/collision-engine/`](./collision-engine/) | Game engine | Same collision problem as Paper 07 — solved with a Map instead of Visitor |
 
 ### How to Run
 

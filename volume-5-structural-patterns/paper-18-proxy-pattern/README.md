@@ -57,14 +57,13 @@ Both wrap an object. The distinction is intent:
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`proxy/caching-repository/`](../../code-samples/proxy/caching-repository/) | Data access | Transparent DB result caching; cache invalidation on writes |
-| [`proxy/lazy-loading/`](../../code-samples/proxy/lazy-loading/) | Reports | Title access is free; PDF content loads only on demand (double-checked locking) |
+| [`proxy/caching-repository/`](./caching-repository/) | Data access | Transparent DB result caching; cache invalidation on writes |
+| [`proxy/lazy-loading/`](./lazy-loading/) | Reports | Title access is free; PDF content loads only on demand (double-checked locking) |
 
 ### How to Run
 

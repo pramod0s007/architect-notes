@@ -65,14 +65,13 @@ This IS Decorator Pattern. Three independent capabilities, composed freely.
 
 ## Read the Full Article
 
-{medium}
 
 ## Code Examples in This Repo
 
 | Example | Domain | What It Shows |
 |---------|--------|--------------|
-| [`decorator/message-sender/`](../../code-samples/decorator/message-sender/) | Messaging | Compression, Encryption, Logging — stackable in any order |
-| [`decorator/http-client/`](../../code-samples/decorator/http-client/) | Networking | Retry, Logging, Caching (LRU+TTL), CircuitBreaker — full cross-cutting stack |
+| [`decorator/message-sender/`](./message-sender/) | Messaging | Compression, Encryption, Logging — stackable in any order |
+| [`decorator/http-client/`](./http-client/) | Networking | Retry, Logging, Caching (LRU+TTL), CircuitBreaker — full cross-cutting stack |
 
 ### How to Run
 

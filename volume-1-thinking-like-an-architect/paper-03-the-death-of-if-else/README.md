@@ -69,10 +69,9 @@ These are not code smells. They are clear, correct, maintainable code. Adding St
 
 ## Read the Full Article
 
-{medium}
 
 ## Related Code Examples
 
-- [`code-samples/strategy/encryption-example/`](../../code-samples/strategy/encryption-example/) — before: if-else for algorithms; after: Strategy Pattern
-- [`code-samples/state/order-processing/`](../../code-samples/state/order-processing/) — before: scattered state checks; after: State Pattern
-- [`code-samples/specification/loan-eligibility/`](../../code-samples/specification/loan-eligibility/) — before: nested rule conditions; after: Specification Pattern
+- [encryption-example](../../volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/encryption-example/) — before: if-else for algorithms; after: Strategy Pattern
+- [order-processing](../../volume-2-behavioral-design/paper-05-state-pattern-through-a-stopwatch/order-processing/) — before: scattered state checks; after: State Pattern
+- [loan-eligibility](../../volume-3-enterprise-patterns/paper-09-specification-pattern/loan-eligibility/) — before: nested rule conditions; after: Specification Pattern
