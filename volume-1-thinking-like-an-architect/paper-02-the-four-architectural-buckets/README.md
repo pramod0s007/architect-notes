@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[The Four Architectural Buckets](https://medium.com/@replytopramods.aws/the-four-architectural-buckets-73cd22f3c33c)
 
 ---
 ## What This Paper Is About
