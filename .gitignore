@@ -1,0 +1,14 @@
+
+.DS_Store
+**/.DS_Store
+
+# Personal publishing assets — stored in architect-notes-private repo
+**/MEDIUM-DRAFT.md
+**/MEDIUM-PASTE.html
+**/LINKEDIN-POST.md
+diagrams/cover-paper-*.png
+scripts/
+run-from-terminal.sh
+
+# Compiled Java classes
+**/*.class
