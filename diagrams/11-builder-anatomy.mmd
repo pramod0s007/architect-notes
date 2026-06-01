@@ -1,0 +1,24 @@
+flowchart LR
+    subgraph BUILDER["HttpRequest.Builder (mutable scratchpad)"]
+        B1["method = POST"]
+        B2["url = api/payments"]
+        B3["timeoutSeconds = 30"]
+        B4["headers = {...}"]
+        B5["retryPolicy = EXPONENTIAL"]
+    end
+
+    BUILD["build()\nvalidate all fields\ncheck invariants\nthrow if invalid"]
+
+    subgraph RESULT["HttpRequest (immutable)"]
+        R1["final method"]
+        R2["final url"]
+        R3["final timeout"]
+        R4["final headers"]
+        R5["final retry"]
+    end
+
+    BUILDER --> BUILD --> RESULT
+
+    style BUILDER fill:#fff3cd,stroke:#ffc107
+    style BUILD fill:#ffa94d,color:#fff
+    style RESULT fill:#d4edda,stroke:#51cf66

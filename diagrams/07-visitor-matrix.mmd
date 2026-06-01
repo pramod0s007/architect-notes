@@ -1,0 +1,23 @@
+flowchart LR
+    subgraph BEFORE["❌ Before — Scattered Methods"]
+        M1["validatePdf()"]
+        M2["validateWord()"]
+        M3["validateHtml()"]
+        M4["extractPdfMeta()"]
+        M5["extractWordMeta()"]
+        M6["indexPdfText()"]
+    end
+
+    subgraph AFTER["✅ After — Visitor Pattern"]
+        V1["ValidationVisitor\n+ visit(Pdf)\n+ visit(Word)\n+ visit(Html)"]
+        V2["MetadataVisitor\n+ visit(Pdf)\n+ visit(Word)\n+ visit(Html)"]
+        V3["IndexingVisitor\n+ visit(Pdf)\n+ visit(Word)\n+ visit(Html)"]
+    end
+
+    BEFORE -->|"New operation\n= edit 3 classes"| PROBLEM["❌ Matrix grows\nin 2 directions"]
+    AFTER -->|"New operation\n= 1 new Visitor"| SOLUTION["✅ One class\nper operation"]
+
+    style BEFORE fill:#fff0f0,stroke:#ff6b6b
+    style AFTER fill:#f0fff4,stroke:#51cf66
+    style PROBLEM fill:#ff6b6b,color:#fff
+    style SOLUTION fill:#51cf66,color:#fff

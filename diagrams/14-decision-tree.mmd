@@ -1,0 +1,46 @@
+flowchart TD
+    START(["🚀 Design Problem"]) --> P0{Is there\nmeasurable pressure?}
+    P0 -->|No| WAIT["⏳ Wait\nDon't add patterns yet"]
+    P0 -->|Yes| P1{What is\nchanging?}
+
+    P1 -->|Only data/config| B1["📊 Bucket 1\nData Variation"]
+    P1 -->|Object/Provider| B2["🔄 Bucket 2\nObject Variation"]
+    P1 -->|Algorithm itself| B3["⚡ Bucket 3\nBehavior Variation"]
+    P1 -->|Business rules| B4["📋 Bucket 4\nRules Variation"]
+
+    B1 --> S1["✅ Parameters\nTemplates\nConfiguration"]
+
+    B2 --> P2{Creation\nvaries too?}
+    P2 -->|Yes| S2a["✅ Interface +\nFactory Pattern"]
+    P2 -->|No| S2b["✅ Interface +\nComposition/DI"]
+
+    B3 --> P3{Operations need\nto travel / undo?}
+    P3 -->|Yes| S3a["✅ Command\nPattern"]
+    P3 -->|No| P4{Behavior depends\non current state?}
+    P4 -->|Yes| S4["✅ State\nPattern"]
+    P4 -->|No| S3b["✅ Strategy\nPattern"]
+
+    B4 --> P5{Rules configurable\nat runtime?}
+    P5 -->|Yes| S5a["✅ Rule Engine\n(Drools / Easy Rules)"]
+    P5 -->|No| S5b["✅ Specification\nPattern"]
+
+    style START fill:#339af0,color:#fff
+    style WAIT fill:#868e96,color:#fff
+    style P0 fill:#ffa94d,color:#fff
+    style P1 fill:#ffa94d,color:#fff
+    style P2 fill:#ffa94d,color:#fff
+    style P3 fill:#ffa94d,color:#fff
+    style P4 fill:#ffa94d,color:#fff
+    style P5 fill:#ffa94d,color:#fff
+    style B1 fill:#51cf66,color:#fff
+    style B2 fill:#51cf66,color:#fff
+    style B3 fill:#51cf66,color:#fff
+    style B4 fill:#51cf66,color:#fff
+    style S1 fill:#94d82d,color:#fff
+    style S2a fill:#94d82d,color:#fff
+    style S2b fill:#94d82d,color:#fff
+    style S3a fill:#94d82d,color:#fff
+    style S3b fill:#94d82d,color:#fff
+    style S4 fill:#94d82d,color:#fff
+    style S5a fill:#94d82d,color:#fff
+    style S5b fill:#94d82d,color:#fff

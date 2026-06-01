@@ -1,0 +1,26 @@
+flowchart LR
+    REQ(["📥 HTTP Request"]) --> H1
+
+    subgraph PIPELINE["Request Pipeline — Chain of Responsibility"]
+        H1["🔒 IP Blocklist\nHandler"] -->|pass| H2
+        H1 -->|block| REJECT1["❌ 403 Forbidden"]
+        H2["🔑 Authentication\nHandler"] -->|pass| H3
+        H2 -->|reject| REJECT2["❌ 401 Unauthorized"]
+        H3["🛡️ Authorization\nHandler"] -->|pass| H4
+        H3 -->|deny| REJECT3["❌ 403 Forbidden"]
+        H4["⏱️ Rate Limit\nHandler"] -->|pass| H5
+        H4 -->|exceeded| REJECT4["❌ 429 Too Many Requests"]
+        H5["✅ Validation\nHandler"] -->|pass| H6
+        H5 -->|invalid| REJECT5["❌ 400 Bad Request"]
+        H6["💼 Business Logic\nHandler"]
+    end
+
+    H6 --> RESP(["📤 Response"])
+
+    style REQ fill:#339af0,color:#fff
+    style RESP fill:#51cf66,color:#fff
+    style REJECT1 fill:#ff6b6b,color:#fff
+    style REJECT2 fill:#ff6b6b,color:#fff
+    style REJECT3 fill:#ff6b6b,color:#fff
+    style REJECT4 fill:#ff6b6b,color:#fff
+    style REJECT5 fill:#ff6b6b,color:#fff

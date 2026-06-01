@@ -1,0 +1,13 @@
+flowchart TD
+    A["Growing Conditional"] --> B{Why growing?}
+    B -->|Algorithm changes| C["Behavior Variation\n→ Strategy Pattern"]
+    B -->|State changes behavior| D["State Explosion\n→ State Pattern"]
+    B -->|Rules combine| E["Rules Variation\n→ Specification Pattern"]
+    B -->|Stable, 2 branches| F["Leave it alone\nif-else is correct"]
+
+    style A fill:#ff6b6b,color:#fff
+    style B fill:#ffa94d,color:#fff
+    style C fill:#51cf66,color:#fff
+    style D fill:#51cf66,color:#fff
+    style E fill:#51cf66,color:#fff
+    style F fill:#868e96,color:#fff

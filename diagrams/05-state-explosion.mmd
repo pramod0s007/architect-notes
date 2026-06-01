@@ -1,0 +1,25 @@
+stateDiagram-v2
+    [*] --> IDLE
+
+    IDLE --> RUNNING : start()
+    RUNNING --> PAUSED : pause()
+    RUNNING --> IDLE : stop()
+    PAUSED --> RUNNING : resume() / start()
+    PAUSED --> IDLE : stop()
+    RUNNING --> SUSPENDED : sync()
+    SUSPENDED --> RUNNING : syncComplete()
+    SUSPENDED --> IDLE : stop()
+    RUNNING --> ERROR_RECOVERY : errorDetected()
+    ERROR_RECOVERY --> IDLE : reset()
+
+    note right of IDLE
+        Each state owns its
+        valid transitions.
+        Invalid = IllegalStateException
+    end note
+
+    note right of ERROR_RECOVERY
+        6 states × 6 operations
+        = 36 conditional branches
+        WITHOUT State Pattern
+    end note

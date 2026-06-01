@@ -1,0 +1,26 @@
+flowchart TD
+    subgraph BEFORE["❌ Creation scattered — 6 callers"]
+        C1["OrderService\nnew EmailNotifier()"]
+        C2["AlertService\nnew EmailNotifier()"]
+        C3["BillingService\nnew EmailNotifier()"]
+        C4["SupportService\n❌ forgot to update"]
+        C5["ReportService\n❌ forgot to update"]
+        C6["AuditService\n❌ forgot to update"]
+    end
+
+    subgraph AFTER["✅ Factory — one update point"]
+        F["NotificationFactory\n.create(channel)\n→ Email / SMS / Push / WhatsApp"]
+        A1["OrderService"] --> F
+        A2["AlertService"] --> F
+        A3["BillingService"] --> F
+        A4["SupportService"] --> F
+        A5["ReportService"] --> F
+        A6["AuditService"] --> F
+    end
+
+    style BEFORE fill:#fff0f0,stroke:#ff6b6b
+    style AFTER fill:#f0fff4,stroke:#51cf66
+    style C4 fill:#ff6b6b,color:#fff
+    style C5 fill:#ff6b6b,color:#fff
+    style C6 fill:#ff6b6b,color:#fff
+    style F fill:#51cf66,color:#fff

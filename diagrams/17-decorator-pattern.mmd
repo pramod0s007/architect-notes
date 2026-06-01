@@ -1,0 +1,17 @@
+flowchart LR
+    CLIENT["Client\ncalls send()"] --> LOG
+
+    subgraph CHAIN["Decorator Chain — outermost runs first"]
+        LOG["LoggedMessageSender\n1. log before\n2. delegate →\n3. log after"]
+        ENC["EncryptedMessageSender\n1. encrypt\n2. delegate →"]
+        COMP["CompressedMessageSender\n1. compress\n2. delegate →"]
+        BASE["TextMessageSender\n(real object)\nnetwork.transmit()"]
+
+        LOG --> ENC --> COMP --> BASE
+    end
+
+    style CLIENT fill:#339af0,color:#fff
+    style BASE fill:#51cf66,color:#fff
+    style LOG fill:#ffa94d,color:#fff
+    style ENC fill:#ffa94d,color:#fff
+    style COMP fill:#ffa94d,color:#fff

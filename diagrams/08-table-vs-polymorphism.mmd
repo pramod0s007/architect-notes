@@ -1,0 +1,10 @@
+flowchart TD
+    Q{Behavior Matrix}
+    Q -->|Small ≤20 pairs\nStable\nData-driven| T["Lookup Table\nMap &lt;Key, Action&gt;\n✅ Simple, fast, configurable"]
+    Q -->|Open type set\nCompiler safety needed\nMany operations| P["Polymorphism / Visitor\ninterface + accept()\n✅ Type-safe, extensible"]
+    Q -->|Growing in 2 directions\nTypes AND operations| R["Reconsider\ndomain model"]
+
+    style Q fill:#ffa94d,color:#fff
+    style T fill:#51cf66,color:#fff
+    style P fill:#339af0,color:#fff
+    style R fill:#ff6b6b,color:#fff

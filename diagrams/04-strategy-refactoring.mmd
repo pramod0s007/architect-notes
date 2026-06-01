@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph BEFORE["❌ Before — Behavior Variation Unaddressed"]
+        direction TB
+        C1["Encryptor.encrypt()"] --> IF1{"if AES\nif DES\nif BLOWFISH\nif CHACHA20\nif RSA\n...growing"}
+    end
+
+    subgraph AFTER["✅ After — Strategy Pattern"]
+        direction TB
+        C2["Encryptor"] --> I1["«interface»\nEncryptionStrategy\n+ encrypt(text)"]
+        I1 --> AES["AesEncryption"]
+        I1 --> DES["DesEncryption"]
+        I1 --> CC["ChaCha20Encryption"]
+        I1 --> RSA["RsaEncryption"]
+        NOTE["New algorithm =\nNew class only\nEncryptor unchanged"] -.- C2
+    end
+
+    BEFORE -->|"Pressure:\nBehavior Variation"| AFTER
+
+    style BEFORE fill:#fff0f0,stroke:#ff6b6b
+    style AFTER fill:#f0fff4,stroke:#51cf66
+    style NOTE fill:#fff3cd,stroke:#ffc107

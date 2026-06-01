@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant C as Client
+    participant I as CommandInvoker
+    participant D as DepositCommand
+    participant W as WithdrawCommand
+    participant A as BankAccount
+
+    C->>I: run(DepositCommand(account, 100))
+    I->>D: execute()
+    D->>A: credit(100)
+    I->>I: history.push(DepositCommand)
+
+    C->>I: run(WithdrawCommand(account, 50))
+    I->>W: execute()
+    W->>A: debit(50)
+    I->>I: history.push(WithdrawCommand)
+
+    Note over C,A: Balance: 50
+
+    C->>I: undoLast()
+    I->>W: undo()
+    W->>A: credit(50)
+    I->>I: history.pop()
+
+    Note over C,A: Balance: 100 (restored)
+
+    Note over I: Also supports: schedule, replay, audit

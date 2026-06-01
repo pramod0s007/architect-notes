@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant C as Client
+    participant OS as OrderService (Subject)
+    participant E as EmailObserver
+    participant W as WarehouseObserver
+    participant L as LoyaltyObserver
+    participant K as KafkaObserver
+
+    Note over OS: observers list = [E, W, L, K]
+
+    C->>OS: placeOrder(order)
+    OS->>OS: orderRepository.save(order)
+    OS->>OS: publish(OrderPlacedEvent)
+
+    OS->>E: onOrderPlaced(event)
+    E->>E: emailService.sendConfirmation()
+
+    OS->>W: onOrderPlaced(event)
+    W->>W: warehouseService.notifyPacking()
+
+    OS->>L: onOrderPlaced(event)
+    L->>L: loyaltyService.awardPoints()
+
+    OS->>K: onOrderPlaced(event)
+    K->>K: kafkaTemplate.send("order-placed")
+
+    Note over OS: Adding new observer = 1 class + 1 registerObserver()<br/>OrderService never changes

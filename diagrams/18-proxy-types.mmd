@@ -1,0 +1,13 @@
+flowchart TD
+    PROXY["Proxy Pattern\nSame interface as real object\nCaller cannot tell the difference"]
+
+    PROXY --> V["Virtual Proxy\nDefer expensive creation\nJPA lazy loading\n@Lazy beans"]
+    PROXY --> R["Remote Proxy\nReal object on different machine\ngRPC stubs\nRPC clients"]
+    PROXY --> P["Protection Proxy\nAccess control\nSpring @PreAuthorize\nRow-level security"]
+    PROXY --> C["Caching Proxy\nTransparent memoization\n@Cacheable\nRedis wrappers"]
+
+    style PROXY fill:#339af0,color:#fff
+    style V fill:#51cf66,color:#fff
+    style R fill:#ffa94d,color:#fff
+    style P fill:#cc5de8,color:#fff
+    style C fill:#f06595,color:#fff

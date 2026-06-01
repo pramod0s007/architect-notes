@@ -1,0 +1,29 @@
+flowchart TD
+    ROOT["🎯 Eligibility Check\nisSatisfiedBy(customer)"]
+
+    ROOT --> AND1["AND"]
+    AND1 --> AGE["MinAgeSpec\nage >= 18"]
+    AND1 --> AND2["AND"]
+    AND2 --> INC["MinIncomeSpec\nincome >= 50000"]
+    AND2 --> AND3["AND"]
+    AND3 --> CRD["MinCreditSpec\ncredit >= 650"]
+    AND3 --> NOT1["NOT"]
+    NOT1 --> BLK["BlacklistSpec\nisBlacklisted()"]
+
+    ROOT2["🎯 Premium Eligibility"] --> OR1["OR"]
+    OR1 --> STANDARD["Standard Eligibility\n(above tree)"]
+    OR1 --> PREM["PremiumOverrideSpec\nisPremium() AND hasPaid()"]
+
+    style ROOT fill:#339af0,color:#fff
+    style ROOT2 fill:#339af0,color:#fff
+    style AND1 fill:#ffa94d,color:#fff
+    style AND2 fill:#ffa94d,color:#fff
+    style AND3 fill:#ffa94d,color:#fff
+    style OR1 fill:#cc5de8,color:#fff
+    style NOT1 fill:#ff6b6b,color:#fff
+    style AGE fill:#51cf66,color:#fff
+    style INC fill:#51cf66,color:#fff
+    style CRD fill:#51cf66,color:#fff
+    style BLK fill:#51cf66,color:#fff
+    style STANDARD fill:#94d82d,color:#fff
+    style PREM fill:#94d82d,color:#fff

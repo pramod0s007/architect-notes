@@ -1,0 +1,23 @@
+flowchart LR
+    YOUR["Your System\nObjectStorage interface\n.upload(key, bytes)\n.download(key)\n.delete(key)"]
+
+    subgraph ADAPTERS["Adapters — translation layer"]
+        A1["S3StorageAdapter\n.upload → putObject()\n.download → getObject()"]
+        A2["AzureBlobAdapter\n.upload → uploadBlob()\n.download → downloadBlob()"]
+        A3["GCSStorageAdapter\n.upload → create()\n.download → readAllBytes()"]
+    end
+
+    subgraph SDKS["External SDKs — cannot modify"]
+        S1["AWS S3 SDK\nputObject(bucket,key,body)\ngetObject(bucket,key)"]
+        S2["Azure Blob SDK\nuploadBlob(container,name,data)\ndownloadBlob(container,name)"]
+        S3["GCS SDK\ncreate(blobInfo,bytes)\nreadAllBytes(blobId)"]
+    end
+
+    YOUR --> A1 --> S1
+    YOUR --> A2 --> S2
+    YOUR --> A3 --> S3
+
+    style YOUR fill:#339af0,color:#fff
+    style A1 fill:#ffa94d,color:#fff
+    style A2 fill:#ffa94d,color:#fff
+    style A3 fill:#ffa94d,color:#fff
