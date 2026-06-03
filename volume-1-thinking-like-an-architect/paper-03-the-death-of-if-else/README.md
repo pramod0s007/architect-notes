@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[The Death of if-else](https://medium.com/@replytopramods.aws/the-death-of-if-else-8044410a1ef8)
 
 ---
 ## What This Paper Is About
