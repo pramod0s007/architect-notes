@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[State Pattern Through a StopWatch](https://medium.com/p/1d44c670fb32)
 
 ---
 ## What This Paper Is About
