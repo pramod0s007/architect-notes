@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Visitor Pattern Without UML](https://medium.com/@replytopramods.aws/visitor-pattern-without-uml-0ec8915fa2a5)
 
 ---
 ## What This Paper Is About
