@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Lookup Tables vs Polymorphism](https://medium.com/@replytopramods.aws/lookup-tables-vs-polymorphism-51befea88a26)
 
 ---
 ## What This Paper Is About
