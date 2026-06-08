@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Specification Pattern](https://medium.com/@replytopramods.aws/specification-pattern-5bbe84d9c56e)
 
 ---
 ## What This Paper Is About
