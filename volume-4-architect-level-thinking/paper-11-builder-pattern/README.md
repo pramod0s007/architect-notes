@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Builder Pattern](https://medium.com/@replytopramods.aws/builder-pattern-747bf70e4b0e)
 
 ---
 ## What This Paper Is About
