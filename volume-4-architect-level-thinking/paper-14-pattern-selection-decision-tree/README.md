@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Pattern Selection Decision Tree](https://medium.com/@replytopramods.aws/pattern-selection-decision-tree-f640d5246fd4)
 
 ---
 ## What This Paper Is About
