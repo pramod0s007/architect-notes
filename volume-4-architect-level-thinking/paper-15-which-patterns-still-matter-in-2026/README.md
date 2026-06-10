@@ -6,9 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
-
-This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
+[Which Patterns Still Matter in 2026](https://medium.com/@replytopramods.aws/which-patterns-still-matter-in-2026-89d3bc154797)
 
 ---
 ## What This Paper Is About
