@@ -91,7 +91,7 @@ The principles that make code changeable, testable, and maintainable under real 
 | Paper | Title | Examples |
 |-------|-------|---------|
 | [20](volume-6-clean-code-principles/paper-20-single-responsibility-principle/) | [Single Responsibility Principle](https://medium.com/@replytopramods.aws/single-responsibility-principle-24c1b8550a4f) | order processor, user account, report generator |
-| [21](volume-6-clean-code-principles/paper-21-open-closed-principle/) | Open/Closed Principle | fee calculator, payment rules |
+| [21](volume-6-clean-code-principles/paper-21-open-closed-principle/) | [Open/Closed Principle](https://medium.com/@replytopramods.aws/open-closed-principle-7d7886947790) | fee calculator, payment rules |
 | [22](volume-6-clean-code-principles/paper-22-liskov-substitution-principle/) | Liskov Substitution Principle | document hierarchy, shape composition |
 | [23](volume-6-clean-code-principles/paper-23-interface-segregation-principle/) | Interface Segregation Principle | notification channels, media player |
 | [24](volume-6-clean-code-principles/paper-24-dependency-inversion-principle/) | Dependency Inversion Principle | order service, notification service, report service |

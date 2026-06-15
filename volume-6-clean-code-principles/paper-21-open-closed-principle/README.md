@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Open/Closed Principle — Extend Without Breaking](https://medium.com/@replytopramods.aws/open-closed-principle-7d7886947790)
 
 ---
 
