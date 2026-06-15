@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Proxy Pattern — Controlling Access to Objects](https://medium.com/@replytopramods.aws/proxy-pattern-controlling-access-to-objects-ad4888b6b592)
 
 This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
 

@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Observer Pattern — The Foundation of Event-Driven Systems](https://medium.com/@replytopramods.aws/observer-pattern-the-foundation-of-event-driven-systems-fd6c38153b34)
 
 This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
 

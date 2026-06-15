@@ -73,17 +73,17 @@ How objects are built, and meta-level pattern judgment.
 | [12](volume-4-architect-level-thinking/paper-12-factory-pattern/) | Factory Pattern | notification factory, storage factory |
 | [13](volume-4-architect-level-thinking/paper-13-when-patterns-become-anti-patterns/) | When Patterns Become Anti-Patterns | — |
 | [14](volume-4-architect-level-thinking/paper-14-pattern-selection-decision-tree/) | Pattern Selection Decision Tree | — |
-| [15](volume-4-architect-level-thinking/paper-15-which-patterns-still-matter-in-2026/) | Which Patterns Still Matter in 2026? | — |
+| [15](volume-4-architect-level-thinking/paper-15-which-patterns-still-matter-in-2026/) | [Which Patterns Still Matter in 2026?](https://medium.com/@replytopramods.aws/which-patterns-still-matter-in-2026-89d3bc154797) | — |
 
 ### [Volume 5 — Structural Patterns](volume-5-structural-patterns/)
 Observer, Decorator, Proxy, Adapter — the structural foundation of modern systems.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [16](volume-5-structural-patterns/paper-16-observer-pattern/) | Observer Pattern | order events, stock price monitor |
-| [17](volume-5-structural-patterns/paper-17-decorator-pattern/) | Decorator Pattern | message sender, HTTP client |
-| [18](volume-5-structural-patterns/paper-18-proxy-pattern/) | Proxy Pattern | caching repository, lazy loading |
-| [19](volume-5-structural-patterns/paper-19-adapter-pattern/) | Adapter Pattern | storage adapter, payment adapter |
+| [16](volume-5-structural-patterns/paper-16-observer-pattern/) | [Observer Pattern](https://medium.com/@replytopramods.aws/observer-pattern-the-foundation-of-event-driven-systems-fd6c38153b34) | order events, stock price monitor |
+| [17](volume-5-structural-patterns/paper-17-decorator-pattern/) | [Decorator Pattern](https://medium.com/@replytopramods.aws/decorator-pattern-adding-behavior-without-subclassing-b12b3550ecdf) | message sender, HTTP client |
+| [18](volume-5-structural-patterns/paper-18-proxy-pattern/) | [Proxy Pattern](https://medium.com/@replytopramods.aws/proxy-pattern-controlling-access-to-objects-ad4888b6b592) | caching repository, lazy loading |
+| [19](volume-5-structural-patterns/paper-19-adapter-pattern/) | [Adapter Pattern](https://medium.com/@replytopramods.aws/adapter-pattern-making-incompatible-interfaces-work-together-300d6a722714) | storage adapter, payment adapter |
 
 ### [Volume 6 — Clean Code & SOLID Principles](volume-6-clean-code-principles/)
 The principles that make code changeable, testable, and maintainable under real organizational pressure.

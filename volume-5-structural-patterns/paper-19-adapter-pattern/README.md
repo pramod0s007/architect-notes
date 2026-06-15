@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Adapter Pattern — Making Incompatible Interfaces Work Together](https://medium.com/@replytopramods.aws/adapter-pattern-making-incompatible-interfaces-work-together-300d6a722714)
 
 This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
 

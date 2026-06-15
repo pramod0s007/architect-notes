@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Decorator Pattern — Adding Behavior Without Subclassing](https://medium.com/@replytopramods.aws/decorator-pattern-adding-behavior-without-subclassing-b12b3550ecdf)
 
 This repository focuses on runnable code examples. The white paper covers theory, war stories, and architectural reasoning in depth.
 
