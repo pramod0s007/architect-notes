@@ -34,7 +34,7 @@ Patterns are not the destination. They are the result of good architectural reas
 
 ---
 
-## Series — 19 Papers, 28 Runnable Examples
+## Series — 27 Papers, 56 Runnable Examples
 
 ### [Volume 1 — Thinking Like an Architect](volume-1-thinking-like-an-architect/)
 Foundation papers. Read these before anything else.
@@ -84,6 +84,20 @@ Observer, Decorator, Proxy, Adapter — the structural foundation of modern syst
 | [17](volume-5-structural-patterns/paper-17-decorator-pattern/) | Decorator Pattern | message sender, HTTP client |
 | [18](volume-5-structural-patterns/paper-18-proxy-pattern/) | Proxy Pattern | caching repository, lazy loading |
 | [19](volume-5-structural-patterns/paper-19-adapter-pattern/) | Adapter Pattern | storage adapter, payment adapter |
+
+### [Volume 6 — Clean Code & SOLID Principles](volume-6-clean-code-principles/)
+The principles that make code changeable, testable, and maintainable under real organizational pressure.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [20](volume-6-clean-code-principles/paper-20-single-responsibility-principle/) | [Single Responsibility Principle](https://medium.com/@replytopramods.aws/single-responsibility-principle-24c1b8550a4f) | order processor, user account, report generator |
+| [21](volume-6-clean-code-principles/paper-21-open-closed-principle/) | Open/Closed Principle | fee calculator, payment rules |
+| [22](volume-6-clean-code-principles/paper-22-liskov-substitution-principle/) | Liskov Substitution Principle | document hierarchy, shape composition |
+| [23](volume-6-clean-code-principles/paper-23-interface-segregation-principle/) | Interface Segregation Principle | notification channels, media player |
+| [24](volume-6-clean-code-principles/paper-24-dependency-inversion-principle/) | Dependency Inversion Principle | order service, notification service, report service |
+| [25](volume-6-clean-code-principles/paper-25-dry-dont-repeat-yourself/) | DRY — Don't Repeat Yourself | discount calculator, address validator |
+| [26](volume-6-clean-code-principles/paper-26-kiss-keep-it-simple/) | KISS — Keep It Simple | product search, config loader, HTTP handler |
+| [27](volume-6-clean-code-principles/paper-27-yagni-you-arent-gonna-need-it/) | YAGNI — You Aren't Gonna Need It | discount evolution, event publisher, user repository |
 
 ---
 

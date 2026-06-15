@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Single Responsibility Principle — One Reason to Change](https://medium.com/@replytopramods.aws/single-responsibility-principle-24c1b8550a4f)
 
 ---
 
