@@ -1,6 +1,6 @@
 public class OrderAuditLogger {
-    public void log(Order order) {
+    public void log(Order order, OrderEvent event) {
         // Legal/Compliance team owns this class exclusively
-        System.out.println("AUDIT [COMPLIANCE]: order=" + order.getId() + " status=PROCESSED");
+        System.out.println("AUDIT [COMPLIANCE]: order=" + order.getId() + " event=" + event);
     }
 }

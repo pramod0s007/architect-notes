@@ -21,6 +21,6 @@ public class OrderProcessor {
         paymentProcessor.charge(order);
         confirmationService.sendConfirmation(order);
         inventoryUpdater.updateInventory(order);
-        auditLogger.log(order);
+        auditLogger.log(order, OrderEvent.PROCESSED);
     }
 }
