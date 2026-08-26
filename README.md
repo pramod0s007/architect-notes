@@ -92,12 +92,12 @@ The principles that make code changeable, testable, and maintainable under real 
 |-------|-------|---------|
 | [20](volume-6-clean-code-principles/paper-20-single-responsibility-principle/) | [Single Responsibility Principle](https://medium.com/@replytopramods.aws/single-responsibility-principle-24c1b8550a4f) | order processor, user account, report generator |
 | [21](volume-6-clean-code-principles/paper-21-open-closed-principle/) | [Open/Closed Principle](https://medium.com/@replytopramods.aws/open-closed-principle-7d7886947790) | fee calculator, payment rules |
-| [22](volume-6-clean-code-principles/paper-22-liskov-substitution-principle/) | Liskov Substitution Principle | document hierarchy, shape composition |
-| [23](volume-6-clean-code-principles/paper-23-interface-segregation-principle/) | Interface Segregation Principle | notification channels, media player |
-| [24](volume-6-clean-code-principles/paper-24-dependency-inversion-principle/) | Dependency Inversion Principle | order service, notification service, report service |
-| [25](volume-6-clean-code-principles/paper-25-dry-dont-repeat-yourself/) | DRY — Don't Repeat Yourself | discount calculator, address validator |
-| [26](volume-6-clean-code-principles/paper-26-kiss-keep-it-simple/) | KISS — Keep It Simple | product search, config loader, HTTP handler |
-| [27](volume-6-clean-code-principles/paper-27-yagni-you-arent-gonna-need-it/) | YAGNI — You Aren't Gonna Need It | discount evolution, event publisher, user repository |
+| [22](volume-6-clean-code-principles/paper-22-liskov-substitution-principle/) | [Liskov Substitution Principle](https://medium.com/@replytopramods.aws/liskov-substitution-principle-012dae842c65) | document hierarchy, shape composition |
+| [23](volume-6-clean-code-principles/paper-23-interface-segregation-principle/) | [Interface Segregation Principle](https://medium.com/@replytopramods.aws/interface-segregation-principle-576d43850bb4) | notification channels, media player |
+| [24](volume-6-clean-code-principles/paper-24-dependency-inversion-principle/) | [Dependency Inversion Principle](https://medium.com/@replytopramods.aws/dependency-inversion-principle-5265cc4e5ae6) | order service, notification service, report service |
+| [25](volume-6-clean-code-principles/paper-25-dry-dont-repeat-yourself/) | [DRY — Don't Repeat Yourself](https://medium.com/@replytopramods.aws/dry-dont-repeat-yourself-2beda5a9c810) | discount calculator, address validator |
+| [26](volume-6-clean-code-principles/paper-26-kiss-keep-it-simple/) | [KISS — Keep It Simple](https://medium.com/@replytopramods.aws/kiss-keep-it-simple-b562f17ec689) | product search, config loader, HTTP handler |
+| [27](volume-6-clean-code-principles/paper-27-yagni-you-arent-gonna-need-it/) | [YAGNI — You Aren't Gonna Need It](https://medium.com/@replytopramods.aws/yagni-you-arent-gonna-need-it-e80785e3ba82) | discount evolution, event publisher, user repository |
 
 ---
 
