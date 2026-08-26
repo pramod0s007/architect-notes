@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Dependency Inversion Principle — Depend on Abstractions, Not Concretions](https://medium.com/@replytopramods.aws/dependency-inversion-principle-5265cc4e5ae6)
 
 ---
 

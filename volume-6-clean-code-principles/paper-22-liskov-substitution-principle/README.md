@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Liskov Substitution Principle — Subclasses Must Honor the Contract](https://medium.com/@replytopramods.aws/liskov-substitution-principle-012dae842c65)
 
 ---
 

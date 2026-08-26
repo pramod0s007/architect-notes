@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Interface Segregation Principle — Clients Should Not Depend on Methods They Don't Use](https://medium.com/@replytopramods.aws/interface-segregation-principle-576d43850bb4)
 
 ---
 

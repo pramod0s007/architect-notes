@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[KISS — Keep It Simple](https://medium.com/@replytopramods.aws/kiss-keep-it-simple-b562f17ec689)
 
 ---
 

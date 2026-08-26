@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[DRY — Don't Repeat Yourself](https://medium.com/@replytopramods.aws/dry-dont-repeat-yourself-2beda5a9c810)
 
 ---
 

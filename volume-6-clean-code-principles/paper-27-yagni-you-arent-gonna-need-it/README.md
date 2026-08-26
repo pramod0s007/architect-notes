@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[YAGNI — You Aren't Gonna Need It](https://medium.com/@replytopramods.aws/yagni-you-arent-gonna-need-it-e80785e3ba82)
 
 ---
 
