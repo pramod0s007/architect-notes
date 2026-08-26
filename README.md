@@ -99,6 +99,15 @@ The principles that make code changeable, testable, and maintainable under real 
 | [26](volume-6-clean-code-principles/paper-26-kiss-keep-it-simple/) | [KISS — Keep It Simple](https://medium.com/@replytopramods.aws/kiss-keep-it-simple-b562f17ec689) | product search, config loader, HTTP handler |
 | [27](volume-6-clean-code-principles/paper-27-yagni-you-arent-gonna-need-it/) | [YAGNI — You Aren't Gonna Need It](https://medium.com/@replytopramods.aws/yagni-you-arent-gonna-need-it-e80785e3ba82) | discount evolution, event publisher, user repository |
 
+### [Volume 7 — Design Principles](volume-7-design-principles/)
+The OO fundamentals underneath every named pattern — how much a module should hide, how much it should know about its neighbors, and what to build instead of a subclass.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [28](volume-7-design-principles/paper-28-abstraction/) | Abstraction — Choosing the Right Level | payment gateway (boolean vs. SettlementStatus, capability split) |
+| [29](volume-7-design-principles/paper-29-coupling/) | Coupling — Hidden Dependencies and How They Spread | pricing engine, invoice generator, shipping quote, shared config |
+| [30](volume-7-design-principles/paper-30-composition-over-inheritance/) | Composition Over Inheritance | report generator (format x encryption x compression x signing), fleet vehicle capabilities |
+
 ---
 
 ## Repository Structure
