@@ -108,6 +108,19 @@ The OO fundamentals underneath every named pattern — how much a module should 
 | [29](volume-7-design-principles/paper-29-coupling/) | Coupling — Hidden Dependencies and How They Spread | pricing engine, invoice generator, shipping quote, shared config |
 | [30](volume-7-design-principles/paper-30-composition-over-inheritance/) | Composition Over Inheritance | report generator (format x encryption x compression x signing), fleet vehicle capabilities |
 
+### [Volume 8 — Concurrency Patterns](volume-8-concurrency-patterns/)
+Real bugs that only appear under concurrent load — reproduced on purpose, then fixed with a proof for why the fix holds.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [31](volume-8-concurrency-patterns/paper-31-deadlock/) | Deadlock — The Bug That Freezes Production | funds transfer (reproducible circular wait, lock ordering fix, tryLock+backoff fix) |
+| [32](volume-8-concurrency-patterns/paper-32-reactor-pattern/) | Reactor Pattern — Non-Blocking I/O Done Right | thread-per-connection cost measurement, single-threaded Selector-based reactor |
+| 33 | Sync Primitives — Locks, Semaphores, and When They Lie to You | *in progress* |
+| 34 | Actor Pattern — Concurrency Without Shared State | *in progress* |
+| 35 | Task vs Data Parallelism — Decision Tree | *in progress* |
+| 36 | I/O Parallelism — Thread-per-Request vs Event Loop | *in progress* |
+| 37 | Cancellation & Graceful Shutdown | *in progress* |
+
 ---
 
 ## Repository Structure
