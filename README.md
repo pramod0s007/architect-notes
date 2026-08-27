@@ -115,11 +115,11 @@ Real bugs that only appear under concurrent load — reproduced on purpose, then
 |-------|-------|---------|
 | [31](volume-8-concurrency-patterns/paper-31-deadlock/) | Deadlock — The Bug That Freezes Production | funds transfer (reproducible circular wait, lock ordering fix, tryLock+backoff fix) |
 | [32](volume-8-concurrency-patterns/paper-32-reactor-pattern/) | Reactor Pattern — Non-Blocking I/O Done Right | thread-per-connection cost measurement, single-threaded Selector-based reactor |
-| 33 | Sync Primitives — Locks, Semaphores, and When They Lie to You | *in progress* |
-| 34 | Actor Pattern — Concurrency Without Shared State | *in progress* |
-| 35 | Task vs Data Parallelism — Decision Tree | *in progress* |
-| 36 | I/O Parallelism — Thread-per-Request vs Event Loop | *in progress* |
-| 37 | Cancellation & Graceful Shutdown | *in progress* |
+| [33](volume-8-concurrency-patterns/paper-33-sync-primitives/) | Sync Primitives — Locks, Semaphores, and When They Lie to You | request-in-flight counter (plain vs. volatile vs. synchronized vs. AtomicInteger), per-field-lock invariant bug |
+| [34](volume-8-concurrency-patterns/paper-34-actor-pattern/) | Actor Pattern — Concurrency Without Shared State | same Paper 31 transfer rebuilt as actors, single-threaded-executor self-deadlock |
+| [35](volume-8-concurrency-patterns/paper-35-task-vs-data-parallelism/) | Task vs Data Parallelism — Decision Tree | image pipeline: wrong data-parallelization (silently wrong output), correct data parallelism (1000 images), correct task parallelism (4-stage pipeline) |
+| [36](volume-8-concurrency-patterns/paper-36-io-parallelism/) | I/O Parallelism — Thread-per-Request vs Event Loop | downstream fan-out pool sizing (pool 8 vs 64, measured ~7x), async alternative (4 threads, 400 in-flight calls) |
+| [37](volume-8-concurrency-patterns/paper-37-cancellation-and-graceful-shutdown/) | Cancellation & Graceful Shutdown | un-cancellable worker (measured), cooperative fix, interrupt-hiding demonstration |
 
 ---
 
