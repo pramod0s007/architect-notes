@@ -1,0 +1,2 @@
+class InventoryBackendError extends Exception {
+}

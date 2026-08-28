@@ -1,0 +1,2 @@
+class ShippingBackendError extends Exception {
+}
