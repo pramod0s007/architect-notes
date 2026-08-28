@@ -1,0 +1,67 @@
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class Main {
+    private static final int SEATS = 100;
+    private static final int REQUESTS = 200;
+
+    public static void main(String[] args) throws InterruptedException {
+        runPessimistic();
+        runOptimistic();
+    }
+
+    private static void runPessimistic() throws InterruptedException {
+        PessimisticTicketInventory inventory = new PessimisticTicketInventory(SEATS);
+        AtomicInteger successes = new AtomicInteger(0);
+
+        CountDownLatch startGate = new CountDownLatch(1);
+        CountDownLatch doneGate = new CountDownLatch(REQUESTS);
+        long start = System.nanoTime();
+        for (int i = 0; i < REQUESTS; i++) {
+            Thread t = new Thread(() -> {
+                await(startGate);
+                if (inventory.bookSeat()) successes.incrementAndGet();
+                doneGate.countDown();
+            });
+            t.start();
+        }
+        startGate.countDown();
+        doneGate.await();
+        long elapsedMs = (System.nanoTime() - start) / 1_000_000;
+
+        System.out.println("Pessimistic (synchronized): successes=" + successes.get()
+                + ", seatsRemaining=" + inventory.seatsAvailable() + ", elapsed=" + elapsedMs + "ms");
+    }
+
+    private static void runOptimistic() throws InterruptedException {
+        OptimisticTicketInventory inventory = new OptimisticTicketInventory(SEATS);
+        AtomicInteger successes = new AtomicInteger(0);
+
+        CountDownLatch startGate = new CountDownLatch(1);
+        CountDownLatch doneGate = new CountDownLatch(REQUESTS);
+        long start = System.nanoTime();
+        for (int i = 0; i < REQUESTS; i++) {
+            Thread t = new Thread(() -> {
+                await(startGate);
+                if (inventory.bookSeat()) successes.incrementAndGet();
+                doneGate.countDown();
+            });
+            t.start();
+        }
+        startGate.countDown();
+        doneGate.await();
+        long elapsedMs = (System.nanoTime() - start) / 1_000_000;
+
+        System.out.println("Optimistic (CAS retry): successes=" + successes.get()
+                + ", seatsRemaining=" + inventory.seatsAvailable() + ", elapsed=" + elapsedMs
+                + "ms, wasted retries=" + inventory.retryCount());
+    }
+
+    private static void await(CountDownLatch gate) {
+        try {
+            gate.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
