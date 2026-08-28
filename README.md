@@ -135,6 +135,38 @@ One running example — an order-fulfillment system — evolved across all 8 pap
 | [50](volume-9-distributed-systems-resilience/paper-50-outbox-pattern/) | Outbox Pattern | dual-write problem: local write succeeds, event silently lost (measured), outbox + retrying relay, relay that marks published before confirming |
 | [51](volume-9-distributed-systems-resilience/paper-51-idempotency/) | Idempotency | same event redelivered, naive handler double-ships (measured), stable-eventId dedup, dedup key regenerated per-call that never matches |
 
+### [Volume 10 — System Design Blueprints, Evaluated Like a Principal Architect](volume-10-system-design-blueprints/)
+Seven classic system design interview questions, each paired with one formal architecture-evaluation method instead of a whiteboard vibe check.
+
+| Paper | System | Eval Method | Examples |
+|-------|--------|-------------|---------|
+| [52](volume-10-system-design-blueprints/paper-52-url-shortener/) | URL Shortener | QAS | random-retry attempts climbing with keyspace fill (measured), centralized vs block-allocated counter (measured ~90x), birthday-paradox collision trap (measured) |
+| [53](volume-10-system-design-blueprints/paper-53-rate-limiter/) | Rate Limiter | ADR | fixed-window boundary burst (measured 2x), token bucket fix (measured exact), per-node token buckets with no shared state (measured 5x over budget) |
+| [54](volume-10-system-design-blueprints/paper-54-ticket-booking-flash-sale/) | Ticket Booking (flash sale) | ATAM | no-lock overselling (measured 100% every run), optimistic vs pessimistic at moderate load (measured ~30-40% gap), same pair at extreme load (measured gap vanishes — a real sensitivity point) |
+| [55](volume-10-system-design-blueprints/paper-55-ride-booking-dispatch/) | Ride Booking Dispatch | CBAM | naive O(n) driver scan cost growing with platform size (measured), grid-bucketed dispatch (measured ~24x), same code with a mistuned cell size (measured benefit vanishes) |
+| [56](volume-10-system-design-blueprints/paper-56-messaging-app/) | Messaging App | 4+1 Views | naive arrival-order inbox + receipt tracker (measured scrambled order, regressed status), server-sequence fix (measured correct), client-clock ordering (measured a 5s skew reordering a conversation) |
+| [57](volume-10-system-design-blueprints/paper-57-social-feed-system/) | Social Feed System | SAAM | fan-out-on-write cost growing unbounded (measured), hybrid push/pull fix (measured flat), pure fan-out-on-read solving one scenario while breaking an unchecked one (measured) |
+| [58](volume-10-system-design-blueprints/paper-58-cloud-file-storage/) | Cloud File Storage | QAS | no-dedup 5x storage cost (measured), content-defined chunking re-syncing after an edit (measured 1/517 new chunks), fixed-size chunking's boundary-shift failure (measured 782/782 new chunks) |
+
+### [Volume 11 — Data Architecture Patterns](volume-11-data-architecture-patterns/)
+One running example — an account ledger — evolved across three data-architecture patterns. Each paper's fix creates the next paper's problem: read/write contention → the need for full history → a single node running out of room.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [59](volume-11-data-architecture-patterns/paper-59-cqrs/) | CQRS | shared-lock write latency exploding under read contention (measured ~300-400ms), separate-lock fix (measured 0ms), async propagation reintroducing a read-your-own-writes gap (measured) |
+| [60](volume-11-data-architecture-patterns/paper-60-event-sourcing/) | Event Sourcing | balance-only ledger with no memory of its own history (measured), event log answering an unanticipated report (measured), balance-snapshot ledger losing transaction type permanently (measured) |
+| [61](volume-11-data-architecture-patterns/paper-61-sharding/) | Sharding | single-node throughput ceiling for unrelated accounts (measured ~650-730ms), account-ID sharding fix (measured ~56ms, ~12x), sharding by a poorly-distributed region key (measured statistically identical to no sharding) |
+
+### [Volume 12 — Production Engineering & Observability](volume-12-production-engineering-observability/)
+Operational practice, not architecture — standalone papers on what gets measured, what pages a human, and how a team decides an incident is over. Each still ships a runnable Java demonstration of the underlying mechanism.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [62](volume-12-production-engineering-observability/paper-62-slos-error-budgets/) | SLOs & Error Budgets | fixed-threshold alert missing a budget-exhausting slow burn (measured), long-window burn-rate fix catching it early (measured), short-window burn rate false-alarming on a harmless blip (measured) |
+| [63](volume-12-production-engineering-observability/paper-63-alerting-symptom-vs-cause/) | Alerting: Symptom-Based vs. Cause-Based | CPU-based alerting false-positive and false-negative (measured), user-facing-error-rate fix (measured correct on both), symptom measured at the wrong point in the request path (measured missing a 3s customer wait) |
+| [64](volume-12-production-engineering-observability/paper-64-blameless-postmortems/) | Blameless Postmortems | single-root-cause postmortem missing 2 of 3 real factors (measured, incident recurs), prioritized contributing-factors fix (measured, no recurrence), unprioritized factor list still missing the critical fix (measured, incident recurs anyway) |
+| [65](volume-12-production-engineering-observability/paper-65-observability-signals/) | Observability: Metrics, Logs, and Traces | metrics-only p99 correctly elevated but structurally unable to attribute a service (measured), trace with spans fix (measured exact culprit and duration), uncorrelated logs leaving 3 concurrent requests equally plausible (measured) |
+
 ---
 
 ## Repository Structure
