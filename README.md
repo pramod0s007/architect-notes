@@ -121,6 +121,20 @@ Real bugs that only appear under concurrent load — reproduced on purpose, then
 | [36](volume-8-concurrency-patterns/paper-36-io-parallelism/) | I/O Parallelism — Thread-per-Request vs Event Loop | downstream fan-out pool sizing (pool 8 vs 64, measured ~7x), async alternative (4 threads, 400 in-flight calls) |
 | [37](volume-8-concurrency-patterns/paper-37-cancellation-and-graceful-shutdown/) | Cancellation & Graceful Shutdown | un-cancellable worker (measured), cooperative fix, interrupt-hiding demonstration |
 
+### [Volume 9 — Distributed Systems & Resilience](volume-9-distributed-systems-resilience/)
+One running example — an order-fulfillment system — evolved across all 8 papers. Each paper's fix creates the next paper's problem, from monolith to distributed system.
+
+| Paper | Title | Examples |
+|-------|-------|---------|
+| [44](volume-9-distributed-systems-resilience/paper-44-strangler-fig/) | Strangler Fig | order-fulfillment monolith extracting a payment provider via a routing facade, duplicated-rule drift demonstration |
+| [45](volume-9-distributed-systems-resilience/paper-45-api-gateway/) | API Gateway | two clients drifting on the same failure message (measured), gateway fix, business-logic-in-gateway reconciliation mismatch |
+| [46](volume-9-distributed-systems-resilience/paper-46-distributed-monolith/) | Distributed Monolith | shared-table + synchronous chain latency (measured ~3000ms), data-ownership fix that deliberately doesn't fix latency |
+| [47](volume-9-distributed-systems-resilience/paper-47-sidecar-and-ambassador/) | Sidecar & Ambassador | three services with three different retry policies (measured inconsistent outcome), shared sidecar fix, bespoke-ambassador overcorrection |
+| [48](volume-9-distributed-systems-resilience/paper-48-circuit-breaker-and-bulkhead/) | Circuit Breaker & Bulkhead | shared-pool starvation from a dead dependency (measured), circuit-breaker-alone vs bulkhead-alone vs both (measured separately), shared-breaker-instance mistake |
+| [49](volume-9-distributed-systems-resilience/paper-49-saga-pattern/) | Saga Pattern | three correct service calls, one wrong aggregate outcome (measured), compensations accumulated in reverse, per-branch compensation that silently drops a step |
+| [50](volume-9-distributed-systems-resilience/paper-50-outbox-pattern/) | Outbox Pattern | dual-write problem: local write succeeds, event silently lost (measured), outbox + retrying relay, relay that marks published before confirming |
+| [51](volume-9-distributed-systems-resilience/paper-51-idempotency/) | Idempotency | same event redelivered, naive handler double-ships (measured), stable-eventId dedup, dedup key regenerated per-call that never matches |
+
 ---
 
 ## Repository Structure
