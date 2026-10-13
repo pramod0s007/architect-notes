@@ -36,7 +36,7 @@ Patterns are not the destination. They are the result of good architectural reas
 
 ## Series — 168 Papers
 
-**Medium publishing status (confirmed October 13, 2026):** Papers 1–37 are published and linked below. Papers 38–168 are authored but not yet published: **37 published, 131 remaining**. Next: Paper 38, Load Balancing Strategies.
+**Medium publishing status (confirmed October 13, 2026):** Papers 1–38 are published and linked below. Papers 39–168 are authored but not yet published: **38 published, 130 remaining**. Next: Paper 39, Service Discovery.
 
 ### [Volume 1 — Thinking Like an Architect](volume-1-thinking-like-an-architect/)
 Foundation papers. Read these before anything else.
@@ -128,7 +128,7 @@ A short bridge volume between Volume 8 and Volume 9. Each paper uses an independ
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [38](volume-8b-networking-rpc-fundamentals/paper-38-load-balancing-strategies/) | Load Balancing Strategies | round robin vs. mismatched backend capacity (measured), weighted round robin, dynamic least-load under runtime capacity degradation |
+| [38](volume-8b-networking-rpc-fundamentals/paper-38-load-balancing-strategies/) | [Load Balancing Strategies](https://medium.com/@replytopramods.aws/load-balancing-strategies-1ff845eeb032) | round robin vs. mismatched backend capacity (measured), weighted round robin, dynamic least-load under runtime capacity degradation |
 | [39](volume-8b-networking-rpc-fundamentals/paper-39-service-discovery/) | Service Discovery | static locator surviving a redeploy (measured failure), heartbeat/TTL registry, health-checked registry |
 | [40](volume-8b-networking-rpc-fundamentals/paper-40-rpc-vs-rest/) | RPC vs REST | string-keyed field rename silently breaking a reader, schema-evolution-safe alternative |
 | [41](volume-8b-networking-rpc-fundamentals/paper-41-rate-limiting/) | Rate Limiting | fixed-window boundary burst (measured 2x rate), sliding-window log fix, per-instance drift across 3 load-balanced instances (measured 3x global cap), shared/centralized limiter |

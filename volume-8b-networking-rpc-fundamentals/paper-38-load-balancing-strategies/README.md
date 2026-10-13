@@ -8,7 +8,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Load Balancing Strategies](https://medium.com/@replytopramods.aws/load-balancing-strategies-1ff845eeb032)
 
 ---
 
