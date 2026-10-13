@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[I/O Parallelism — Thread-per-Request vs Event Loop](https://medium.com/@replytopramods.aws/i-o-parallelism-thread-per-request-vs-event-loop-c5a4c6d96cae)
 
 ---
 

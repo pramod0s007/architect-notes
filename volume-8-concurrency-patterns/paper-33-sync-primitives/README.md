@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Sync Primitives — Locks, Semaphores, and When They Lie to You](https://medium.com/@replytopramods.aws/sync-primitives-locks-semaphores-and-when-they-lie-to-you-c52c82e97955)
 
 ---
 

@@ -34,45 +34,47 @@ Patterns are not the destination. They are the result of good architectural reas
 
 ---
 
-## Series — 27 Papers, 56 Runnable Examples
+## Series — 168 Papers
+
+**Medium publishing status (confirmed October 13, 2026):** Papers 1–37 are published and linked below. Papers 38–168 are authored but not yet published: **37 published, 131 remaining**. Next: Paper 38, Load Balancing Strategies.
 
 ### [Volume 1 — Thinking Like an Architect](volume-1-thinking-like-an-architect/)
 Foundation papers. Read these before anything else.
 
 | Paper | Title |
 |-------|-------|
-| [01](volume-1-thinking-like-an-architect/paper-01-why-memorizing-design-patterns-is-holding-you-back/) | Why Memorizing Design Patterns Is Holding You Back |
-| [02](volume-1-thinking-like-an-architect/paper-02-the-four-architectural-buckets/) | The Four Architectural Buckets |
-| [03](volume-1-thinking-like-an-architect/paper-03-the-death-of-if-else/) | The Death of if-else |
+| [01](volume-1-thinking-like-an-architect/paper-01-why-memorizing-design-patterns-is-holding-you-back/) | [Why Memorizing Design Patterns Is Holding You Back](https://medium.com/@replytopramods.aws/why-memorizing-design-patterns-is-holding-you-back-6b6dfa8d7d7c) |
+| [02](volume-1-thinking-like-an-architect/paper-02-the-four-architectural-buckets/) | [The Four Architectural Buckets](https://medium.com/@replytopramods.aws/the-four-architectural-buckets-73cd22f3c33c) |
+| [03](volume-1-thinking-like-an-architect/paper-03-the-death-of-if-else/) | [The Death of if-else](https://medium.com/@replytopramods.aws/the-death-of-if-else-8044410a1ef8) |
 
 ### [Volume 2 — Behavioral Design](volume-2-behavioral-design/)
 The most commonly needed patterns in production systems.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [04](volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/) | Strategy Pattern Through Real Refactoring | encryption, payment gateway, pricing engine |
-| [05](volume-2-behavioral-design/paper-05-state-pattern-through-a-stopwatch/) | State Pattern Through a StopWatch | stopwatch, order processing |
-| [06](volume-2-behavioral-design/paper-06-command-pattern-through-banking-systems/) | Command Pattern Through Banking Systems | banking, document editor, job scheduler |
-| [07](volume-2-behavioral-design/paper-07-visitor-pattern-without-uml/) | Visitor Pattern Without UML | collision engine, document processor |
-| [08](volume-2-behavioral-design/paper-08-lookup-tables-vs-polymorphism/) | Lookup Tables vs Polymorphism | collision engine (table approach) |
+| [04](volume-2-behavioral-design/paper-04-strategy-pattern-through-real-refactoring/) | [Strategy Pattern Through Real Refactoring](https://medium.com/@replytopramods.aws/strategy-pattern-through-real-refactoring-25f41134d26c) | encryption, payment gateway, pricing engine |
+| [05](volume-2-behavioral-design/paper-05-state-pattern-through-a-stopwatch/) | [State Pattern Through a StopWatch](https://medium.com/@replytopramods.aws/state-pattern-through-a-stopwatch-1d44c670fb32) | stopwatch, order processing |
+| [06](volume-2-behavioral-design/paper-06-command-pattern-through-banking-systems/) | [Command Pattern Through Banking Systems](https://medium.com/@replytopramods.aws/command-pattern-through-banking-systems-a50491b11df9) | banking, document editor, job scheduler |
+| [07](volume-2-behavioral-design/paper-07-visitor-pattern-without-uml/) | [Visitor Pattern Without UML](https://medium.com/@replytopramods.aws/visitor-pattern-without-uml-0ec8915fa2a5) | collision engine, document processor |
+| [08](volume-2-behavioral-design/paper-08-lookup-tables-vs-polymorphism/) | [Lookup Tables vs Polymorphism](https://medium.com/@replytopramods.aws/lookup-tables-vs-polymorphism-51befea88a26) | collision engine (table approach) |
 
 ### [Volume 3 — Enterprise Patterns](volume-3-enterprise-patterns/)
 Patterns for business rules and multi-step pipelines.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [09](volume-3-enterprise-patterns/paper-09-specification-pattern/) | Specification Pattern | product search, loan eligibility |
-| [10](volume-3-enterprise-patterns/paper-10-chain-of-responsibility/) | Chain of Responsibility | request pipeline, API security pipeline |
+| [09](volume-3-enterprise-patterns/paper-09-specification-pattern/) | [Specification Pattern](https://medium.com/@replytopramods.aws/specification-pattern-5bbe84d9c56e) | product search, loan eligibility |
+| [10](volume-3-enterprise-patterns/paper-10-chain-of-responsibility/) | [Chain of Responsibility](https://medium.com/@replytopramods.aws/chain-of-responsibility-baf650a0e7e4) | request pipeline, API security pipeline |
 
 ### [Volume 4 — Creational Patterns + Architect-Level Thinking](volume-4-architect-level-thinking/)
 How objects are built, and meta-level pattern judgment.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [11](volume-4-architect-level-thinking/paper-11-builder-pattern/) | Builder Pattern | HTTP request, database config, search request |
-| [12](volume-4-architect-level-thinking/paper-12-factory-pattern/) | Factory Pattern | notification factory, storage factory |
-| [13](volume-4-architect-level-thinking/paper-13-when-patterns-become-anti-patterns/) | When Patterns Become Anti-Patterns | — |
-| [14](volume-4-architect-level-thinking/paper-14-pattern-selection-decision-tree/) | Pattern Selection Decision Tree | — |
+| [11](volume-4-architect-level-thinking/paper-11-builder-pattern/) | [Builder Pattern](https://medium.com/@replytopramods.aws/builder-pattern-747bf70e4b0e) | HTTP request, database config, search request |
+| [12](volume-4-architect-level-thinking/paper-12-factory-pattern/) | [Factory Pattern](https://medium.com/@replytopramods.aws/factory-pattern-0a2ea0e58d1e) | notification factory, storage factory |
+| [13](volume-4-architect-level-thinking/paper-13-when-patterns-become-anti-patterns/) | [When Patterns Become Anti-Patterns](https://medium.com/@replytopramods.aws/when-patterns-become-anti-patterns-309e57533027) | — |
+| [14](volume-4-architect-level-thinking/paper-14-pattern-selection-decision-tree/) | [Pattern Selection Decision Tree](https://medium.com/@replytopramods.aws/pattern-selection-decision-tree-f640d5246fd4) | — |
 | [15](volume-4-architect-level-thinking/paper-15-which-patterns-still-matter-in-2026/) | [Which Patterns Still Matter in 2026?](https://medium.com/@replytopramods.aws/which-patterns-still-matter-in-2026-89d3bc154797) | — |
 
 ### [Volume 5 — Structural Patterns](volume-5-structural-patterns/)
@@ -104,22 +106,22 @@ The OO fundamentals underneath every named pattern — how much a module should 
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [28](volume-7-design-principles/paper-28-abstraction/) | Abstraction — Choosing the Right Level | payment gateway (boolean vs. SettlementStatus, capability split) |
-| [29](volume-7-design-principles/paper-29-coupling/) | Coupling — Hidden Dependencies and How They Spread | pricing engine, invoice generator, shipping quote, shared config |
-| [30](volume-7-design-principles/paper-30-composition-over-inheritance/) | Composition Over Inheritance | report generator (format x encryption x compression x signing), fleet vehicle capabilities |
+| [28](volume-7-design-principles/paper-28-abstraction/) | [Abstraction — Choosing the Right Level](https://medium.com/@replytopramods.aws/abstraction-choosing-the-right-level-a8999030ac5a) | payment gateway (boolean vs. SettlementStatus, capability split) |
+| [29](volume-7-design-principles/paper-29-coupling/) | [Coupling — Hidden Dependencies and How They Spread](https://medium.com/@replytopramods.aws/coupling-hidden-dependencies-and-how-they-spread-c5bdbe15ba08) | pricing engine, invoice generator, shipping quote, shared config |
+| [30](volume-7-design-principles/paper-30-composition-over-inheritance/) | [Composition Over Inheritance](https://medium.com/@replytopramods.aws/composition-over-inheritance-b5418fa73c11) | report generator (format x encryption x compression x signing), fleet vehicle capabilities |
 
 ### [Volume 8 — Concurrency Patterns](volume-8-concurrency-patterns/)
 Real bugs that only appear under concurrent load — reproduced on purpose, then fixed with a proof for why the fix holds.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
-| [31](volume-8-concurrency-patterns/paper-31-deadlock/) | Deadlock — The Bug That Freezes Production | funds transfer (reproducible circular wait, lock ordering fix, tryLock+backoff fix) |
-| [32](volume-8-concurrency-patterns/paper-32-reactor-pattern/) | Reactor Pattern — Non-Blocking I/O Done Right | thread-per-connection cost measurement, single-threaded Selector-based reactor |
-| [33](volume-8-concurrency-patterns/paper-33-sync-primitives/) | Sync Primitives — Locks, Semaphores, and When They Lie to You | request-in-flight counter (plain vs. volatile vs. synchronized vs. AtomicInteger), per-field-lock invariant bug |
-| [34](volume-8-concurrency-patterns/paper-34-actor-pattern/) | Actor Pattern — Concurrency Without Shared State | same Paper 31 transfer rebuilt as actors, single-threaded-executor self-deadlock |
-| [35](volume-8-concurrency-patterns/paper-35-task-vs-data-parallelism/) | Task vs Data Parallelism — Decision Tree | image pipeline: wrong data-parallelization (silently wrong output), correct data parallelism (1000 images), correct task parallelism (4-stage pipeline) |
-| [36](volume-8-concurrency-patterns/paper-36-io-parallelism/) | I/O Parallelism — Thread-per-Request vs Event Loop | downstream fan-out pool sizing (pool 8 vs 64, measured ~7x), async alternative (4 threads, 400 in-flight calls) |
-| [37](volume-8-concurrency-patterns/paper-37-cancellation-and-graceful-shutdown/) | Cancellation & Graceful Shutdown | un-cancellable worker (measured), cooperative fix, interrupt-hiding demonstration |
+| [31](volume-8-concurrency-patterns/paper-31-deadlock/) | [Deadlock — The Bug That Freezes Production](https://medium.com/@replytopramods.aws/deadlock-the-bug-that-freezes-production-d2a17ddc8e7e) | funds transfer (reproducible circular wait, lock ordering fix, tryLock+backoff fix) |
+| [32](volume-8-concurrency-patterns/paper-32-reactor-pattern/) | [Reactor Pattern — Non-Blocking I/O Done Right](https://medium.com/@replytopramods.aws/reactor-pattern-non-blocking-i-o-done-right-c56687b42114) | thread-per-connection cost measurement, single-threaded Selector-based reactor |
+| [33](volume-8-concurrency-patterns/paper-33-sync-primitives/) | [Sync Primitives — Locks, Semaphores, and When They Lie to You](https://medium.com/@replytopramods.aws/sync-primitives-locks-semaphores-and-when-they-lie-to-you-c52c82e97955) | request-in-flight counter (plain vs. volatile vs. synchronized vs. AtomicInteger), per-field-lock invariant bug |
+| [34](volume-8-concurrency-patterns/paper-34-actor-pattern/) | [Actor Pattern — Concurrency Without Shared State](https://medium.com/@replytopramods.aws/actor-pattern-concurrency-without-shared-state-ea0fa60af1df) | same Paper 31 transfer rebuilt as actors, single-threaded-executor self-deadlock |
+| [35](volume-8-concurrency-patterns/paper-35-task-vs-data-parallelism/) | [Task vs Data Parallelism — Decision Tree](https://medium.com/@replytopramods.aws/task-vs-data-parallelism-decision-tree-452d413ff49f) | image pipeline: wrong data-parallelization (silently wrong output), correct data parallelism (1000 images), correct task parallelism (4-stage pipeline) |
+| [36](volume-8-concurrency-patterns/paper-36-io-parallelism/) | [I/O Parallelism — Thread-per-Request vs Event Loop](https://medium.com/@replytopramods.aws/i-o-parallelism-thread-per-request-vs-event-loop-c5a4c6d96cae) | downstream fan-out pool sizing (pool 8 vs 64, measured ~7x), async alternative (4 threads, 400 in-flight calls) |
+| [37](volume-8-concurrency-patterns/paper-37-cancellation-and-graceful-shutdown/) | [Cancellation & Graceful Shutdown](https://medium.com/@replytopramods.aws/cancellation-graceful-shutdown-e765116a60c3) | un-cancellable worker (measured), cooperative fix, interrupt-hiding demonstration |
 
 ### [Volume 8b — Networking & RPC Fundamentals](volume-8b-networking-rpc-fundamentals/)
 A short bridge volume between Volume 8 and Volume 9. Each paper uses an independent example, evolved across 3 steps: a naive/failing design → a fix that solves one problem while exposing the next → the real fix.

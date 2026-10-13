@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Abstraction — Choosing the Right Level](https://medium.com/@replytopramods.aws/abstraction-choosing-the-right-level-a8999030ac5a)
 
 ---
 

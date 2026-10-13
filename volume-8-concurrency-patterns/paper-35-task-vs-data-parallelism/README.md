@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Task vs Data Parallelism — Decision Tree](https://medium.com/@replytopramods.aws/task-vs-data-parallelism-decision-tree-452d413ff49f)
 
 ---
 

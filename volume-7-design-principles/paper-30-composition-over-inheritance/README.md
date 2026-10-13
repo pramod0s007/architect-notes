@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Composition Over Inheritance](https://medium.com/@replytopramods.aws/composition-over-inheritance-b5418fa73c11)
 
 ---
 

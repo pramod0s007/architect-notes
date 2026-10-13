@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Actor Pattern — Concurrency Without Shared State](https://medium.com/@replytopramods.aws/actor-pattern-concurrency-without-shared-state-ea0fa60af1df)
 
 ---
 

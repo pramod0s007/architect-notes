@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Coupling — Hidden Dependencies and How They Spread](https://medium.com/@replytopramods.aws/coupling-hidden-dependencies-and-how-they-spread-c5bdbe15ba08)
 
 ---
 

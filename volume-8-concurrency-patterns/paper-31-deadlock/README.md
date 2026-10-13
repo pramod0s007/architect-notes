@@ -6,7 +6,7 @@
 
 ## Read the Full Article on Medium
 
-_Article coming soon on Medium._
+[Deadlock — The Bug That Freezes Production](https://medium.com/@replytopramods.aws/deadlock-the-bug-that-freezes-production-d2a17ddc8e7e)
 
 ---
 
