@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>The Approval-to-Execution Race &#183; Interactive Explorer &#183; Architect Notes</title>
+<style>
+:root{color-scheme:dark;--bg1:#1B2230;--bg2:#38465C;--page:#10141C;--panel:#2C323E;--panel2:#3B404B;--inset:#0B0E13;--line:#5F626A;--lane:#76787D;--ink:#FFF8F0;--ink2:#E1DCD7;--muted:#E4DFD9;--bandInk:#FFFFFF;--bandSoft:#FFFFFF;--accH:#FFCA98;--acc2H:#FFD166;--accT:#FF9F43;--acc2T:#FFD166;--accBtn:#FF9F43;--onAcc:#000000;--focus:#FFD166;--chipLine:#7B7F87;--hl:#4E433F;--rawhl:#412E1E;--sec:#414242;--secT:#FFD166;--arrow:#ABA9A9;--badge:#EEE8E2;--badgeOn:#000000;--guard:#35D07F;--guardOn:#0B1020;--guardT:#35D07F;--guardBg:#2D4747;--harm:#FF6B6B;--harmOn:#0B1020;--harmT:#FF9593;--harmBg:#483944;--neutral:#8FA6D6;--neutralOn:#0B1020;--neutralT:#A5B6DB;--neutralBg:#394152;--amber:#F2B84B;--amberOn:#0B1020;--amberT:#F2B84B;--amberBg:#464340;--glow:rgba(255,159,67,.22)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 -apple-system,"Avenir Next","Helvetica Neue",Arial,sans-serif;overflow-wrap:break-word}
+[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+code,.mono{font-family:Menlo,Consolas,monospace}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.skip{position:absolute;left:10px;top:-80px;z-index:60;padding:10px 16px;border-radius:10px;background:var(--accBtn);color:var(--onAcc);font-weight:700;text-decoration:none}
+.skip:focus{top:10px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1380px;margin:0 auto;padding:0 20px}
+#svgns{position:absolute;width:0;height:0;overflow:hidden}
+
+/* header band */
+.band{background:radial-gradient(760px 280px at 100% 0,var(--glow),transparent 72%),linear-gradient(135deg,var(--bg1),var(--bg2));color:var(--bandInk);border-bottom:4px solid var(--accH);border-image:linear-gradient(90deg,var(--accH),var(--acc2H)) 1}
+.band-in{display:grid;grid-template-columns:minmax(0,1fr);gap:14px 28px;align-items:center;padding-top:16px;padding-bottom:16px}
+.eyebrow{margin:0 0 6px;font:700 12px/1.4 Menlo,Consolas,monospace;letter-spacing:.14em;color:var(--acc2H)}
+.band h1{margin:0 0 6px;font-size:clamp(24px,2.7vw,34px);line-height:1.15;font-weight:800;letter-spacing:-.01em}
+.tagline{margin:0 0 10px;font-size:16px;font-weight:600;color:var(--accH)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;padding:0;list-style:none}
+.chips li{border:1px solid var(--chipLine);border-radius:999px;padding:2px 12px;font-size:11.5px;font-weight:700;line-height:1.5;letter-spacing:.08em}
+.claim{margin:0;max-width:74ch;font-size:15px;color:var(--bandSoft)}
+.cover{display:none;width:100%;height:auto;border-radius:12px;border:1px solid var(--chipLine);box-shadow:0 10px 28px rgba(0,0,0,.38)}
+@media(min-width:720px){.band-in{grid-template-columns:minmax(0,1fr) clamp(220px,26vw,300px)}.cover{display:block}}
+@media(max-width:559px){.wrap{padding:0 14px}.tagline{font-size:15px}.claim{font-size:14.5px}}
+
+/* tabs and captions */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 10px}
+.tab{appearance:none;display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:14px;font-weight:700;cursor:pointer}
+.tab:hover{background:var(--panel2)}
+.tab .k{font:700 11px/1.4 Menlo,Consolas,monospace;padding:1px 6px;border:1px solid var(--line);border-radius:5px;color:var(--muted)}
+.tab[aria-selected=true],.tab[aria-selected=true]:hover{background:var(--accBtn);border-color:var(--accBtn);color:var(--onAcc)}
+.tab[aria-selected=true] .k{border-color:currentColor;color:var(--onAcc)}
+@media(max-width:559px){.tab{flex:1 1 calc(50% - 8px);justify-content:center;padding:8px 10px;font-size:13.5px}}
+.caption{margin:0 0 10px;max-width:120ch;font-size:15px}
+.kick{display:block;margin-bottom:2px;font:700 11px/1.4 Menlo,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc2T)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.cbtns{display:flex;gap:8px}
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:42px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);font-size:14px;font-weight:700;cursor:pointer}
+.btn:hover{border-color:var(--lane)}
+.btn.primary{min-width:110px;background:var(--accBtn);border-color:var(--accBtn);color:var(--onAcc)}
+.btn[aria-disabled=true]{opacity:.5;cursor:default}
+.ic{flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic .f{fill:currentColor}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{appearance:none;min-height:40px;min-width:46px;padding:0 10px;border:0;border-right:1px solid var(--line);background:transparent;font:700 13px/1 Menlo,Consolas,monospace;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--panel2)}
+.seg button[aria-pressed=true]{background:var(--accBtn);color:var(--onAcc)}
+.seg button:focus-visible{outline-offset:-3px}
+.scrub{flex:1 1 220px;display:flex;align-items:center;gap:12px;min-width:200px}
+.count{min-width:8.4em;text-align:right;font:700 13px/1 Menlo,Consolas,monospace;color:var(--muted)}
+input[type=range]{flex:1;min-width:0;height:28px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accBtn) var(--p,0%),var(--line) var(--p,0%))}
+input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:99px;background:var(--accBtn)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-6px;border-radius:50%;background:var(--ink);border:3px solid var(--accBtn)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ink);border:3px solid var(--accBtn)}
+.hint{margin:6px 2px 0;font-size:12.5px;color:var(--muted)}
+.hint b{font:700 11.5px/1 Menlo,Consolas,monospace;color:var(--ink2)}
+@media(max-width:640px){.controls{padding:10px}.cbtns{width:100%}.cbtns .btn{flex:1;min-width:0;padding:0 6px}.cbtns .btn.primary{flex:2}.scrub{flex-basis:100%}.count{min-width:0;margin-left:auto}}
+@media(max-width:480px){.cbtns .btn:not(.primary) span{display:none}.cbtns .btn:not(.primary){flex:0 0 52px}}
+@media(max-width:559px){.hint{display:none}}
+@media(min-width:900px) and (min-height:620px){html{scroll-padding-top:92px}.controls{position:sticky;top:8px;z-index:30;box-shadow:0 12px 24px -14px rgba(0,0,0,.6)}}
+
+/* now strip */
+.now{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;min-height:48px;margin:0;padding:8px 14px;border:1px solid var(--line);border-left:6px solid var(--tc,var(--line));border-radius:12px;background:var(--panel)}
+.now .tag{font:700 11px/1.4 Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.now .who{font:700 13px/1.4 Menlo,Consolas,monospace}
+.now .what{font-size:14.5px;overflow-wrap:anywhere}
+.now .why{font-size:13px;color:var(--muted)}
+.vc{display:inline-flex;align-items:center;gap:6px;padding:2px 10px 2px 7px;border-radius:999px;background:var(--fill);color:var(--on);font:700 11.5px/1.5 Menlo,Consolas,monospace;letter-spacing:.04em}
+.vc .ic{stroke:none;fill:currentColor}
+.vc .ic .cut{fill:none;stroke:var(--fill);stroke-width:2.4}
+.vc .ic .cutf{fill:var(--fill);stroke:none}
+
+/* tones */
+.t-guard{--fill:var(--guard);--on:var(--guardOn);--tc:var(--guardT);--tint:var(--guardBg)}
+.t-harm{--fill:var(--harm);--on:var(--harmOn);--tc:var(--harmT);--tint:var(--harmBg)}
+.t-neutral{--fill:var(--neutral);--on:var(--neutralOn);--tc:var(--neutralT);--tint:var(--neutralBg)}
+.t-unknown{--fill:var(--amber);--on:var(--amberOn);--tc:var(--amberT);--tint:var(--amberBg)}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start;margin-top:12px}
+.col{display:grid;gap:16px;min-width:0}
+@media(min-width:960px){.grid{grid-template-columns:minmax(0,1fr) 400px}}
+@media(min-width:1200px){.grid{grid-template-columns:minmax(0,1fr) 420px}}
+.card{min-width:0;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.card>h2{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 10px;font:700 12px/1.4 -apple-system,"Avenir Next","Helvetica Neue",Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.card>h2 .n{font:700 12px/1.4 Menlo,Consolas,monospace;letter-spacing:.02em;text-transform:none;color:var(--ink2)}
+.empty{margin:0;font-size:13.5px;color:var(--muted)}
+.empty.pad{padding:16px}
+.swipe{margin:-4px 0 10px;font-size:12.5px;color:var(--muted)}
+.scroller:focus-visible{outline-offset:-3px}
+
+/* lane timeline */
+.tlscroll{position:relative;isolation:isolate;max-height:clamp(280px,calc(100vh - 230px),760px);min-height:180px;overflow:auto;scrollbar-gutter:stable;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.tlscroll svg{display:block;max-width:none}
+.tlhead{position:sticky;top:0;z-index:3}
+.hbg{fill:var(--panel2)}
+.hline{stroke:var(--line);stroke-width:1}
+.lane{stroke:var(--lane);stroke-width:1.5;stroke-dasharray:2 5;stroke-linecap:round}
+.labbg{fill:var(--panel);stroke:var(--lane);stroke-width:1}
+.tlscroll text{font-family:-apple-system,"Avenir Next","Helvetica Neue",Arial,sans-serif}
+.lab{font-size:12px;font-weight:700;fill:var(--ink);text-anchor:middle}
+.secbg{fill:var(--sec)}
+.sectext{font-size:11px;font-weight:700;letter-spacing:.12em;fill:var(--secT)}
+.row.sec.cur .secbg{fill:var(--hl);stroke:var(--accT);stroke-width:1.5}
+.row{opacity:0;visibility:hidden;transition:opacity .28s ease,visibility 0s linear .28s}
+.row.shown{opacity:1;visibility:visible;transition:opacity .28s ease,visibility 0s}
+.still .row,.still .row.shown{transition:none}
+.hl{fill:var(--hl);opacity:0}
+.row.cur .hl{opacity:1}
+.arr{fill:none;stroke:var(--arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.head{fill:var(--arrow)}
+.row.ev[class*=t-] .arr{stroke:var(--fill)}
+.row.ev[class*=t-] .head{fill:var(--fill)}
+.row.cur .arr{stroke-width:2.8}
+.msg{font-size:12.5px;font-weight:500;fill:var(--ink)}
+.why{font-size:11px;font-weight:500;fill:var(--muted)}
+.msg,.why{paint-order:stroke;stroke:var(--panel);stroke-width:3px;stroke-linejoin:round}
+.row.cur .msg,.row.cur .why{stroke:var(--hl)}
+.row.cur .msg{font-weight:700}
+.row.past .msg{fill:var(--ink2)}
+.row.past .arr,.row.past .head,.row.past .bdg{opacity:.72}
+.bdg{fill:var(--badge)}
+.bdgt{font-size:10px;font-weight:700;fill:var(--badgeOn);text-anchor:middle}
+.cbg{fill:var(--fill)}
+.ct{font-size:10.5px;font-weight:700;letter-spacing:.04em;fill:var(--on)}
+.gl{fill:var(--on)}
+.gl .cut{fill:none;stroke:var(--fill);stroke-width:2.4;stroke-linecap:round}
+.gl .cutf{fill:var(--fill);stroke:none}
+
+/* raw output */
+.rawbox{position:relative;height:clamp(220px,34vh,340px);overflow:auto;padding:8px 0;background:var(--inset);border:1px solid var(--line);border-radius:10px;font:12.5px/1.55 Menlo,Consolas,monospace}
+.rawbox .empty{display:none;padding:6px 12px;font-family:-apple-system,"Avenir Next","Helvetica Neue",Arial,sans-serif}
+.rawbox.is-empty .empty{display:block}
+.ln{display:none;grid-template-columns:3.4em minmax(0,1fr);padding-right:10px}
+.ln.shown{display:grid}
+.lno{padding-right:10px;text-align:right;color:var(--muted);user-select:none}
+.ltx{white-space:pre-wrap;overflow-wrap:anywhere}
+.ln.cur{background:var(--rawhl);box-shadow:inset 3px 0 0 var(--accT)}
+.k-section .ltx{font-weight:700;color:var(--secT)}
+.seg-no{color:var(--muted)}
+.seg-v{font-weight:700;color:var(--tc)}
+.seg-r{font-weight:700}
+.r-pass{color:var(--guardT)}
+.r-fail{color:var(--harmT)}
+.seg-val{font-weight:700;color:var(--accT)}
+
+/* metrics and checks */
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mcard{min-height:72px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}
+.mcard.pending{border-style:dashed;background:transparent}
+.mcard.pending>*,.chk.pending>*{visibility:hidden}
+.mcard.fresh,.chk.fresh{box-shadow:0 0 0 2px var(--accT)}
+.mn{font:600 11.5px/1.4 Menlo,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere}
+.mv{font-size:26px;font-weight:800;line-height:1.2;color:var(--accT);overflow-wrap:anywhere}
+.mv.long{font-size:16px;line-height:1.35}
+.checks{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.chk{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:start;min-height:46px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+.chk.pending{border-style:dashed;background:transparent}
+.ico{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--fill);color:var(--on)}
+.cn{font:700 13px/1.4 Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.cd{margin-top:2px;font-size:12.5px;color:var(--muted)}
+.cr{font:700 11.5px/1.6 Menlo,Consolas,monospace;letter-spacing:.08em;color:var(--tc)}
+
+/* compare */
+.cmpcards{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-bottom:16px}
+@media(min-width:900px){.cmpcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cmp{display:flex;flex-direction:column}
+.cmp>.btn{margin-top:auto;align-self:flex-start}
+.cmp>.empty{margin-bottom:12px}
+.cmp h3{margin:0 0 6px;font-size:17px;line-height:1.3}
+.cmp h3 .k{margin-right:8px;font:700 11px/1.4 Menlo,Consolas,monospace;padding:1px 6px;border:1px solid var(--line);border-radius:5px;color:var(--muted);vertical-align:2px}
+.sum{margin:0 0 12px;font-size:14.5px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.stat{padding:7px 4px;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+.stat b{display:block;font-size:20px;line-height:1.2}
+.stat span{display:block;font-size:11px;line-height:1.3;color:var(--muted)}
+.bar{display:flex;height:12px;margin:0 0 8px;overflow:hidden;border-radius:99px;background:var(--line)}
+.bar i{display:block;min-width:0;background:var(--fill)}
+.bar i.t-none{background:var(--lane)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 12px;padding:0;list-style:none;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:3px;background:var(--fill);vertical-align:-1px}
+.legend i.t-none{background:var(--lane)}
+.tscroll{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tbl{width:100%;min-width:600px;border-collapse:separate;border-spacing:0;font-size:14px}
+.tbl th,.tbl td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:0}
+.tbl thead th{background:var(--panel2);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.tbl tbody th{font:700 13px/1.4 Menlo,Consolas,monospace;background:var(--panel)}
+.tbl thead th:first-child,.tbl tbody th{position:sticky;left:0;z-index:1;border-right:1px solid var(--line)}
+.tbl thead th:first-child{z-index:2}
+.tbl td.num{font:700 14px/1.4 Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px 2px 6px;border-radius:999px;background:var(--fill);color:var(--on);font:700 11.5px/1.5 Menlo,Consolas,monospace;letter-spacing:.04em}
+.badge .ic{stroke-width:2.6}
+.dd{display:block;margin-top:4px;font-size:12.5px;color:var(--muted)}
+.na{color:var(--muted)}
+.panel>.card+.card{margin-top:16px}
+
+/* footer */
+.foot{margin:30px 0 36px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.foot p{margin:0 0 6px}
+.foot .main{font-size:14px;color:var(--ink2)}
+.foot code{padding:1px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)}
+.nojs{max-width:900px;margin:0 auto;padding:20px}
+.nojs pre{padding:12px;overflow:auto;background:var(--inset);border:1px solid var(--line);border-radius:10px}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(forced-colors:active){.btn,.tab,.seg,.seg button,.card,.chk,.mcard,.now{border:1px solid CanvasText}.tab[aria-selected=true],.seg button[aria-pressed=true]{outline:2px solid Highlight}}
+</style>
+<script>
+(function(){var d=document.documentElement,n=0;function bump(){n+=1;d.setAttribute('data-an-errors',String(n))}d.setAttribute('data-an-errors','0');window.addEventListener('error',bump);window.addEventListener('unhandledrejection',bump)})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the explorer</a>
+<svg id="svgns" width="0" height="0" aria-hidden="true" focusable="false"></svg>
+<header class="band"><div class="wrap band-in"><div id="hdr"></div><img class="cover" alt="" width="800" height="420" src="data:image/jpeg;base64,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"></div></header>
+<div class="wrap">
+<div class="tabs" id="tabs" role="tablist" aria-label="Explorer views"></div>
+<main id="main"></main>
+<footer class="foot" id="foot"></footer>
+</div>
+<div class="sr" id="live" aria-live="polite" aria-atomic="true"></div>
+<noscript><div class="nojs"><h1>The Approval-to-Execution Race</h1><p>This explorer needs JavaScript. The raw program output of each scenario is listed below.</p><h2>Pressure</h2><pre>-- Approvals are granted --
+[01] gateway -&gt; runlog : ap-1 approved by support-lead for refund order 5101 $20 at t=03 =&gt; APPROVED
+[02] gateway -&gt; runlog : ap-2 approved by support-lead for refund order 5102 $40 at t=20 =&gt; APPROVED
+[03] gateway -&gt; runlog : ap-3 approved by support-lead for refund order 5103 $30 at t=21 =&gt; APPROVED
+-- Overnight: the world moves --
+[04] meridian -&gt; ledger : support rep refunded $50 on order 5102 at t=30, v1 to v2 =&gt; RECORDED
+[05] meridian -&gt; ledger : card dispute opened on order 5102 at t=41, v2 to v3 =&gt; RECORDED
+-- Morning: one more approval, one more change --
+[06] gateway -&gt; runlog : ap-4 approved by support-lead for refund order 5104 $25 at t=58 =&gt; APPROVED
+[07] meridian -&gt; ledger : support rep refunded $20 on order 5104 at t=59, v1 to v2 =&gt; RECORDED
+-- The run resumes at t=60 --
+[08] ops-agent -&gt; gateway : run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =&gt; QUEUED
+[09] gateway -&gt; meridian : s1 ap-1 refund order 5101 $20 =&gt; EXECUTED (age 57, approved at v1, order now v1, nothing refunded)
+[10] gateway -&gt; meridian : s2 ap-2 refund order 5102 $40 =&gt; STALE (age 40, approved at v1, order now v3, $50 of $120 refunded, dispute open)
+[11] gateway -&gt; meridian : s3 ap-3 refund order 5103 $30 =&gt; EXECUTED (age 39, approved at v1, order now v1, nothing refunded)
+[12] gateway -&gt; meridian : s4 ap-3 refund order 5103 $30 =&gt; DUPLICATED (age 39, approved at v1, order now v2, $30 of $90 refunded)
+[13] gateway -&gt; meridian : s5 ap-4 refund order 5104 $25 =&gt; STALE (age 2, approved at v1, order now v2, $20 of $80 refunded)
+METRIC refunds_applied = 5
+METRIC stale_refund_dollars = 65
+METRIC repeated_refund_dollars = 30
+CHECK stale-approval-rejected : FAIL  (2 of 2 approvals on changed orders still refunded, $65)
+CHECK state-drift-detected-at-execution : FAIL  (0 of 2 changed orders detected)
+CHECK approval-consumed-atomically : FAIL  (1 refund repeated an approval that had already paid out, $30)
+CHECK expired-approval-rejected : FAIL  (1 approval older than 48 ticks still produced a refund)
+CHECK legit-unchanged-state-executes : PASS  (unchanged order 5103 was refunded under ap-3)
+</pre><h2>Wrong direction</h2><pre>-- Approvals are granted --
+[01] gateway -&gt; runlog : ap-1 approved by support-lead for refund order 5101 $20 at t=03 =&gt; APPROVED
+[02] gateway -&gt; runlog : ap-2 approved by support-lead for refund order 5102 $40 at t=20 =&gt; APPROVED
+[03] gateway -&gt; runlog : ap-3 approved by support-lead for refund order 5103 $30 at t=21 =&gt; APPROVED
+-- Overnight: the world moves --
+[04] meridian -&gt; ledger : support rep refunded $50 on order 5102 at t=30, v1 to v2 =&gt; RECORDED
+[05] meridian -&gt; ledger : card dispute opened on order 5102 at t=41, v2 to v3 =&gt; RECORDED
+-- Morning: one more approval, one more change --
+[06] gateway -&gt; runlog : ap-4 approved by support-lead for refund order 5104 $25 at t=58 =&gt; APPROVED
+[07] meridian -&gt; ledger : support rep refunded $20 on order 5104 at t=59, v1 to v2 =&gt; RECORDED
+-- The run resumes at t=60 with a 12-tick window --
+[08] ops-agent -&gt; gateway : run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =&gt; QUEUED
+[09] gateway -&gt; runlog : s1 ap-1 refund order 5101 $20 =&gt; EXPIRED (age 57 over the 12-tick window)
+[10] gateway -&gt; runlog : s2 ap-2 refund order 5102 $40 =&gt; EXPIRED (age 40 over the 12-tick window)
+[11] gateway -&gt; runlog : s3 ap-3 refund order 5103 $30 =&gt; EXPIRED (age 39 over the 12-tick window)
+[12] gateway -&gt; runlog : s4 ap-3 refund order 5103 $30 =&gt; EXPIRED (age 39 over the 12-tick window)
+[13] gateway -&gt; ops-agent : s5 ap-4 refund order 5104 $25, model asked to confirm nothing changed =&gt; PENDING
+[14] ops-agent -&gt; gateway : model replies confirmed, nothing has changed since t=58 =&gt; OK
+[15] gateway -&gt; meridian : s5 ap-4 refund order 5104 $25 =&gt; STALE (age 2, approved at v1, order now v2, $20 of $80 refunded)
+METRIC refunds_applied = 1
+METRIC stale_refund_dollars = 25
+METRIC calls_expired = 4
+CHECK stale-approval-rejected : FAIL  (1 of 2 approvals on changed orders still refunded, $25)
+CHECK state-drift-detected-at-execution : FAIL  (0 of 2 changed orders detected)
+CHECK expired-approval-rejected : PASS  (no refund ran on an approval older than 48 ticks)
+CHECK legit-unchanged-state-executes : FAIL  (unchanged order 5103 was never refunded, ap-3 expired)
+</pre><h2>Principle applied</h2><pre>-- Approvals are granted, each bound to the order version --
+[01] gateway -&gt; runlog : ap-1 approved by support-lead for refund order 5101 $20 at t=03, bound to v1 =&gt; APPROVED
+[02] gateway -&gt; runlog : ap-2 approved by support-lead for refund order 5102 $40 at t=20, bound to v1 =&gt; APPROVED
+[03] gateway -&gt; runlog : ap-3 approved by support-lead for refund order 5103 $30 at t=21, bound to v1 =&gt; APPROVED
+-- Overnight: the world moves --
+[04] meridian -&gt; ledger : support rep refunded $50 on order 5102 at t=30, v1 to v2 =&gt; RECORDED
+[05] meridian -&gt; ledger : card dispute opened on order 5102 at t=41, v2 to v3 =&gt; RECORDED
+-- Morning: one more approval, one more change --
+[06] gateway -&gt; runlog : ap-4 approved by support-lead for refund order 5104 $25 at t=58, bound to v1 =&gt; APPROVED
+[07] meridian -&gt; ledger : support rep refunded $20 on order 5104 at t=59, v1 to v2 =&gt; RECORDED
+-- The run resumes at t=60: every approval is re-read first --
+[08] ops-agent -&gt; gateway : run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =&gt; QUEUED
+[09] gateway -&gt; runlog : s1 ap-1 refund order 5101 $20 =&gt; EXPIRED (age 57 over the 48-tick limit)
+[10] gateway -&gt; meridian : s2 ap-2 refund order 5102 $40, order re-read =&gt; DETECTED (approved at v1, order now v3)
+[11] gateway -&gt; runlog : fresh approval requested for order 5102 $40, bound to v3 =&gt; PENDING
+[12] gateway -&gt; meridian : s3 ap-3 refund order 5103 $30, order re-read =&gt; VERIFIED (still at v1)
+[13] gateway -&gt; meridian : s4 ap-3 refund order 5103 $30, order re-read =&gt; VERIFIED (still at v1)
+[14] gateway -&gt; meridian : s5 ap-4 refund order 5104 $25, order re-read =&gt; DETECTED (approved at v1, order now v2)
+[15] gateway -&gt; runlog : fresh approval requested for order 5104 $25, bound to v2 =&gt; PENDING
+-- Meridian applies a refund only if the version still holds --
+[16] gateway -&gt; meridian : s3 ap-3 refund order 5103 $30 only if still at v1 =&gt; EXECUTED (order now v2)
+[17] gateway -&gt; meridian : s4 ap-3 refund order 5103 $30 only if still at v1 =&gt; REJECTED (approval already spent, order at v2)
+METRIC refunds_applied = 1
+METRIC stale_refund_dollars = 0
+METRIC repeated_refund_dollars = 0
+METRIC fresh_approvals_requested = 2
+CHECK stale-approval-rejected : PASS  (no refund ran against a changed order)
+CHECK state-drift-detected-at-execution : PASS  (all 2 changed orders detected)
+CHECK approval-consumed-atomically : PASS  (each approval produced one refund and was spent with it)
+CHECK mismatch-requests-fresh-approval : PASS  (all 2 changed orders have a fresh request bound to their current version)
+CHECK expired-approval-rejected : PASS  (no refund ran on an approval older than 48 ticks)
+CHECK legit-unchanged-state-executes : PASS  (unchanged order 5103 was refunded under ap-3)
+</pre></div></noscript>
+<script type="application/json" id="an-data">{"chips":["APPROVAL RACE","STATE VERSION","COMPARE-AND-SET"],"claim":"An approval describes the world at the moment it was granted; if the action runs against a different world, a correct approval authorizes the wrong thing.","company":{"disclaimer":"Halcyon Commerce, its people, systems and numbers are a fictional composite created for this series.","name":"Halcyon Commerce"},"compare":{"checks":[{"cells":[{"d":"2 of 2 approvals on changed orders still refunded, $65","r":"FAIL"},{"d":"1 of 2 approvals on changed orders still refunded, $25","r":"FAIL"},{"d":"no refund ran against a changed order","r":"PASS"}],"name":"stale-approval-rejected"},{"cells":[{"d":"0 of 2 changed orders detected","r":"FAIL"},{"d":"0 of 2 changed orders detected","r":"FAIL"},{"d":"all 2 changed orders detected","r":"PASS"}],"name":"state-drift-detected-at-execution"},{"cells":[{"d":"1 refund repeated an approval that had already paid out, $30","r":"FAIL"},null,{"d":"each approval produced one refund and was spent with it","r":"PASS"}],"name":"approval-consumed-atomically"},{"cells":[{"d":"1 approval older than 48 ticks still produced a refund","r":"FAIL"},{"d":"no refund ran on an approval older than 48 ticks","r":"PASS"},{"d":"no refund ran on an approval older than 48 ticks","r":"PASS"}],"name":"expired-approval-rejected"},{"cells":[{"d":"unchanged order 5103 was refunded under ap-3","r":"PASS"},{"d":"unchanged order 5103 was never refunded, ap-3 expired","r":"FAIL"},{"d":"unchanged order 5103 was refunded under ap-3","r":"PASS"}],"name":"legit-unchanged-state-executes"},{"cells":[null,null,{"d":"all 2 changed orders have a fresh request bound to their current version","r":"PASS"}],"name":"mismatch-requests-fresh-approval"}],"metrics":[{"cells":["5","1","1"],"name":"refunds_applied"},{"cells":["65","25","0"],"name":"stale_refund_dollars"},{"cells":["30",null,"0"],"name":"repeated_refund_dollars"},{"cells":[null,"4",null],"name":"calls_expired"},{"cells":[null,null,"2"],"name":"fresh_approvals_requested"}]},"eyebrow":"ARCHITECT NOTES \u00b7 PAPER 185 \u00b7 VOLUME 34","paper":185,"scenarios":[{"actors":["gateway","runlog","meridian","ledger","ops-agent"],"caption":"The approval records only who said yes to which action, and execution re-checks nothing about the order's current state, so a stale approval authorizes a refund that is now wrong.","counts":{"checks":5,"events":13,"failed":4,"guard":0,"harm":3,"lines":25,"metrics":3,"neutral":10,"passed":1,"plain":0,"unknown":0},"id":"pressure","lines":[{"k":"section","raw":"-- Approvals are granted --","title":"Approvals are granted"},{"dst":"runlog","k":"event","msg":"ap-1 approved by support-lead for refund order 5101 $20 at t=03","no":1,"raw":"[01] gateway -\u003e runlog \u003a ap-1 approved by support-lead for refund order 5101 $20 at t=03 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-2 approved by support-lead for refund order 5102 $40 at t=20","no":2,"raw":"[02] gateway -\u003e runlog \u003a ap-2 approved by support-lead for refund order 5102 $40 at t=20 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-3 approved by support-lead for refund order 5103 $30 at t=21","no":3,"raw":"[03] gateway -\u003e runlog \u003a ap-3 approved by support-lead for refund order 5103 $30 at t=21 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"k":"section","raw":"-- Overnight\u003a the world moves --","title":"Overnight\u003a the world moves"},{"dst":"ledger","k":"event","msg":"support rep refunded $50 on order 5102 at t=30, v1 to v2","no":4,"raw":"[04] meridian -\u003e ledger \u003a support rep refunded $50 on order 5102 at t=30, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"dst":"ledger","k":"event","msg":"card dispute opened on order 5102 at t=41, v2 to v3","no":5,"raw":"[05] meridian -\u003e ledger \u003a card dispute opened on order 5102 at t=41, v2 to v3 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- Morning\u003a one more approval, one more change --","title":"Morning\u003a one more approval, one more change"},{"dst":"runlog","k":"event","msg":"ap-4 approved by support-lead for refund order 5104 $25 at t=58","no":6,"raw":"[06] gateway -\u003e runlog \u003a ap-4 approved by support-lead for refund order 5104 $25 at t=58 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"ledger","k":"event","msg":"support rep refunded $20 on order 5104 at t=59, v1 to v2","no":7,"raw":"[07] meridian -\u003e ledger \u003a support rep refunded $20 on order 5104 at t=59, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- The run resumes at t=60 --","title":"The run resumes at t=60"},{"dst":"gateway","k":"event","msg":"run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout","no":8,"raw":"[08] ops-agent -\u003e gateway \u003a run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =\u003e QUEUED","reason":null,"src":"ops-agent","tone":"neutral","verdict":"QUEUED"},{"dst":"meridian","k":"event","msg":"s1 ap-1 refund order 5101 $20","no":9,"raw":"[09] gateway -\u003e meridian \u003a s1 ap-1 refund order 5101 $20 =\u003e EXECUTED \u0028age 57, approved at v1, order now v1, nothing refunded\u0029","reason":"age 57, approved at v1, order now v1, nothing refunded","src":"gateway","tone":"neutral","verdict":"EXECUTED"},{"dst":"meridian","k":"event","msg":"s2 ap-2 refund order 5102 $40","no":10,"raw":"[10] gateway -\u003e meridian \u003a s2 ap-2 refund order 5102 $40 =\u003e STALE \u0028age 40, approved at v1, order now v3, $50 of $120 refunded, dispute open\u0029","reason":"age 40, approved at v1, order now v3, $50 of $120 refunded, dispute open","src":"gateway","tone":"harm","verdict":"STALE"},{"dst":"meridian","k":"event","msg":"s3 ap-3 refund order 5103 $30","no":11,"raw":"[11] gateway -\u003e meridian \u003a s3 ap-3 refund order 5103 $30 =\u003e EXECUTED \u0028age 39, approved at v1, order now v1, nothing refunded\u0029","reason":"age 39, approved at v1, order now v1, nothing refunded","src":"gateway","tone":"neutral","verdict":"EXECUTED"},{"dst":"meridian","k":"event","msg":"s4 ap-3 refund order 5103 $30","no":12,"raw":"[12] gateway -\u003e meridian \u003a s4 ap-3 refund order 5103 $30 =\u003e DUPLICATED \u0028age 39, approved at v1, order now v2, $30 of $90 refunded\u0029","reason":"age 39, approved at v1, order now v2, $30 of $90 refunded","src":"gateway","tone":"harm","verdict":"DUPLICATED"},{"dst":"meridian","k":"event","msg":"s5 ap-4 refund order 5104 $25","no":13,"raw":"[13] gateway -\u003e meridian \u003a s5 ap-4 refund order 5104 $25 =\u003e STALE \u0028age 2, approved at v1, order now v2, $20 of $80 refunded\u0029","reason":"age 2, approved at v1, order now v2, $20 of $80 refunded","src":"gateway","tone":"harm","verdict":"STALE"},{"k":"metric","name":"refunds_applied","raw":"METRIC refunds_applied = 5","value":"5"},{"k":"metric","name":"stale_refund_dollars","raw":"METRIC stale_refund_dollars = 65","value":"65"},{"k":"metric","name":"repeated_refund_dollars","raw":"METRIC repeated_refund_dollars = 30","value":"30"},{"detail":"2 of 2 approvals on changed orders still refunded, $65","k":"check","name":"stale-approval-rejected","raw":"CHECK stale-approval-rejected \u003a FAIL  \u00282 of 2 approvals on changed orders still refunded, $65\u0029","result":"FAIL"},{"detail":"0 of 2 changed orders detected","k":"check","name":"state-drift-detected-at-execution","raw":"CHECK state-drift-detected-at-execution \u003a FAIL  \u00280 of 2 changed orders detected\u0029","result":"FAIL"},{"detail":"1 refund repeated an approval that had already paid out, $30","k":"check","name":"approval-consumed-atomically","raw":"CHECK approval-consumed-atomically \u003a FAIL  \u00281 refund repeated an approval that had already paid out, $30\u0029","result":"FAIL"},{"detail":"1 approval older than 48 ticks still produced a refund","k":"check","name":"expired-approval-rejected","raw":"CHECK expired-approval-rejected \u003a FAIL  \u00281 approval older than 48 ticks still produced a refund\u0029","result":"FAIL"},{"detail":"unchanged order 5103 was refunded under ap-3","k":"check","name":"legit-unchanged-state-executes","raw":"CHECK legit-unchanged-state-executes \u003a PASS  \u0028unchanged order 5103 was refunded under ap-3\u0029","result":"PASS"}],"summary":"13 events, 0 guard verdicts and 3 harm verdicts; 4 of 5 checks failed.","tab":"Pressure"},{"actors":["gateway","runlog","meridian","ledger","ops-agent"],"caption":"Shorten the approval timeout and ask the model to confirm that nothing has changed before it executes. A short window only shrinks the race, and the model's confirmation is a guess about state it does not read.","counts":{"checks":4,"events":15,"failed":3,"guard":4,"harm":1,"lines":26,"metrics":3,"neutral":10,"passed":1,"plain":0,"unknown":0},"id":"wrong-direction","lines":[{"k":"section","raw":"-- Approvals are granted --","title":"Approvals are granted"},{"dst":"runlog","k":"event","msg":"ap-1 approved by support-lead for refund order 5101 $20 at t=03","no":1,"raw":"[01] gateway -\u003e runlog \u003a ap-1 approved by support-lead for refund order 5101 $20 at t=03 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-2 approved by support-lead for refund order 5102 $40 at t=20","no":2,"raw":"[02] gateway -\u003e runlog \u003a ap-2 approved by support-lead for refund order 5102 $40 at t=20 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-3 approved by support-lead for refund order 5103 $30 at t=21","no":3,"raw":"[03] gateway -\u003e runlog \u003a ap-3 approved by support-lead for refund order 5103 $30 at t=21 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"k":"section","raw":"-- Overnight\u003a the world moves --","title":"Overnight\u003a the world moves"},{"dst":"ledger","k":"event","msg":"support rep refunded $50 on order 5102 at t=30, v1 to v2","no":4,"raw":"[04] meridian -\u003e ledger \u003a support rep refunded $50 on order 5102 at t=30, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"dst":"ledger","k":"event","msg":"card dispute opened on order 5102 at t=41, v2 to v3","no":5,"raw":"[05] meridian -\u003e ledger \u003a card dispute opened on order 5102 at t=41, v2 to v3 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- Morning\u003a one more approval, one more change --","title":"Morning\u003a one more approval, one more change"},{"dst":"runlog","k":"event","msg":"ap-4 approved by support-lead for refund order 5104 $25 at t=58","no":6,"raw":"[06] gateway -\u003e runlog \u003a ap-4 approved by support-lead for refund order 5104 $25 at t=58 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"ledger","k":"event","msg":"support rep refunded $20 on order 5104 at t=59, v1 to v2","no":7,"raw":"[07] meridian -\u003e ledger \u003a support rep refunded $20 on order 5104 at t=59, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- The run resumes at t=60 with a 12-tick window --","title":"The run resumes at t=60 with a 12-tick window"},{"dst":"gateway","k":"event","msg":"run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout","no":8,"raw":"[08] ops-agent -\u003e gateway \u003a run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =\u003e QUEUED","reason":null,"src":"ops-agent","tone":"neutral","verdict":"QUEUED"},{"dst":"runlog","k":"event","msg":"s1 ap-1 refund order 5101 $20","no":9,"raw":"[09] gateway -\u003e runlog \u003a s1 ap-1 refund order 5101 $20 =\u003e EXPIRED \u0028age 57 over the 12-tick window\u0029","reason":"age 57 over the 12-tick window","src":"gateway","tone":"guard","verdict":"EXPIRED"},{"dst":"runlog","k":"event","msg":"s2 ap-2 refund order 5102 $40","no":10,"raw":"[10] gateway -\u003e runlog \u003a s2 ap-2 refund order 5102 $40 =\u003e EXPIRED \u0028age 40 over the 12-tick window\u0029","reason":"age 40 over the 12-tick window","src":"gateway","tone":"guard","verdict":"EXPIRED"},{"dst":"runlog","k":"event","msg":"s3 ap-3 refund order 5103 $30","no":11,"raw":"[11] gateway -\u003e runlog \u003a s3 ap-3 refund order 5103 $30 =\u003e EXPIRED \u0028age 39 over the 12-tick window\u0029","reason":"age 39 over the 12-tick window","src":"gateway","tone":"guard","verdict":"EXPIRED"},{"dst":"runlog","k":"event","msg":"s4 ap-3 refund order 5103 $30","no":12,"raw":"[12] gateway -\u003e runlog \u003a s4 ap-3 refund order 5103 $30 =\u003e EXPIRED \u0028age 39 over the 12-tick window\u0029","reason":"age 39 over the 12-tick window","src":"gateway","tone":"guard","verdict":"EXPIRED"},{"dst":"ops-agent","k":"event","msg":"s5 ap-4 refund order 5104 $25, model asked to confirm nothing changed","no":13,"raw":"[13] gateway -\u003e ops-agent \u003a s5 ap-4 refund order 5104 $25, model asked to confirm nothing changed =\u003e PENDING","reason":null,"src":"gateway","tone":"neutral","verdict":"PENDING"},{"dst":"gateway","k":"event","msg":"model replies confirmed, nothing has changed since t=58","no":14,"raw":"[14] ops-agent -\u003e gateway \u003a model replies confirmed, nothing has changed since t=58 =\u003e OK","reason":null,"src":"ops-agent","tone":"neutral","verdict":"OK"},{"dst":"meridian","k":"event","msg":"s5 ap-4 refund order 5104 $25","no":15,"raw":"[15] gateway -\u003e meridian \u003a s5 ap-4 refund order 5104 $25 =\u003e STALE \u0028age 2, approved at v1, order now v2, $20 of $80 refunded\u0029","reason":"age 2, approved at v1, order now v2, $20 of $80 refunded","src":"gateway","tone":"harm","verdict":"STALE"},{"k":"metric","name":"refunds_applied","raw":"METRIC refunds_applied = 1","value":"1"},{"k":"metric","name":"stale_refund_dollars","raw":"METRIC stale_refund_dollars = 25","value":"25"},{"k":"metric","name":"calls_expired","raw":"METRIC calls_expired = 4","value":"4"},{"detail":"1 of 2 approvals on changed orders still refunded, $25","k":"check","name":"stale-approval-rejected","raw":"CHECK stale-approval-rejected \u003a FAIL  \u00281 of 2 approvals on changed orders still refunded, $25\u0029","result":"FAIL"},{"detail":"0 of 2 changed orders detected","k":"check","name":"state-drift-detected-at-execution","raw":"CHECK state-drift-detected-at-execution \u003a FAIL  \u00280 of 2 changed orders detected\u0029","result":"FAIL"},{"detail":"no refund ran on an approval older than 48 ticks","k":"check","name":"expired-approval-rejected","raw":"CHECK expired-approval-rejected \u003a PASS  \u0028no refund ran on an approval older than 48 ticks\u0029","result":"PASS"},{"detail":"unchanged order 5103 was never refunded, ap-3 expired","k":"check","name":"legit-unchanged-state-executes","raw":"CHECK legit-unchanged-state-executes \u003a FAIL  \u0028unchanged order 5103 was never refunded, ap-3 expired\u0029","result":"FAIL"}],"summary":"15 events, 4 guard verdicts and 1 harm verdict; 3 of 4 checks failed.","tab":"Wrong direction"},{"actors":["gateway","runlog","meridian","ledger","ops-agent"],"caption":"Bind each approval to the version of the state it was granted against, re-read that version at execution and apply the effect with an atomic compare-and-set that also consumes the approval, fail closed into a fresh approval request on any mismatch, and keep the time limit as a second, independent bound.","counts":{"checks":6,"events":17,"failed":0,"guard":6,"harm":0,"lines":32,"metrics":4,"neutral":11,"passed":6,"plain":0,"unknown":0},"id":"principle-applied","lines":[{"k":"section","raw":"-- Approvals are granted, each bound to the order version --","title":"Approvals are granted, each bound to the order version"},{"dst":"runlog","k":"event","msg":"ap-1 approved by support-lead for refund order 5101 $20 at t=03, bound to v1","no":1,"raw":"[01] gateway -\u003e runlog \u003a ap-1 approved by support-lead for refund order 5101 $20 at t=03, bound to v1 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-2 approved by support-lead for refund order 5102 $40 at t=20, bound to v1","no":2,"raw":"[02] gateway -\u003e runlog \u003a ap-2 approved by support-lead for refund order 5102 $40 at t=20, bound to v1 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"runlog","k":"event","msg":"ap-3 approved by support-lead for refund order 5103 $30 at t=21, bound to v1","no":3,"raw":"[03] gateway -\u003e runlog \u003a ap-3 approved by support-lead for refund order 5103 $30 at t=21, bound to v1 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"k":"section","raw":"-- Overnight\u003a the world moves --","title":"Overnight\u003a the world moves"},{"dst":"ledger","k":"event","msg":"support rep refunded $50 on order 5102 at t=30, v1 to v2","no":4,"raw":"[04] meridian -\u003e ledger \u003a support rep refunded $50 on order 5102 at t=30, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"dst":"ledger","k":"event","msg":"card dispute opened on order 5102 at t=41, v2 to v3","no":5,"raw":"[05] meridian -\u003e ledger \u003a card dispute opened on order 5102 at t=41, v2 to v3 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- Morning\u003a one more approval, one more change --","title":"Morning\u003a one more approval, one more change"},{"dst":"runlog","k":"event","msg":"ap-4 approved by support-lead for refund order 5104 $25 at t=58, bound to v1","no":6,"raw":"[06] gateway -\u003e runlog \u003a ap-4 approved by support-lead for refund order 5104 $25 at t=58, bound to v1 =\u003e APPROVED","reason":null,"src":"gateway","tone":"neutral","verdict":"APPROVED"},{"dst":"ledger","k":"event","msg":"support rep refunded $20 on order 5104 at t=59, v1 to v2","no":7,"raw":"[07] meridian -\u003e ledger \u003a support rep refunded $20 on order 5104 at t=59, v1 to v2 =\u003e RECORDED","reason":null,"src":"meridian","tone":"neutral","verdict":"RECORDED"},{"k":"section","raw":"-- The run resumes at t=60\u003a every approval is re-read first --","title":"The run resumes at t=60\u003a every approval is re-read first"},{"dst":"gateway","k":"event","msg":"run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout","no":8,"raw":"[08] ops-agent -\u003e gateway \u003a run-0417 resumes, the model proposes 5 refunds, one of them a repeat after a timeout =\u003e QUEUED","reason":null,"src":"ops-agent","tone":"neutral","verdict":"QUEUED"},{"dst":"runlog","k":"event","msg":"s1 ap-1 refund order 5101 $20","no":9,"raw":"[09] gateway -\u003e runlog \u003a s1 ap-1 refund order 5101 $20 =\u003e EXPIRED \u0028age 57 over the 48-tick limit\u0029","reason":"age 57 over the 48-tick limit","src":"gateway","tone":"guard","verdict":"EXPIRED"},{"dst":"meridian","k":"event","msg":"s2 ap-2 refund order 5102 $40, order re-read","no":10,"raw":"[10] gateway -\u003e meridian \u003a s2 ap-2 refund order 5102 $40, order re-read =\u003e DETECTED \u0028approved at v1, order now v3\u0029","reason":"approved at v1, order now v3","src":"gateway","tone":"guard","verdict":"DETECTED"},{"dst":"runlog","k":"event","msg":"fresh approval requested for order 5102 $40, bound to v3","no":11,"raw":"[11] gateway -\u003e runlog \u003a fresh approval requested for order 5102 $40, bound to v3 =\u003e PENDING","reason":null,"src":"gateway","tone":"neutral","verdict":"PENDING"},{"dst":"meridian","k":"event","msg":"s3 ap-3 refund order 5103 $30, order re-read","no":12,"raw":"[12] gateway -\u003e meridian \u003a s3 ap-3 refund order 5103 $30, order re-read =\u003e VERIFIED \u0028still at v1\u0029","reason":"still at v1","src":"gateway","tone":"guard","verdict":"VERIFIED"},{"dst":"meridian","k":"event","msg":"s4 ap-3 refund order 5103 $30, order re-read","no":13,"raw":"[13] gateway -\u003e meridian \u003a s4 ap-3 refund order 5103 $30, order re-read =\u003e VERIFIED \u0028still at v1\u0029","reason":"still at v1","src":"gateway","tone":"guard","verdict":"VERIFIED"},{"dst":"meridian","k":"event","msg":"s5 ap-4 refund order 5104 $25, order re-read","no":14,"raw":"[14] gateway -\u003e meridian \u003a s5 ap-4 refund order 5104 $25, order re-read =\u003e DETECTED \u0028approved at v1, order now v2\u0029","reason":"approved at v1, order now v2","src":"gateway","tone":"guard","verdict":"DETECTED"},{"dst":"runlog","k":"event","msg":"fresh approval requested for order 5104 $25, bound to v2","no":15,"raw":"[15] gateway -\u003e runlog \u003a fresh approval requested for order 5104 $25, bound to v2 =\u003e PENDING","reason":null,"src":"gateway","tone":"neutral","verdict":"PENDING"},{"k":"section","raw":"-- Meridian applies a refund only if the version still holds --","title":"Meridian applies a refund only if the version still holds"},{"dst":"meridian","k":"event","msg":"s3 ap-3 refund order 5103 $30 only if still at v1","no":16,"raw":"[16] gateway -\u003e meridian \u003a s3 ap-3 refund order 5103 $30 only if still at v1 =\u003e EXECUTED \u0028order now v2\u0029","reason":"order now v2","src":"gateway","tone":"neutral","verdict":"EXECUTED"},{"dst":"meridian","k":"event","msg":"s4 ap-3 refund order 5103 $30 only if still at v1","no":17,"raw":"[17] gateway -\u003e meridian \u003a s4 ap-3 refund order 5103 $30 only if still at v1 =\u003e REJECTED \u0028approval already spent, order at v2\u0029","reason":"approval already spent, order at v2","src":"gateway","tone":"guard","verdict":"REJECTED"},{"k":"metric","name":"refunds_applied","raw":"METRIC refunds_applied = 1","value":"1"},{"k":"metric","name":"stale_refund_dollars","raw":"METRIC stale_refund_dollars = 0","value":"0"},{"k":"metric","name":"repeated_refund_dollars","raw":"METRIC repeated_refund_dollars = 0","value":"0"},{"k":"metric","name":"fresh_approvals_requested","raw":"METRIC fresh_approvals_requested = 2","value":"2"},{"detail":"no refund ran against a changed order","k":"check","name":"stale-approval-rejected","raw":"CHECK stale-approval-rejected \u003a PASS  \u0028no refund ran against a changed order\u0029","result":"PASS"},{"detail":"all 2 changed orders detected","k":"check","name":"state-drift-detected-at-execution","raw":"CHECK state-drift-detected-at-execution \u003a PASS  \u0028all 2 changed orders detected\u0029","result":"PASS"},{"detail":"each approval produced one refund and was spent with it","k":"check","name":"approval-consumed-atomically","raw":"CHECK approval-consumed-atomically \u003a PASS  \u0028each approval produced one refund and was spent with it\u0029","result":"PASS"},{"detail":"all 2 changed orders have a fresh request bound to their current version","k":"check","name":"mismatch-requests-fresh-approval","raw":"CHECK mismatch-requests-fresh-approval \u003a PASS  \u0028all 2 changed orders have a fresh request bound to their current version\u0029","result":"PASS"},{"detail":"no refund ran on an approval older than 48 ticks","k":"check","name":"expired-approval-rejected","raw":"CHECK expired-approval-rejected \u003a PASS  \u0028no refund ran on an approval older than 48 ticks\u0029","result":"PASS"},{"detail":"unchanged order 5103 was refunded under ap-3","k":"check","name":"legit-unchanged-state-executes","raw":"CHECK legit-unchanged-state-executes \u003a PASS  \u0028unchanged order 5103 was refunded under ap-3\u0029","result":"PASS"}],"summary":"17 events, 6 guard verdicts and 0 harm verdicts; all 6 checks passed.","tab":"Principle applied"}],"series":{"byline":"Pramod Srivastava","name":"Architect Notes","role":"Staff Engineer \u00b7 Adobe","strapline":"A pressure-first framework for software architecture"},"tagline":"Correct steps can still add up to an unsafe workflow","title":"The Approval-to-Execution Race","volume":34}</script>
+<script>
+(function () {
+'use strict';
+
+var SANS = '-apple-system, "Avenir Next", "Helvetica Neue", Arial, sans-serif';
+var SPEEDS = [0.5, 1, 2, 4];
+var KICKER = {'pressure': 'The pressure scenario', 'wrong-direction': 'The wrong-direction fix', 'principle-applied': 'The principle applied'};
+var IDS = ['pressure', 'wrong-direction', 'principle-applied', 'compare'];
+// The SVG namespace is read from the parsed document so the page carries no URL literals.
+var NS = document.getElementById('svgns').namespaceURI;
+// Data never reaches event-handler, style or URL-bearing attributes.
+var BLOCKED = /^(on|style$|href$|src|xlink|formaction$)/i;
+
+var D;
+try {
+  D = JSON.parse(document.getElementById('an-data').textContent);
+} catch (err) {
+  document.getElementById('main').textContent = 'The embedded data could not be read.';
+  throw err;
+}
+
+/* ---------- DOM helpers: every dynamic string enters the page as a text node or an attribute value ---------- */
+function put(e, attrs, kids) {
+  if (attrs) {
+    Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v === null || v === undefined || v === false) return;
+      if (BLOCKED.test(k)) throw new Error('attribute not allowed: ' + k);
+      e.setAttribute(k, v === true ? '' : String(v));
+    });
+  }
+  if (kids !== null && kids !== undefined) {
+    (Array.isArray(kids) ? kids : [kids]).forEach(function (c) {
+      if (c === null || c === undefined || c === false) return;
+      e.appendChild(typeof c === 'object' ? c : document.createTextNode(String(c)));
+    });
+  }
+  return e;
+}
+function h(tag, attrs, kids) { return put(document.createElement(tag), attrs, kids); }
+function sv(tag, attrs, kids) { return put(document.createElementNS(NS, tag), attrs, kids); }
+function clear(e) { while (e.firstChild) e.removeChild(e.firstChild); return e; }
+function $(id) { return document.getElementById(id); }
+function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+function r1(n) { return Math.round(n * 10) / 10; }
+function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+function pts(list) { return list.map(function (p) { return r1(p[0]) + ',' + r1(p[1]); }).join(' '); }
+
+/* ---------- icons (24-unit box) ---------- */
+var ICONS = {
+  reset: [['path', {d: 'M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'}], ['path', {d: 'M3 3v5h5'}]],
+  back: [['polygon', {points: '19 20 9 12 19 4 19 20', 'class': 'f'}], ['line', {x1: 5, x2: 5, y1: 19, y2: 5}]],
+  fwd: [['polygon', {points: '5 4 15 12 5 20 5 4', 'class': 'f'}], ['line', {x1: 19, x2: 19, y1: 5, y2: 19}]],
+  play: [['polygon', {points: '6 3 20 12 6 21 6 3', 'class': 'f'}]],
+  pause: [['rect', {x: 14, y: 4, width: 4, height: 16, rx: 1, 'class': 'f'}], ['rect', {x: 6, y: 4, width: 4, height: 16, rx: 1, 'class': 'f'}]],
+  tick: [['path', {d: 'M5 12.5l4.5 4.5L19 7.5'}]],
+  cross: [['path', {d: 'M6 6l12 12M18 6L6 18'}]],
+  shield: [['path', {d: 'M12 2.5l8 3v6c0 5-3.5 9-8 10.5C7.5 20.5 4 16.5 4 11.5v-6z'}]],
+  warn: [['path', {d: 'M12 3l10 18H2z'}], ['path', {d: 'M12 10v5', 'class': 'cut'}], ['circle', {cx: 12, cy: 18, r: 1.3, 'class': 'cutf'}]],
+  dot: [['circle', {cx: 12, cy: 12, r: 5.5}]],
+  query: [['path', {d: 'M9 9.2a3 3 0 1 1 4.6 2.5c-1 .7-1.6 1.3-1.6 2.6', 'class': 'cut'}], ['circle', {cx: 12, cy: 18, r: 1.3, 'class': 'cutf'}]]
+};
+function iconKids(name) {
+  return ICONS[name].map(function (p) { return sv(p[0], p[1]); });
+}
+function icon(name, size) {
+  return sv('svg', {viewBox: '0 0 24 24', width: size || 18, height: size || 18, 'aria-hidden': 'true', focusable: 'false', 'class': 'ic ic-' + name}, iconKids(name));
+}
+function glyphName(ln) {
+  if (!ln.verdict) return null;
+  return ln.tone === 'guard' ? 'shield' : ln.tone === 'harm' ? 'warn' : ln.tone === 'neutral' ? 'dot' : 'query';
+}
+function toneOf(ln) {
+  if (!ln.verdict) return '';
+  return ln.tone ? 't-' + ln.tone : 't-unknown';
+}
+function vchip(ln) {
+  return h('span', {'class': 'vc ' + toneOf(ln)}, [icon(glyphName(ln), 12), ln.verdict]);
+}
+
+/* ---------- text measuring (canvas) with ellipsis fitting ---------- */
+var ctx = (function () { try { return document.createElement('canvas').getContext('2d'); } catch (e) { return null; } })();
+var wcache = new Map();
+function tw(s, font) {
+  var key = font + '|' + s, w = wcache.get(key);
+  if (w === undefined) {
+    if (ctx) { ctx.font = font; w = ctx.measureText(s).width; } else { w = s.length * 7; }
+    wcache.set(key, w);
+  }
+  return w;
+}
+function fit(s, font, maxW, ls) {
+  var cs = Array.from(s), lo = 0, hi = cs.length - 1, mid, k = ls || 0;
+  if (tw(s, font) + cs.length * k <= maxW) return s;
+  while (lo < hi) {
+    mid = (lo + hi + 1) >> 1;
+    if (tw(cs.slice(0, mid).join('') + '\u2026', font) + (mid + 1) * k <= maxW) lo = mid; else hi = mid - 1;
+  }
+  return lo > 0 ? cs.slice(0, lo).join('').replace(/\s+$/, '') + '\u2026' : '\u2026';
+}
+function splitName(name) {
+  var out = [];
+  name.split(/([-_./])/).forEach(function (part) {
+    if (!part) return;
+    out.push(part);
+    if (/^[-_./]$/.test(part)) out.push(h('wbr'));
+  });
+  return out;
+}
+
+/* ---------- state ---------- */
+var S = {tab: null, playing: false, speed: 1, timer: 0};
+var views = {};
+var speedBtns = [];
+var live = $('live');
+function say(msg) { live.textContent = msg; }
+function curView() { return S.tab && S.tab !== 'compare' ? views[S.tab] || null : null; }
+
+/* ---------- static chrome ---------- */
+function renderHeader() {
+  var box = $('hdr');
+  box.appendChild(h('p', {'class': 'eyebrow'}, D.eyebrow));
+  box.appendChild(h('h1', null, D.title));
+  if (D.tagline) box.appendChild(h('p', {'class': 'tagline'}, D.tagline));
+  if (D.chips.length) box.appendChild(h('ul', {'class': 'chips', 'aria-label': 'Topics'}, D.chips.map(function (c) { return h('li', null, c); })));
+  if (D.claim) box.appendChild(h('p', {'class': 'claim'}, D.claim));
+}
+function renderFooter() {
+  var f = $('foot');
+  f.appendChild(h('p', {'class': 'main'}, 'Replay of real program output; deterministic simulation, not a live system.'));
+  f.appendChild(h('p', null, ['Reproduce: ', h('code', null, 'javac -Xlint:all *.java'), ' then ', h('code', null, 'java Main'), '.']));
+  f.appendChild(h('p', null, [D.series.name, D.series.byline, D.series.role].filter(Boolean).join(' \u00b7 ')));
+  if (D.company.disclaimer) f.appendChild(h('p', null, D.company.disclaimer));
+}
+var TABS = D.scenarios.map(function (s, i) { return {id: s.id, label: s.tab, key: String(i + 1)}; });
+TABS.push({id: 'compare', label: 'Compare', key: String(TABS.length + 1)});
+function renderTabs() {
+  var nav = $('tabs'), main = $('main');
+  TABS.forEach(function (t) {
+    var b = h('button', {type: 'button', 'class': 'tab', role: 'tab', id: 'tab-' + t.id, 'aria-selected': 'false', 'aria-controls': 'panel-' + t.id, 'aria-keyshortcuts': t.key},
+      [h('span', {'class': 'k'}, t.key), h('span', null, t.label)]);
+    b.addEventListener('click', function () { showTab(t.id, {}); });
+    nav.appendChild(b);
+    main.appendChild(h('section', {'class': 'panel', role: 'tabpanel', id: 'panel-' + t.id, 'aria-labelledby': 'tab-' + t.id, hidden: true}));
+  });
+}
+
+/* ---------- scenario view: static parts ---------- */
+function seg(cls, s) { return h('span', {'class': cls}, s); }
+function rawSegs(ln) {
+  var r = ln.raw, a, rest, mark, cut, tok, p, q;
+  if (ln.k === 'event') {
+    a = r.indexOf('] ');
+    rest = a > -1 ? r.slice(a + 1) : r;
+    mark = ln.verdict ? ' => ' + ln.verdict : '';
+    cut = mark ? rest.lastIndexOf(mark) : -1;
+    var out = [];
+    if (a > -1) out.push(seg('seg-no', r.slice(0, a + 1)));
+    if (cut > -1) { out.push(rest.slice(0, cut)); out.push(seg('seg-v', rest.slice(cut))); } else { out.push(rest); }
+    return out;
+  }
+  if (ln.k === 'check') {
+    tok = ' : ' + ln.result; p = r.indexOf(tok);
+    if (p > -1) return [r.slice(0, p + 3), seg('seg-r r-' + ln.result.toLowerCase(), ln.result), r.slice(p + tok.length)];
+  }
+  if (ln.k === 'metric') {
+    q = r.indexOf(' = ');
+    if (q > -1) return [r.slice(0, q + 3), seg('seg-val', r.slice(q + 3))];
+  }
+  return [r];
+}
+function metricCard(ln) {
+  return h('div', {'class': 'mcard pending'}, [h('div', {'class': 'mn'}, ln.name), h('div', {'class': 'mv' + (ln.value.length > 9 ? ' long' : '')}, ln.value)]);
+}
+function checkItem(ln) {
+  var pass = ln.result === 'PASS';
+  return h('li', {'class': 'chk pending ' + (pass ? 't-guard' : 't-harm')}, [
+    h('span', {'class': 'ico'}, icon(pass ? 'tick' : 'cross', 15)),
+    h('div', null, [h('div', {'class': 'cn'}, splitName(ln.name)), ln.detail ? h('div', {'class': 'cd'}, ln.detail) : null]),
+    h('span', {'class': 'cr'}, ln.result)
+  ]);
+}
+function ctl(act, label, ic, text, key, extra) {
+  return h('button', {type: 'button', 'class': 'btn' + (extra ? ' ' + extra : ''), 'data-act': act, 'aria-label': label, 'aria-keyshortcuts': key}, [icon(ic), h('span', null, text)]);
+}
+
+function buildScenario(sc, panel) {
+  var v = {sc: sc, id: sc.id, total: sc.lines.length, step: 0, panel: panel, rows: [], geo: [], secTexts: [], hdrH: 0, builtW: 0, ro: null};
+  var C = sc.counts;
+
+  panel.appendChild(h('p', {'class': 'caption'}, [h('span', {'class': 'kick'}, KICKER[sc.id] || sc.tab), sc.caption]));
+
+  v.bReset = ctl('reset', 'Reset replay to the start', 'reset', 'Reset', 'R');
+  v.bBack = ctl('back', 'Step back one line', 'back', 'Back', 'ArrowLeft');
+  v.bPlay = ctl('play', 'Play replay', 'play', 'Play', 'Space', 'primary');
+  v.bFwd = ctl('fwd', 'Step forward one line', 'fwd', 'Forward', 'ArrowRight');
+  v.slider = h('input', {type: 'range', min: 0, max: v.total, step: 1, value: 0, 'aria-label': 'Scrub through the output lines'});
+  v.count = h('span', {'class': 'count', 'aria-hidden': 'true'});
+  var speed = h('div', {'class': 'seg', role: 'group', 'aria-label': 'Playback speed'}, SPEEDS.map(function (s) {
+    var b = h('button', {type: 'button', 'aria-pressed': s === S.speed ? 'true' : 'false', 'aria-label': 'Speed ' + s + ' times', 'aria-keyshortcuts': '[ ]'}, s + '\u00d7');
+    b.addEventListener('click', function () { setSpeed(s); });
+    speedBtns.push({btn: b, s: s});
+    return b;
+  }));
+  v.bReset.addEventListener('click', function () { act(v, 'reset'); });
+  v.bBack.addEventListener('click', function () { act(v, 'back'); });
+  v.bPlay.addEventListener('click', function () { act(v, 'play'); });
+  v.bFwd.addEventListener('click', function () { act(v, 'fwd'); });
+  v.slider.addEventListener('input', function () { stop(); focusStage(v); setStep(v, parseInt(v.slider.value, 10) || 0, {}); });
+
+  v.ctrl = h('div', {'class': 'controls', role: 'group', 'aria-label': 'Replay controls'}, [
+    h('div', {'class': 'cbtns'}, [v.bReset, v.bBack, v.bPlay, v.bFwd]),
+    speed,
+    h('div', {'class': 'scrub'}, [v.slider, v.count])
+  ]);
+  panel.appendChild(v.ctrl);
+  panel.appendChild(h('p', {'class': 'hint'}, [
+    'Keyboard: ', h('b', null, 'Space'), ' play/pause \u00b7 ', h('b', null, '\u2190 \u2192'), ' step \u00b7 ',
+    h('b', null, 'R'), ' reset \u00b7 ', h('b', null, '1\u20134'), ' tabs \u00b7 ', h('b', null, '[ ]'), ' speed'
+  ]));
+
+  v.now = h('div', {'class': 'now'});
+  v.scroller = h('div', {'class': 'tlscroll scroller', tabindex: '0', role: 'region', 'aria-label': 'Lane timeline, scrollable'});
+  v.scroller.addEventListener('scroll', function () { syncSections(v); });
+  v.swipe = h('p', {'class': 'swipe', hidden: true}, 'Scroll sideways to see all ' + plural(sc.actors.length, 'lane', 'lanes') + '.');
+  v.rawbox = h('div', {'class': 'rawbox scroller is-empty', tabindex: '0', role: 'region', 'aria-label': 'Raw program output, scrollable'}, h('div', {'class': 'empty'}, 'No output revealed yet.'));
+  v.mgrid = h('div', {'class': 'metrics'});
+  v.clist = h('ul', {'class': 'checks'});
+  v.mN = h('span', {'class': 'n'});
+  v.cN = h('span', {'class': 'n'});
+
+  sc.lines.forEach(function (ln, i) {
+    var row = {raw: h('div', {'class': 'ln k-' + ln.k + ' ' + (ln.k === 'event' ? toneOf(ln) : '')},
+      [h('span', {'class': 'lno', 'aria-hidden': 'true'}, String(i + 1)), h('span', {'class': 'ltx'}, rawSegs(ln))]), tl: null, card: null};
+    v.rawbox.appendChild(row.raw);
+    if (ln.k === 'metric') { row.card = metricCard(ln); v.mgrid.appendChild(row.card); }
+    if (ln.k === 'check') { row.card = checkItem(ln); v.clist.appendChild(row.card); }
+    v.rows[i] = row;
+  });
+  if (!C.metrics) v.mgrid.appendChild(h('p', {'class': 'empty'}, 'This output has no METRIC lines.'));
+  if (!C.checks) v.clist.appendChild(h('li', {'class': 'empty'}, 'This output has no CHECK lines.'));
+
+  var left = h('div', {'class': 'col'}, [v.now, h('section', {'class': 'card', 'aria-label': 'Lane timeline'}, [h('h2', null, ['Lane timeline', h('span', {'class': 'n'}, plural(C.events, 'event', 'events') + ' \u00b7 ' + plural(sc.actors.length, 'lane', 'lanes'))]), v.swipe, v.scroller])]);
+  var right = h('div', {'class': 'col'}, [
+    h('section', {'class': 'card', 'aria-label': 'Raw output'}, [h('h2', null, ['Raw output', h('span', {'class': 'n'}, plural(C.lines, 'line', 'lines'))]), v.rawbox]),
+    h('section', {'class': 'card', 'aria-label': 'Metrics'}, [h('h2', null, ['Metrics', v.mN]), v.mgrid]),
+    h('section', {'class': 'card', 'aria-label': 'Checks'}, [h('h2', null, ['Checks', v.cN]), v.clist])
+  ]);
+  panel.appendChild(h('div', {'class': 'grid'}, [left, right]));
+  return v;
+}
+
+/* ---------- lane timeline layout ---------- */
+var EV_H = 52, SEC_H = 34, TOP = 6, ARY = 26, BR = 9, MIN_GAP = 80, MAX_GAP = 230;
+// SECLS is the .sectext letter-spacing in px (0.12em of 11px); the canvas measure does not include it.
+var MSGF = '700 12.5px ' + SANS, WHYF = '500 11px ' + SANS, LABF = '700 12px ' + SANS, CHIPF = '700 10.5px ' + SANS, SECF = '700 11px ' + SANS, SECLS = 1.32;
+
+function chipWidth(verdict) { return Math.ceil(tw(verdict, CHIPF) + verdict.length * 0.4) + 8 + 12 + 6 + 10; }
+
+// Where a label of width w goes relative to the arrow span [a, b] inside [lo, hi].
+function place(w, a, b, lo, hi) {
+  var span = b - a, right = hi - (a + 6), left = (b - 6) - lo;
+  if (w <= span - 12) return {x: (a + b) / 2, anchor: 'middle', max: span - 12};
+  if (w <= right) return {x: a + 6, anchor: 'start', max: right};
+  if (w <= left) return {x: b - 6, anchor: 'end', max: left};
+  return right >= left ? {x: a + 6, anchor: 'start', max: right} : {x: b - 6, anchor: 'end', max: left};
+}
+function reach(x, anchor, w) { return anchor === 'middle' ? [x - w / 2, x + w / 2] : anchor === 'end' ? [x - w, x] : [x, x + w]; }
+function syncSections(v) {
+  var x = r1(v.scroller.scrollLeft + 12);
+  v.secTexts.forEach(function (t) { t.setAttribute('x', x); });
+}
+
+function buildTimeline(v) {
+  var sc = v.sc, scroller = v.scroller, A = sc.actors, n = A.length;
+  clear(scroller);
+  v.geo = [];
+  v.secTexts = [];
+  v.rows.forEach(function (r) { r.tl = null; });
+  v.builtW = scroller.clientWidth;
+  if (!n) {
+    scroller.appendChild(h('p', {'class': 'empty pad'}, 'No events in this output.'));
+    v.swipe.hidden = true;
+    v.hdrH = 0;
+    return;
+  }
+  var idx = new Map();
+  A.forEach(function (a, i) { idx.set(a, i); });
+  var needL = A.map(function () { return 0; }), needR = needL.slice();
+  sc.lines.forEach(function (ln) {
+    if (ln.k !== 'event') return;
+    var si = idx.get(ln.src), ti = idx.get(ln.dst), cw = ln.verdict ? chipWidth(ln.verdict) : 0;
+    if (si === ti) needR[ti] = Math.max(needR[ti], 44 + cw);
+    else if (ti > si) needR[ti] = Math.max(needR[ti], cw ? cw + 8 : 0);
+    else needL[ti] = Math.max(needL[ti], cw ? cw + 8 : 0);
+  });
+  var labW0 = A.map(function (a) { return Math.min(tw(a, LABF) + 24, 168); });
+  var W = Math.max(scroller.clientWidth, 260);
+  // Edge margins: half a lane label, or the verdict chips that hang past the outer lanes, whichever is larger.
+  function margins(g) {
+    var l = 12 + labW0[0] / 2, r = 12 + labW0[n - 1] / 2, i;
+    for (i = 0; i < n; i++) {
+      l = Math.max(l, needL[i] + 4 - i * g);
+      r = Math.max(r, needR[i] + 4 - (n - 1 - i) * g);
+    }
+    return [l, r];
+  }
+  var gap = n > 1 ? MIN_GAP : 0, mg = margins(gap), pass;
+  for (pass = 0; n > 1 && pass < 3; pass++) {
+    gap = clamp((W - mg[0] - mg[1]) / (n - 1), MIN_GAP, MAX_GAP);
+    mg = margins(gap);
+  }
+  var minL = mg[0], minR = mg[1];
+  var natural = minL + (n - 1) * gap + minR;
+  var totalW = Math.max(W, Math.ceil(natural));
+  var x0 = minL + (totalW - natural) / 2;
+  var X = A.map(function (a, i) { return r1(x0 + i * gap); });
+  var stagger = n > 1 && labW0.some(function (w) { return w > gap - 6; });
+  var maxLab = n > 1 ? (stagger ? 2 * gap - 8 : gap - 6) : 168;
+  var hdrH = stagger ? 68 : 42;
+
+  var head = sv('svg', {'class': 'tlhead', width: totalW, height: hdrH, viewBox: '0 0 ' + totalW + ' ' + hdrH, 'aria-hidden': 'true', focusable: 'false'});
+  head.appendChild(sv('rect', {'class': 'hbg', x: 0, y: 0, width: totalW, height: hdrH}));
+  head.appendChild(sv('line', {'class': 'hline', x1: 0, y1: hdrH - 0.5, x2: totalW, y2: hdrH - 0.5}));
+  A.forEach(function (a, i) {
+    var py = stagger && i % 2 ? 38 : 8, label = fit(a, LABF, Math.max(maxLab - 24, 24)), pw = Math.ceil(tw(label, LABF)) + 24;
+    head.appendChild(sv('line', {'class': 'lane', x1: X[i], y1: py + 26, x2: X[i], y2: hdrH}));
+    head.appendChild(sv('g', null, [
+      sv('title', null, a),
+      sv('rect', {'class': 'labbg', x: r1(X[i] - pw / 2), y: py, width: pw, height: 26, rx: 13}),
+      sv('text', {'class': 'lab', x: X[i], y: py + 17.5}, label)
+    ]));
+  });
+
+  var y = TOP;
+  sc.lines.forEach(function (ln, i) {
+    if (ln.k === 'event') { v.geo[i] = {y: y, h: EV_H, x1: 0, x2: totalW, sec: false}; y += EV_H; }
+    else if (ln.k === 'section') { v.geo[i] = {y: y, h: SEC_H, x1: 0, x2: totalW, sec: true}; y += SEC_H; }
+  });
+  var bodyH = y + 12;
+  var body = sv('svg', {'class': 'tlbody', width: totalW, height: bodyH, viewBox: '0 0 ' + totalW + ' ' + bodyH, role: 'img', focusable: 'false',
+    'aria-label': 'Lane timeline with ' + plural(n, 'lane', 'lanes') + ' (' + A.join(', ') + ') and ' + plural(sc.counts.events, 'event', 'events') + '. The raw output panel lists every line as text.'});
+  X.forEach(function (x) { body.appendChild(sv('line', {'class': 'lane', x1: x, y1: 0, x2: x, y2: bodyH})); });
+
+  function chip(ln, cx, cy) {
+    var w = chipWidth(ln.verdict), g = sv('g', {'class': 'chip', transform: 'translate(' + r1(cx) + ' ' + r1(cy - 10) + ')'});
+    g.appendChild(sv('rect', {'class': 'cbg', x: 0, y: 0, width: w, height: 20, rx: 10}));
+    g.appendChild(sv('g', {'class': 'gl', transform: 'translate(8 4) scale(0.5)'}, iconKids(glyphName(ln))));
+    g.appendChild(sv('text', {'class': 'ct', x: 26, y: 14.2}, ln.verdict));
+    return g;
+  }
+
+  function eventRow(ln, geo) {
+    var si = idx.get(ln.src), ti = idx.get(ln.dst), xs = X[si], xt = X[ti], ay = geo.y + ARY;
+    var dir = ti > si ? 1 : ti < si ? -1 : 0, cw = ln.verdict ? chipWidth(ln.verdict) : 0;
+    var g = sv('g', {'class': 'row ev ' + toneOf(ln)});
+    var a, b, cx, tip;
+    g.appendChild(sv('title', null, ln.raw));
+    g.appendChild(sv('rect', {'class': 'hl', x: 3, y: geo.y + 1, width: totalW - 6, height: EV_H - 2, rx: 9}));
+    if (dir === 0) {
+      a = xs; b = xs + 34; cx = b + 8;
+      g.appendChild(sv('path', {'class': 'arr', d: 'M' + r1(xs + BR) + ' ' + r1(ay - 2) + 'H' + r1(b) + 'V' + r1(ay + 12) + 'H' + r1(xs + 14)}));
+      g.appendChild(sv('polygon', {'class': 'head', points: pts([[xs + 5, ay + 12], [xs + 14, ay + 7.5], [xs + 14, ay + 16.5]])}));
+    } else {
+      a = Math.min(xs, xt); b = Math.max(xs, xt);
+      tip = xt - dir * 5;
+      cx = dir > 0 ? xt + 8 : xt - 8 - cw;
+      g.appendChild(sv('line', {'class': 'arr', x1: r1(xs + dir * (BR + 1)), y1: ay, x2: r1(tip - dir * 9), y2: ay}));
+      g.appendChild(sv('polygon', {'class': 'head', points: pts([[tip, ay], [tip - dir * 9, ay - 4.5], [tip - dir * 9, ay + 4.5]])}));
+    }
+    var digits = String(ln.no);
+    g.appendChild(sv('circle', {'class': 'bdg', cx: xs, cy: ay, r: BR}));
+    g.appendChild(sv('text', {'class': 'bdgt', x: xs, y: ay + (digits.length > 2 ? 3 : 3.6), 'font-size': digits.length > 2 ? 8 : 10}, digits.length > 3 ? digits.slice(0, 3) : digits));
+    var m = place(tw(ln.msg, MSGF), a, b, 6, totalW - 6), mt = fit(ln.msg, MSGF, m.max), mx = reach(m.x, m.anchor, tw(mt, MSGF));
+    var lo = Math.min(xs, xt, ln.verdict ? cx : xs, mx[0]), hi = Math.max(xs, xt, ln.verdict ? cx + cw : xs, mx[1]);
+    g.appendChild(sv('text', {'class': 'msg', x: r1(m.x), y: geo.y + 14, 'text-anchor': m.anchor}, mt));
+    if (ln.reason) {
+      var rr = place(tw(ln.reason, WHYF), a, b, 6, totalW - 6), rt = fit(ln.reason, WHYF, rr.max), rx = reach(rr.x, rr.anchor, tw(rt, WHYF));
+      g.appendChild(sv('text', {'class': 'why', x: r1(rr.x), y: geo.y + 46, 'text-anchor': rr.anchor}, rt));
+      lo = Math.min(lo, rx[0]);
+      hi = Math.max(hi, rx[1]);
+    }
+    if (ln.verdict) g.appendChild(chip(ln, cx, ay));
+    geo.x1 = Math.max(0, lo - 10);
+    geo.x2 = Math.min(totalW, hi + 10);
+    return g;
+  }
+  function sectionRow(ln, geo) {
+    var g = sv('g', {'class': 'row sec'}), t;
+    g.appendChild(sv('title', null, ln.raw));
+    g.appendChild(sv('rect', {'class': 'secbg', x: 0, y: geo.y + 4, width: totalW, height: SEC_H - 8}));
+    t = sv('text', {'class': 'sectext', x: 12, y: geo.y + SEC_H / 2 + 4}, fit(ln.title.toUpperCase(), SECF, W - 30, SECLS));
+    g.appendChild(t);
+    v.secTexts.push(t);
+    return g;
+  }
+  sc.lines.forEach(function (ln, i) {
+    var geo = v.geo[i], g;
+    if (!geo) return;
+    g = ln.k === 'event' ? eventRow(ln, geo) : sectionRow(ln, geo);
+    body.appendChild(g);
+    v.rows[i].tl = g;
+  });
+  scroller.appendChild(head);
+  scroller.appendChild(body);
+  v.swipe.hidden = totalW <= scroller.clientWidth + 1;
+  v.hdrH = hdrH;
+  syncSections(v);
+}
+
+/* ---------- rendering of one step ---------- */
+function describe(v) {
+  var n = v.step, ln = n ? v.sc.lines[n - 1] : null, s;
+  if (!ln) return 'Start of the replay. ' + plural(v.total, 'line', 'lines') + ' of output.';
+  if (ln.k === 'event') {
+    s = 'Event ' + ln.no + ': ' + ln.src + ' to ' + ln.dst + ': ' + ln.msg + '.';
+    if (ln.verdict) s += ' Verdict ' + ln.verdict + (ln.tone ? ', ' + ln.tone : '') + (ln.reason ? ', ' + ln.reason : '') + '.';
+  } else if (ln.k === 'section') {
+    s = 'Section: ' + ln.title + '.';
+  } else if (ln.k === 'check') {
+    s = 'Check ' + ln.name + ' ' + (ln.result === 'PASS' ? 'passed' : 'failed') + (ln.detail ? ': ' + ln.detail : '') + '.';
+  } else if (ln.k === 'metric') {
+    s = 'Metric ' + ln.name + ' equals ' + ln.value + '.';
+  } else {
+    s = 'Output: ' + ln.raw;
+  }
+  if (n >= v.total) s += ' Replay complete. ' + v.sc.summary;
+  return s;
+}
+
+function renderNow(v) {
+  var n = v.step, ln = n ? v.sc.lines[n - 1] : null, now = v.now, tone = '';
+  clear(now);
+  if (!v.total) { now.className = 'now'; now.appendChild(h('span', {'class': 'what'}, 'This output has no lines to replay.')); return; }
+  if (!ln) {
+    now.className = 'now';
+    now.appendChild(h('span', {'class': 'tag'}, 'Ready'));
+    now.appendChild(h('span', {'class': 'what'}, 'Press Play, or step with the arrow keys, to replay this output line by line.'));
+    return;
+  }
+  if (n >= v.total) {
+    now.className = 'now';
+    now.appendChild(h('span', {'class': 'tag'}, 'Replay complete'));
+    now.appendChild(h('span', {'class': 'what'}, v.sc.summary));
+    return;
+  }
+  if (ln.k === 'event') {
+    tone = toneOf(ln);
+    now.appendChild(h('span', {'class': 'tag'}, 'Event ' + (ln.no < 10 ? '0' : '') + ln.no));
+    now.appendChild(h('span', {'class': 'who'}, ln.src + ' \u2192 ' + ln.dst));
+    now.appendChild(h('span', {'class': 'what'}, ln.msg));
+    if (ln.verdict) now.appendChild(vchip(ln));
+    if (ln.reason) now.appendChild(h('span', {'class': 'why'}, '(' + ln.reason + ')'));
+  } else if (ln.k === 'section') {
+    now.appendChild(h('span', {'class': 'tag'}, 'Section'));
+    now.appendChild(h('span', {'class': 'what'}, ln.title));
+  } else if (ln.k === 'check') {
+    tone = ln.result === 'PASS' ? 't-guard' : 't-harm';
+    now.appendChild(h('span', {'class': 'tag'}, 'Check'));
+    now.appendChild(h('span', {'class': 'who'}, ln.name));
+    now.appendChild(h('span', {'class': 'vc ' + tone}, [icon(ln.result === 'PASS' ? 'tick' : 'cross', 12), ln.result]));
+    if (ln.detail) now.appendChild(h('span', {'class': 'why'}, '(' + ln.detail + ')'));
+  } else if (ln.k === 'metric') {
+    now.appendChild(h('span', {'class': 'tag'}, 'Metric'));
+    now.appendChild(h('span', {'class': 'who'}, ln.name));
+    now.appendChild(h('span', {'class': 'what'}, '= ' + ln.value));
+  } else {
+    now.appendChild(h('span', {'class': 'tag'}, 'Output'));
+    now.appendChild(h('span', {'class': 'what mono'}, ln.raw));
+  }
+  now.className = 'now ' + tone;
+}
+
+function scrollInto(box, el, pad) {
+  var top = el.offsetTop, bot = top + el.offsetHeight;
+  if (top - pad < box.scrollTop) box.scrollTop = Math.max(0, top - pad);
+  else if (bot + pad > box.scrollTop + box.clientHeight) box.scrollTop = bot + pad - box.clientHeight;
+}
+function follow(v, curRow) {
+  var n = v.step, sc = v.scroller, g, hg, j, y1, y2, top, bot, w = sc.clientWidth, l = sc.scrollLeft;
+  if (n === 0) { v.rawbox.scrollTop = 0; sc.scrollTop = 0; sc.scrollLeft = 0; syncSections(v); return; }
+  scrollInto(v.rawbox, v.rows[n - 1].raw, 8);
+  if (curRow < 0 || !v.geo[curRow]) return;
+  g = v.geo[curRow];
+  y1 = v.hdrH + g.y - 4; y2 = v.hdrH + g.y + g.h + 4;
+  top = sc.scrollTop + v.hdrH; bot = sc.scrollTop + sc.clientHeight;
+  if (y1 < top) sc.scrollTop = Math.max(0, y1 - v.hdrH);
+  else if (y2 > bot) sc.scrollTop = y2 - sc.clientHeight;
+  // A section band keeps its title pinned to the left edge, so it takes the sideways position of the event before it.
+  hg = g;
+  if (g.sec) {
+    hg = null;
+    for (j = curRow - 1; j >= 0 && !hg; j--) { if (v.geo[j] && !v.geo[j].sec) hg = v.geo[j]; }
+  }
+  if (hg) {
+    if (hg.x2 - hg.x1 > w || hg.x1 < l) sc.scrollLeft = Math.max(0, hg.x1);
+    else if (hg.x2 > l + w) sc.scrollLeft = hg.x2 - w;
+  }
+  syncSections(v);
+}
+
+function syncPlay(v) {
+  var done = v.total > 0 && v.step >= v.total, b = v.bPlay, name, text, label;
+  if (S.playing) { name = 'pause'; text = 'Pause'; label = 'Pause replay'; }
+  else if (done) { name = 'play'; text = 'Replay'; label = 'Replay from the start'; }
+  else { name = 'play'; text = 'Play'; label = 'Play replay'; }
+  clear(b);
+  b.appendChild(icon(name));
+  b.appendChild(h('span', null, text));
+  b.setAttribute('aria-label', label);
+}
+
+function render(v) {
+  var n = v.step, tot = v.total, done = tot > 0 && n >= tot, curRow = -1, i, r, shown, mDone = 0, cDone = 0;
+  // Rows fade in only when the reader steps one line; loads, hash states and scrubbing jump without animation.
+  v.scroller.classList.toggle('still', !(typeof v.drawn === 'number' && Math.abs(n - v.drawn) === 1));
+  v.drawn = n;
+  for (i = n - 1; i >= 0; i--) { if (v.geo[i]) { curRow = i; break; } }
+  for (i = 0; i < tot; i++) {
+    r = v.rows[i]; shown = i < n;
+    r.raw.classList.toggle('shown', shown);
+    r.raw.classList.toggle('cur', i === n - 1);
+    if (r.tl) {
+      r.tl.classList.toggle('shown', shown);
+      r.tl.classList.toggle('cur', shown && !done && i === curRow);
+      r.tl.classList.toggle('past', shown && !done && i !== curRow && v.sc.lines[i].k === 'event');
+    }
+    if (r.card) {
+      r.card.classList.toggle('pending', !shown);
+      r.card.classList.toggle('fresh', shown && i === n - 1);
+      if (shown) { if (v.sc.lines[i].k === 'metric') mDone++; else cDone++; }
+    }
+  }
+  v.rawbox.classList.toggle('is-empty', n === 0);
+  v.mN.textContent = mDone + '/' + v.sc.counts.metrics;
+  v.cN.textContent = cDone + '/' + v.sc.counts.checks;
+  v.slider.value = String(n);
+  v.slider.style.setProperty('--p', (tot ? Math.round(n / tot * 1000) / 10 : 0) + '%');
+  v.slider.setAttribute('aria-valuetext', 'Line ' + n + ' of ' + tot);
+  v.count.textContent = 'Line ' + n + ' / ' + tot;
+  v.bBack.setAttribute('aria-disabled', n <= 0 ? 'true' : 'false');
+  v.bReset.setAttribute('aria-disabled', n <= 0 ? 'true' : 'false');
+  v.bFwd.setAttribute('aria-disabled', n >= tot ? 'true' : 'false');
+  syncPlay(v);
+  renderNow(v);
+  follow(v, done ? lastRowIndex(v) : curRow);
+  document.documentElement.setAttribute('data-an-state', v.id + ':' + n + '/' + tot);
+}
+function lastRowIndex(v) {
+  for (var i = v.total - 1; i >= 0; i--) { if (v.geo[i]) return i; }
+  return -1;
+}
+
+function writeHash(v) {
+  var hash = '#s=' + (v ? v.id + '&step=' + v.step : 'compare');
+  try { history.replaceState(null, '', hash); } catch (e) { /* file:// quirks: the hash is a convenience only */ }
+}
+function setStep(v, n, o) {
+  v.step = clamp(n, 0, v.total);
+  render(v);
+  if (!o.silent) say(o.say || describe(v));
+  if (!o.noHash) writeHash(v);
+}
+
+/* ---------- playback ---------- */
+function dwell(ln) { return (ln && ln.k === 'event' ? 1150 : 650) / S.speed; }
+function stop() {
+  clearTimeout(S.timer);
+  var was = S.playing;
+  S.playing = false;
+  var v = curView();
+  if (v && was) syncPlay(v);
+}
+function tick() {
+  var v = curView();
+  clearTimeout(S.timer);
+  if (!S.playing || !v) return;
+  if (v.step >= v.total) { stop(); return; }
+  setStep(v, v.step + 1, {});
+  if (v.step >= v.total) { stop(); return; }
+  S.timer = setTimeout(tick, dwell(v.sc.lines[v.step - 1]));
+}
+function start(v) {
+  if (!v.total) return;
+  if (v.step >= v.total) setStep(v, 0, {silent: true});
+  S.playing = true;
+  syncPlay(v);
+  tick();
+}
+// Once per view, when the reader first acts, scroll the control bar to the top of the window so the timeline is on screen while it replays.
+// Never done on page load: a scrolled load would not match the hash-state screenshots.
+function focusStage(v) {
+  var dy, calm;
+  if (v.focused) return;
+  v.focused = true;
+  dy = v.ctrl.getBoundingClientRect().top - 8;
+  calm = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (dy > 4) window.scrollBy({top: dy, left: 0, behavior: calm ? 'auto' : 'smooth'});
+}
+function act(v, a) {
+  focusStage(v);
+  if (a === 'play') { if (S.playing) { stop(); say('Paused at line ' + v.step + ' of ' + v.total + '.'); } else { start(v); } return; }
+  stop();
+  if (a === 'reset') { setStep(v, 0, {say: 'Reset to the start.'}); }
+  else if (a === 'back') { if (v.step <= 0) say('Already at the start.'); else setStep(v, v.step - 1, {}); }
+  else if (a === 'fwd') { if (v.step >= v.total) say('End of the output. ' + v.sc.summary); else setStep(v, v.step + 1, {}); }
+}
+function setSpeed(s) {
+  S.speed = s;
+  speedBtns.forEach(function (o) { o.btn.setAttribute('aria-pressed', o.s === s ? 'true' : 'false'); });
+  say('Speed ' + s + ' times.');
+}
+
+/* ---------- compare tab ---------- */
+function badge(result) {
+  var pass = result === 'PASS';
+  return h('span', {'class': 'badge ' + (pass ? 't-guard' : 't-harm')}, [icon(pass ? 'tick' : 'cross', 13), result]);
+}
+function buildCompare(panel) {
+  var scs = D.scenarios, C = D.compare;
+  panel.appendChild(h('p', {'class': 'caption'}, [h('span', {'class': 'kick'}, 'Comparing the three designs'),
+    'Verdicts, checks and metrics side by side, computed from the captured output of each scenario.']));
+
+  var cards = h('div', {'class': 'cmpcards'});
+  scs.forEach(function (sc, i) {
+    var c = sc.counts;
+    var segs = [['t-harm', c.harm, 'harm'], ['t-guard', c.guard, 'guard'], ['t-neutral', c.neutral, 'neutral'], ['t-unknown', c.unknown, 'other'], ['t-none', c.plain, 'no verdict']];
+    var mix = segs.filter(function (s) { return s[1] > 0; });
+    var label = plural(c.events, 'event', 'events') + ': ' + segs.map(function (s) { return s[1] + ' ' + s[2]; }).join(', ') + '.';
+    var bar = h('div', {'class': 'bar', role: 'img', 'aria-label': label}, mix.map(function (s) {
+      var seg = h('i', {'class': s[0]});
+      seg.style.flexGrow = String(s[1]);
+      seg.style.flexBasis = '0';
+      return seg;
+    }));
+    var go = h('button', {type: 'button', 'class': 'btn', 'aria-label': 'Replay the ' + sc.tab + ' scenario'}, [icon('play', 16), h('span', null, 'Replay this')]);
+    go.addEventListener('click', function () { showTab(sc.id, {step: 0}); focusStage(views[sc.id]); });
+    var failing = sc.lines.filter(function (l) { return l.k === 'check' && l.result === 'FAIL'; });
+    cards.appendChild(h('article', {'class': 'card cmp'}, [
+      h('h3', null, [h('span', {'class': 'k'}, String(i + 1)), sc.tab]),
+      h('p', {'class': 'sum'}, sc.summary),
+      h('div', {'class': 'stats'}, [
+        h('div', {'class': 'stat'}, [h('b', null, String(c.events)), h('span', null, 'events')]),
+        h('div', {'class': 'stat'}, [h('b', null, String(c.guard)), h('span', null, 'guard')]),
+        h('div', {'class': 'stat'}, [h('b', null, String(c.harm)), h('span', null, 'harm')]),
+        h('div', {'class': 'stat'}, [h('b', null, c.failed + '/' + c.checks), h('span', null, 'checks failed')])
+      ]),
+      c.events ? bar : h('p', {'class': 'empty'}, 'No events in this output.'),
+      c.events ? h('ul', {'class': 'legend'}, segs.filter(function (s) { return s[1] > 0; }).map(function (s) { return h('li', null, [h('i', {'class': s[0]}), s[1] + ' ' + s[2]]); })) : null,
+      failing.length ? h('p', {'class': 'empty'}, 'Failed: ' + failing.map(function (l) { return l.name; }).join(', ')) : null,
+      go
+    ]));
+  });
+  panel.appendChild(cards);
+
+  var names = scs.map(function (s) { return s.tab; });
+  var head = function (first) { return h('thead', null, h('tr', null, [h('th', {scope: 'col'}, first)].concat(names.map(function (t) { return h('th', {scope: 'col'}, t); })))); };
+  var matrix = h('table', {'class': 'tbl'}, [h('caption', {'class': 'sr'}, 'Check results by scenario'), head('Check'), h('tbody', null, C.checks.map(function (row) {
+    return h('tr', null, [h('th', {scope: 'row'}, splitName(row.name))].concat(row.cells.map(function (cell) {
+      return cell ? h('td', null, [badge(cell.r), cell.d ? h('span', {'class': 'dd'}, cell.d) : null])
+                  : h('td', {'class': 'na'}, [h('span', {'aria-hidden': 'true'}, '\u2014'), h('span', {'class': 'sr'}, 'not run')]);
+    })));
+  }))]);
+  panel.appendChild(h('section', {'class': 'card', 'aria-label': 'Check matrix'}, [
+    h('h2', null, ['Check matrix', h('span', {'class': 'n'}, plural(C.checks.length, 'check', 'checks'))]),
+    C.checks.length ? h('div', {'class': 'tscroll scroller', tabindex: '0', role: 'region', 'aria-label': 'Check matrix, scrollable'}, matrix) : h('p', {'class': 'empty'}, 'No CHECK lines in any scenario.')
+  ]));
+
+  var metrics = h('table', {'class': 'tbl'}, [h('caption', {'class': 'sr'}, 'Metric values by scenario'), head('Metric'), h('tbody', null, C.metrics.map(function (row) {
+    return h('tr', null, [h('th', {scope: 'row'}, splitName(row.name))].concat(row.cells.map(function (cell) {
+      return cell === null ? h('td', {'class': 'na'}, [h('span', {'aria-hidden': 'true'}, '\u2014'), h('span', {'class': 'sr'}, 'not reported')]) : h('td', {'class': 'num'}, cell);
+    })));
+  }))]);
+  panel.appendChild(h('section', {'class': 'card', 'aria-label': 'Metrics'}, [
+    h('h2', null, ['Metrics', h('span', {'class': 'n'}, plural(C.metrics.length, 'metric', 'metrics'))]),
+    C.metrics.length ? h('div', {'class': 'tscroll scroller', tabindex: '0', role: 'region', 'aria-label': 'Metrics table, scrollable'}, metrics) : h('p', {'class': 'empty'}, 'No METRIC lines in any scenario.')
+  ]));
+}
+
+/* ---------- tabs ---------- */
+function ensureBuilt(id) {
+  var panel = $('panel-' + id), v;
+  if (panel.getAttribute('data-built')) return views[id] || null;
+  panel.setAttribute('data-built', '1');
+  if (id === 'compare') { buildCompare(panel); return null; }
+  v = buildScenario(D.scenarios.filter(function (s) { return s.id === id; })[0], panel);
+  views[id] = v;
+  buildTimeline(v);
+  if (typeof ResizeObserver === 'function') {
+    v.ro = new ResizeObserver(function () {
+      if (S.tab === v.id && v.scroller.clientWidth > 0 && Math.abs(v.scroller.clientWidth - v.builtW) >= 2) { buildTimeline(v); render(v); }
+    });
+    v.ro.observe(v.scroller);
+  }
+  return v;
+}
+function showTab(id, o) {
+  var v;
+  if (IDS.indexOf(id) < 0) id = 'pressure';
+  stop();
+  S.tab = id;
+  TABS.forEach(function (t) {
+    var on = t.id === id;
+    $('tab-' + t.id).setAttribute('aria-selected', on ? 'true' : 'false');
+    $('panel-' + t.id).hidden = !on;
+  });
+  v = ensureBuilt(id);
+  if (v) {
+    if (v.scroller.clientWidth > 0 && Math.abs(v.scroller.clientWidth - v.builtW) >= 2) buildTimeline(v);
+    if (typeof o.step === 'number') v.step = clamp(o.step, 0, v.total);
+    render(v);
+    if (!o.silent) say(KICKER[id] + '. ' + describe(v));
+    if (!o.noHash) writeHash(v);
+  } else {
+    document.documentElement.setAttribute('data-an-state', 'compare');
+    if (!o.silent) say('Compare tab. ' + D.scenarios.map(function (s) { return s.tab + ': ' + s.summary; }).join(' '));
+    if (!o.noHash) writeHash(null);
+  }
+}
+
+/* ---------- URL hash: #s=pressure|wrong-direction|principle-applied|compare&step=N|end ---------- */
+function applyHash(initial) {
+  var p = new URLSearchParams(location.hash.replace(/^#/, '')), s = p.get('s'), st = p.get('step'), v, n;
+  if (!s && !initial) return;
+  if (IDS.indexOf(s) < 0) s = 'pressure';
+  showTab(s, {silent: true, noHash: true});
+  v = views[s];
+  if (v) {
+    n = st === 'end' ? v.total : clamp(parseInt(st, 10) || 0, 0, v.total);
+    setStep(v, n, {silent: true, noHash: true});
+  }
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', function (e) {
+  if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+  var t = e.target, tag = t && t.tagName, k = e.key, v = curView(), i;
+  if (tag === 'TEXTAREA' || tag === 'SELECT' || (tag === 'INPUT' && t.type !== 'range') || (t && t.isContentEditable)) return;
+  if (k === ' ' || k === 'Spacebar') {
+    if (tag === 'BUTTON' || tag === 'A') return;
+    if (v) { e.preventDefault(); act(v, 'play'); }
+  } else if (k === 'ArrowRight' || k === 'ArrowLeft') {
+    if (tag === 'INPUT' || e.shiftKey) return;
+    if (v) { e.preventDefault(); act(v, k === 'ArrowRight' ? 'fwd' : 'back'); }
+  } else if (k === 'r' || k === 'R') {
+    if (v) { e.preventDefault(); act(v, 'reset'); }
+  } else if (k >= '1' && k <= String(TABS.length)) {
+    e.preventDefault();
+    showTab(TABS[parseInt(k, 10) - 1].id, {});
+  } else if (k === '[' || k === ']') {
+    i = SPEEDS.indexOf(S.speed) + (k === ']' ? 1 : -1);
+    e.preventDefault();
+    setSpeed(SPEEDS[clamp(i, 0, SPEEDS.length - 1)]);
+  }
+});
+window.addEventListener('hashchange', function () { applyHash(false); });
+
+renderHeader();
+renderTabs();
+renderFooter();
+applyHash(true);
+document.documentElement.setAttribute('data-an-ready', '1');
+})();
+</script>
+</body>
+</html>
