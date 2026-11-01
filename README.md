@@ -34,9 +34,9 @@ Patterns are not the destination. They are the result of good architectural reas
 
 ---
 
-## Series — 168 Papers
+## Series — 199 Papers
 
-**Medium publishing status (confirmed October 13, 2026):** Papers 1–38 are published and linked below. Papers 39–168 are authored but not yet published: **38 published, 130 remaining**. Next: Paper 39, Service Discovery.
+**Medium publishing status (confirmed October 13, 2026):** Papers 1–38 are published and linked below. Papers 39–168 and 31 of the planned Papers 169–268 are authored but not yet published: **38 published, 161 remaining**. Next: Paper 39, Service Discovery.
 
 ### [Volume 1 — Thinking Like an Architect](volume-1-thinking-like-an-architect/)
 Foundation papers. Read these before anything else.
@@ -410,7 +410,7 @@ Five papers on cost-aware engineering — where a policy tuned for the average p
 ---
 
 ### [Volume 30 — Capstone: One System, End to End](volume-30-capstone-one-system-end-to-end/)
-The final volume of the entire 168-paper plan. Unlike every prior volume's 3 unrelated toy problems per paper, all 7 papers here trace one single fictional system — "Nova," a multi-tenant B2B order/checkout and fulfillment platform — through a different architectural concern each paper, each explicitly tying its mechanism back to a named earlier volume rather than inventing a new domain from scratch. The closing paper ties every earlier mechanism into one unified cost-and-correlation model, closing the loop on the whole series.
+The final volume of the original 168-paper plan. Unlike every prior volume's 3 unrelated toy problems per paper, all 7 papers here trace one single fictional system — "Nova," a multi-tenant B2B order/checkout and fulfillment platform — through a different architectural concern each paper, each explicitly tying its mechanism back to a named earlier volume rather than inventing a new domain from scratch. The closing paper ties every earlier mechanism into one unified cost-and-correlation model, closing the loop on the whole series.
 
 | Paper | Title | Examples |
 |-------|-------|---------|
@@ -420,9 +420,144 @@ The final volume of the entire 168-paper plan. Unlike every prior volume's 3 unr
 | [165](volume-30-capstone-one-system-end-to-end/paper-165-nova-read-path-multitenant-load/) | Nova's Read Path Under Multi-Tenant Load | a shared cache with no tenant isolation letting one tenant's cold scan evict another tenant's hot working set (verified), per-tenant cache partitioning that closes cross-tenant eviction but a naive fixed even-split doesn't fit a legitimately larger tenant's own historical working set (verified), usage-weighted partition sizing giving each tenant a partition matching its own historical need (verified) |
 | [166](volume-30-capstone-one-system-end-to-end/paper-166-nova-resilience-verification/) | Verifying Nova's Resilience Actually Holds | a circuit breaker checked once before a refactor and then treated as permanently settled (verified), a one-time manual GameDay chaos drill whose recorded result goes stale the moment a later refactor changes the call path (verified), a continuous automated chaos suite re-executing the identical failure-injection experiment against whichever call path each deploy actually selects (verified) |
 | [167](volume-30-capstone-one-system-end-to-end/paper-167-nova-security-tenant-compliance/) | Masking What's Shown Is Not the Same as Guarding What's Logged | a support tool logging a customer's real PII on every lookup with no purpose check and no residency check (verified), a masking fix that redacts the agent's own screen while leaving the underlying audit-log call completely unchanged (verified), tokenization composed with a purpose gate and a residency gate closing all three gaps together around one lookup path (verified) |
-| [168](volume-30-capstone-one-system-end-to-end/paper-168-nova-cost-aware-operation-capstone-synthesis/) | A Cost Total and a Separate Health Log Without a Shared Key Leave Cost-to-Mechanism Pairing Fragile | Nova's operational cost tracked as a single running total with no attribution to any tenant or mechanism (verified), two independent logs — cost and mechanism/health — that stay aligned only because of this program's fixed call order, not because either log's own entries record the pairing (verified), a unified `OperationEvent` co-locating tenant, mechanism, health status, and cost delta as fields on one object, correctly attributing the largest cost contributor directly from the recorded fields (verified) — the final paper of the entire 168-paper plan |
+| [168](volume-30-capstone-one-system-end-to-end/paper-168-nova-cost-aware-operation-capstone-synthesis/) | A Cost Total and a Separate Health Log Without a Shared Key Leave Cost-to-Mechanism Pairing Fragile | Nova's operational cost tracked as a single running total with no attribution to any tenant or mechanism (verified), two independent logs — cost and mechanism/health — that stay aligned only because of this program's fixed call order, not because either log's own entries record the pairing (verified), a unified `OperationEvent` co-locating tenant, mechanism, health status, and cost delta as fields on one object, correctly attributing the largest cost contributor directly from the recorded fields (verified) — the final paper of the original 168-paper plan |
 
 ---
+
+<!-- volumes-31-50:begin -->
+
+> Volumes 31–50 follow one fictional company, Halcyon Commerce, and its Orbit agentic platform. The company, its people, systems and numbers are a composite invented for this series; the standards and incidents each paper cites are real and named with sources.
+>
+> **Status:** 31 of the 100 planned papers (Papers 169–268) are authored. Complete volumes: 31, 32, 33, 35, 36. Partial volumes: 34, 37, 38 (planned papers are listed without links). Planned volumes with no pages yet: 39–50.
+
+---
+
+### [Volume 31 — Agentic AI Security Architecture](volume-31-agentic-ai-security-architecture/)
+*Arc I — Secure Agentic Systems.* A model's decision is not permission. Orbit Support Assistant enters beta; Lena Brandt's red team spends a Friday trying to turn it against the merchants it serves.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [169](volume-31-agentic-ai-security-architecture/paper-169-prompt-injection-is-an-architecture-problem/) | Prompt Injection Is an Architecture Problem | You cannot filter your way out of text that looks like every other sentence; you can only decide, outside the model, what untrusted text is allowed to cause. |
+| [170](volume-31-agentic-ai-security-architecture/paper-170-policy-belongs-outside-the-model/) | Policy Belongs Outside the Model | A prompt that says 'never refund more than $100' is a request; a policy gate that rejects the call is a guarantee. |
+| [171](volume-31-agentic-ai-security-architecture/paper-171-least-privilege-tools-for-agents/) | Least-Privilege Tools for Agents | Every tool you hand an agent is authority an attacker can borrow; the cheapest defense is a smaller toolbox. |
+| [172](volume-31-agentic-ai-security-architecture/paper-172-sandboxes-and-egress-control/) | Sandboxes and Egress Control | Assume the agent will be tricked once; make sure that when it is, the data has nowhere to go. |
+| [173](volume-31-agentic-ai-security-architecture/paper-173-approve-the-exact-action/) | Approve the Exact Action, Not the Summary | An approval only means something if it is bound to the exact action that will execute, not to a friendly description of it. |
+
+---
+
+### [Volume 32 — Identity and Authorization for Agents](volume-32-identity-and-authorization-for-agents/)
+*Arc I — Secure Agentic Systems.* Acting for a user without becoming the user. Orbit starts acting for merchant admins across Halcyon's APIs; Dev Raman and Lena argue over whose authority the agent is really using.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [174](volume-32-identity-and-authorization-for-agents/paper-174-an-agent-is-not-the-user-it-acts-for/) | An Agent Is Not the User It Acts For | When an agent reuses the user's own credential, every action looks like the user's decision, nobody can tell a human click from a model's guess, and nothing bounds what the agent may do. |
+| [175](volume-32-identity-and-authorization-for-agents/paper-175-delegation-should-only-ever-narrow/) | Delegation Should Only Ever Narrow | Each hop in a delegation chain may hold only a subset of what the hop before it held; a chain that can widen is a privilege-escalation path with extra steps. |
+| [176](volume-32-identity-and-authorization-for-agents/paper-176-the-confused-deputy-at-the-tool-gateway/) | The Confused Deputy at the Tool Gateway | A gateway that holds more authority than the agents calling it is a deputy waiting to be confused: authorize with the caller's authority, never the gateway's own. |
+| [177](volume-32-identity-and-authorization-for-agents/paper-177-authority-laundering-between-agents/) | Authority Laundering Between Agents | When one agent asks another to act, the callee must see the original authority and its limits, not just the caller's request, or a low-privilege agent can launder its request through a high-privilege one. |
+| [178](volume-32-identity-and-authorization-for-agents/paper-178-revocation-is-the-hard-half-of-delegation/) | Revocation Is the Hard Half of Delegation | Granting happens once and is easy; revoking must reach every cached token, running sub-agent and in-flight call, and it must arrive before the damage does. |
+
+---
+
+### [Volume 33 — Secure RAG and Agent Memory](volume-33-secure-rag-and-agent-memory/)
+*Arc I — Secure Agentic Systems.* Retrieval is also an access-control boundary. Orbit learns from merchant documents, tickets and memory; Aiko Tanaka's retrieval index becomes the newest access-control boundary.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [179](volume-33-secure-rag-and-agent-memory/paper-179-authorize-at-retrieval-not-at-display/) | Authorize at Retrieval, Not at Display | A document the user may not read must never reach the model's context; hiding the link in the final answer is too late, because the model has already read the text and can be asked about it. |
+| [180](volume-33-secure-rag-and-agent-memory/paper-180-tenant-isolation-in-a-shared-vector-store/) | Tenant Isolation in a Shared Vector Store | In a shared vector index a missing tenant filter is a data breach with excellent recall; isolation has to be structural, not a parameter every query must remember to pass. |
+| [181](volume-33-secure-rag-and-agent-memory/paper-181-deleted-documents-still-answer-questions/) | Deleted Documents Still Answer Questions | Deleting a source document does not delete the chunks, embeddings, caches and summaries derived from it, so the assistant keeps answering from data the company promised to erase. |
+| [182](volume-33-secure-rag-and-agent-memory/paper-182-indirect-injection-through-retrieved-content/) | Indirect Injection Through Retrieved Content | Everything the retriever returns is untrusted input, including pages your own team indexed; the index is an injection channel with a trusted-looking return address. |
+| [183](volume-33-secure-rag-and-agent-memory/paper-183-agent-memory-is-a-write-path/) | Agent Memory Is a Write Path | Whatever an agent is allowed to remember becomes context it will trust later; memory is a write path into the agent's future behavior and deserves the controls any write path gets. |
+
+---
+
+### [Volume 34 — Reliable and Bounded Agent Execution](volume-34-reliable-and-bounded-agent-execution/)
+*Arc I — Secure Agentic Systems. Partial volume: 4 of 5 papers authored.* Correct steps can still add up to an unsafe workflow. The Orbit Ops Agent runs refund, email and ledger workflows overnight; Tomás Rivera is on call when correct steps add up to a bad night.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [184](volume-34-reliable-and-bounded-agent-execution/paper-184-durable-agent-runs-and-idempotent-effects/) | Durable Agent Runs and Idempotent Effects | A run that crashes halfway must resume without repeating a finished effect; the run's progress and each effect's identity have to live in a durable log, not in the model's context. |
+| [185](volume-34-reliable-and-bounded-agent-execution/paper-185-the-approval-to-execution-race/) | The Approval-to-Execution Race | An approval describes the world at the moment it was granted; if the action runs against a different world, a correct approval authorizes the wrong thing. |
+| 186 | Retry Amplification and Budget Governors | *Planned, not yet authored.* |
+| [187](volume-34-reliable-and-bounded-agent-execution/paper-187-partial-effects-compensation-and-reconciliation/) | Partial Effects: Compensation and Reconciliation | A multi-step agent workflow has no rollback; when it stops halfway the system needs a declared compensation for each effect and a reconciler that finds the differences nobody reported. |
+| [188](volume-34-reliable-and-bounded-agent-execution/paper-188-kill-switches-and-containment-for-agent-fleets/) | Kill Switches and Containment for Agent Fleets | When an agent fleet misbehaves, the first question is how fast and how narrowly you can stop it; a stop that depends on the broken system, or can only stop everything, is not a control. |
+
+---
+
+### [Volume 35 — Continuous Assurance for AI Systems](volume-35-continuous-assurance-for-ai-systems/)
+*Arc I — Secure Agentic Systems.* 'It passed the demo' is not a security argument. Sam Whitfield's board asks how anyone knows Orbit is safe, and the team has to replace demos with evidence.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [189](volume-35-continuous-assurance-for-ai-systems/paper-189-test-the-effect-not-the-wording/) | Test the Effect, Not the Wording | A security test that asserts on what the model said passes attacks that work and fails builds that are fine; the test has to assert on what the system did. |
+| [190](volume-35-continuous-assurance-for-ai-systems/paper-190-release-gates-for-prompts-models-and-tools/) | Release Gates for Prompts, Models and Tools | A prompt edit, a model alias that moves or a new tool schema changes behavior as surely as a code change, so each must travel the same pinned, tested and staged release path as code. |
+| [191](volume-35-continuous-assurance-for-ai-systems/paper-191-tool-and-mcp-supply-chain-controls/) | Tool and MCP Supply-Chain Controls | A tool server is third-party code that talks to your model; its name, description and schema are part of your prompt, so they need the same pinning, review and isolation as any dependency. |
+| [192](volume-35-continuous-assurance-for-ai-systems/paper-192-audit-trails-that-survive-an-incident/) | Audit Trails That Survive an Incident | After an incident the audit trail is the only witness; it has to say who acted for whom, under which authority and policy version, and it has to be written by something the agent cannot edit. |
+| [193](volume-35-continuous-assurance-for-ai-systems/paper-193-incident-response-for-agent-systems/) | Incident Response for Agent Systems | An agent incident is not over when the agent stops: the cause is often state outside the prompt, so response means containing authority, scoping effects from the audit trail, removing the poisoned state and feeding the case back into the tests. |
+
+---
+
+### [Volume 36 — Zero Trust and Workload Identity](volume-36-zero-trust-and-workload-identity/)
+*Arc II — Security Foundations.* Trust is a decision made per request, not per network. Halcyon's flat internal network meets the Orbit tool gateway calling Meridian; Mira Okafor asks who actually authenticates whom.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| [194](volume-36-zero-trust-and-workload-identity/paper-194-network-location-is-not-identity/) | Network Location Is Not Identity | An address says where a packet came from, not who sent it; any service that grants authority because a caller sits inside the network has handed that authority to every workload that can get an address there. |
+| [195](volume-36-zero-trust-and-workload-identity/paper-195-workload-identity-and-mtls-everywhere/) | Workload Identity and mTLS Everywhere | Mutual TLS proves a peer holds a key; it says nothing about what that peer may do, so every workload needs its own attested identity and every callee needs an explicit policy for each identity. |
+| [196](volume-36-zero-trust-and-workload-identity/paper-196-the-certificate-that-expired-at-2-am/) | The Certificate That Expired at 2 A.M. | Expiry is a scheduled outage unless renewal is automated, overlapped and watched; the temptation at 2 a.m. is to turn verification off, and that fix is worse than the outage. |
+| [197](volume-36-zero-trust-and-workload-identity/paper-197-policy-decision-points-fail-open-or-fail-closed/) | Policy Decision Points: Fail Open or Fail Closed | Every enforcement point must have a decided answer for when its policy engine is slow or gone; leaving it to a default means the behavior during an outage is chosen by whoever wrote the timeout. |
+| [198](volume-36-zero-trust-and-workload-identity/paper-198-continuous-verification-and-step-up/) | Continuous Verification and Step-Up | A login is a claim about one moment; trust has to be recomputed on each request from signals that can go bad, and sensitive actions should ask for fresh proof instead of relying on how long ago the user signed in. |
+
+---
+
+### [Volume 37 — Secrets, Keys and Crypto Architecture](volume-37-secrets-keys-and-crypto-architecture/)
+*Arc II — Security Foundations. Partial volume: 1 of 5 papers authored.* Every secret is a liability with an expiry date. Orbit needs tool credentials in five places; Lena inventories every secret and every key's blast radius.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| 199 | From Secret Sprawl to Short-Lived Credentials | *Planned, not yet authored.* |
+| [200](volume-37-secrets-keys-and-crypto-architecture/paper-200-envelope-encryption-and-crypto-shredding/) | Envelope Encryption and Crypto-Shredding | When each tenant's data is encrypted under its own data key, and those keys are wrapped by a key the application cannot read, rotating the top key is cheap and destroying one tenant's key makes every copy of that tenant's data unreadable, including backups. |
+| 201 | Rotation Without Downtime | *Planned, not yet authored.* |
+| 202 | Crypto Agility Before You Need It | *Planned, not yet authored.* |
+| 203 | When a Key Leaks: Compromise Response | *Planned, not yet authored.* |
+
+---
+
+### [Volume 38 — Software Supply Chain Security](volume-38-software-supply-chain-security/)
+*Arc II — Security Foundations. Partial volume: 1 of 5 papers authored.* You ship everything you depend on. Orbit's toolchain pulls hundreds of dependencies; a surprise advisory sends the team hunting for what they actually run.
+
+| Paper | Title | Claim |
+|-------|-------|-------|
+| 204 | Dependency Confusion and the Pinning Illusion | *Planned, not yet authored.* |
+| [205](volume-38-software-supply-chain-security/paper-205-build-integrity-and-provenance/) | Build Integrity and Provenance | A signature on an artifact says who handled it last; provenance says which source and which builder produced it, and it is only worth anything if the build steps cannot write it themselves. |
+| 206 | Sign, Verify, Admit | *Planned, not yet authored.* |
+| 207 | SBOMs Are Inventory, VEX Is Triage | *Planned, not yet authored.* |
+| 208 | CI/CD Is an Attack Surface | *Planned, not yet authored.* |
+
+---
+
+### Planned volumes
+
+Volumes 39–50 are planned. They have no pages yet, so nothing below is linked.
+
+| Volume | Title | Papers | Focus |
+|--------|-------|--------|-------|
+| 39 | Threat Modeling, Detection and Response | 209–213 | Design for the day the controls fail |
+| 40 | Multi-Region and Global Architecture | 214–218 | Distance turns every assumption into a trade-off |
+| 41 | Data Platform Architecture | 219–223 | Pipelines fail quietly before they fail loudly |
+| 42 | Workflow Orchestration and Durable Execution | 224–228 | Long-running work needs a memory that survives crashes |
+| 43 | Real-Time Communication Architecture | 229–233 | A connection is a promise you must keep under load |
+| 44 | Edge, Offline-First and Sync | 234–238 | The network is optional; your data model must not be |
+| 45 | Capacity, Queueing and Load | 239–243 | Every system has a knee; find it before your users do |
+| 46 | Migration and Modernization | 244–248 | Moving a system is a product, not a weekend |
+| 47 | Architecture Governance and Evolution | 249–253 | Decisions that cannot be checked will be forgotten |
+| 48 | AI Platform Architecture | 254–258 | Models change weekly; platforms must not |
+| 49 | Multi-Agent Systems and Protocols | 259–263 | More agents means more boundaries to defend |
+| 50 | Capstone II: One Secure Agentic Platform | 264–268 | Everything converges in one system |
+
+---
+
+<!-- volumes-31-50:end -->
 
 ## Repository Structure
 
